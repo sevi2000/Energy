@@ -1,0 +1,42 @@
+Board, Tile (avec sous-classes ou enum), Connector, abstract Component, BulbComponent, SourceComponent, WifiComponent, EmptyComponent
+
+Board
+- List<List<Tile>> tiles
+- méthodes addRowOnTop addRowAtBottom addColumnAtLeft addColumnAtRight et remove
+- méthode boolean isSolved()
+- void shuffle()
+- public Board(int width, int heigth) throws InvalidSizeException
+
+Tile
+- List<Connector> connectors = 4 ou 6 connecteurs
+- Component component = vide, lampe, source ou borne wifi
+- int orientation entre 0 et 3 ou 0 et 5 et méthode rotate() ?
+- méthode calculatePower() : si un des bords ou la source a isPowered à true, alors tous les Connector existants et le Component ont isPowered à true ?
+
+Connector
+- boolean exists
+- boolean isPowered
+- préciser comment gérer le connecteur sur la tuile adjacente : champ Connector voisin ou boolean isConnected
+
+classe abstraite ou interface Component :
+- boolean isPowered
+
+EmptyComponent et LampComponent n'ont pas de champ particulier
+SourceComponent renvoie toujours isPowered() à true
+
+
+
+Level :
+- final int number
+- Board board
+- méthode isSolved()
+- méthode void start()
+- enum Level.State = { EDITING, PLAYING }
+
+
+Parser :
+- factory qui parse un fichier et retourne Level ou null
+méthode qui écrit un Level dans un fichier
+
+
+Doit-on pouvoir augmenter et diminuer la taille de la grille
