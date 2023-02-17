@@ -3,6 +3,8 @@ package fr.uparis.energy.model;
 public class Connector {
     private boolean exists;
 
+    private boolean isPowered;
+
     public boolean exists() {
         return exists;
     }
@@ -18,6 +20,4 @@ public class Connector {
     public void setPowered(boolean powered) {
         isPowered = powered;
     }
-
-    private boolean isPowered;
 }

@@ -17,11 +17,11 @@ public class Board {
 
     }
 
-    public void addRowAtLeft() {
+    public void addColumnAtLeft() {
 
     }
 
-    public void addRowAtRight() {
+    public void addColumnAtRight() {
 
     }
 
@@ -33,11 +33,11 @@ public class Board {
 
     }
 
-    public void removeRowAtLeft() {
+    public void removeColumnAtLeft() {
 
     }
 
-    public void removeRowAtRight() {
+    public void removeColumnAtRight() {
 
     }
 
