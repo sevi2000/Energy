@@ -1,6 +1,7 @@
 package fr.uparis.energy.model;
 
 public class Level {
+
     private final int levelNumber;
     private Board board;
     private State state;
