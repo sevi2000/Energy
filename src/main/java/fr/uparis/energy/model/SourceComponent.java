@@ -1,4 +1,4 @@
-package fr.uparis;
+package fr.uparis.energy.model;
 
 public class SourceComponent extends Component {
     @Override

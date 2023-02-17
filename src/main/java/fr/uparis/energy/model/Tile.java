@@ -1,4 +1,4 @@
-package fr.uparis;
+package fr.uparis.energy.model;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package fr.uparis;
+package fr.uparis.energy.model;
 
 public class LevelConverter {
     public static Level fileToLevel() {

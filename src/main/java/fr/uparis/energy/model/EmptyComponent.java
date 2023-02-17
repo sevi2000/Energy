@@ -1,4 +1,4 @@
-package fr.uparis;
+package fr.uparis.energy.model.energy.model.energy.model;
 
 public class EmptyComponent extends Component {
     @Override
