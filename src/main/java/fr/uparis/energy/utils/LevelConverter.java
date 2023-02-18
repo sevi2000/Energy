@@ -13,7 +13,7 @@ public class LevelConverter {
         return null;
     }
 
-    public static Level fileToLevel(String path) throws IOError, InvalidLevelException {
+    public static Level fileToLevel(String path, Level.State state) throws IOError, InvalidLevelException {
         return null;
     }
 

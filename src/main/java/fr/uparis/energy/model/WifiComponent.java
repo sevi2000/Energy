@@ -7,4 +7,8 @@ public class WifiComponent extends Component {
     public boolean isPowered() {
         return super.isPowered() || isPoweredByAnother;
     }
+
+    public void setPoweredByAnother(boolean state) {
+        this.isPoweredByAnother = state;
+    }
 }
