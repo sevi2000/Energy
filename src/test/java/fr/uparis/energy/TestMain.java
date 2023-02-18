@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import fr.uparis.energy.Main;
 public class TestMain {
     @Test
     public void testSum() {

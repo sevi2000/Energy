@@ -1,11 +1,12 @@
 plugins {
     id 'java'
     id 'jacoco'
+    id 'application'
 }
 
 group 'fr.uparis'
 version '1.0-SNAPSHOT'
-
+mainClassName="fr.uparis.energy.Main"
 repositories {
     mavenCentral()
 }
