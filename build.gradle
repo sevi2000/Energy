@@ -6,7 +6,7 @@ plugins {
 
 group 'fr.uparis.energy'
 version '1.0-SNAPSHOT'
-mainClassName 'fr.uparis.energy.Main'
+mainClassName = 'fr.uparis.energy.Main'
 
 repositories {
     mavenCentral()
