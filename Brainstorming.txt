@@ -1,6 +1,6 @@
 enum Geometry = { SQUARE, HEXAGON }
 
-Board
+Board empty body methods implemented
 - List<List<Tile>> tiles
 - Geometry geometry
 - public Board(int width, int heigth, Geometry geometry) throws InvalidSizeException
@@ -11,7 +11,7 @@ Board
 - private void turnOffEverything()
 - private List<WifiComponent> getWifiComponents()
 
-Tile
+Tile empty body methods implemented
 - List<Connector> connectors = 4 or 6 connectors according to geometry
 - Component component
 - Geometry geometry
@@ -25,13 +25,13 @@ Tile
 - void rotateCounterClockwise(boolean propagateEnergy)
 - void calculatePower() // May be added later
 
-Connector
+Connector empty body methods implemented
 - boolean exists
 - boolean isPowered
 - Tile parentTile?
 - Connector neighbor // null if the connector is facing outside
 
-class Component
+class Component empty body methods implemented
 - protected Tile parentTile
 - public boolean isPowered() // Returns true if one of the connectors is powered
 
@@ -42,12 +42,12 @@ LampComponent
 SourceComponent
 - @Override boolean isPowered() { return true; }
 
-WifiComponent
+WifiComponent implemented empty body methods implemented
 - private boolean isPoweredByAnother
 - @Override boolean isPowered() { return super.isPowered() || isPowerByAnother; }
 
 Level
-- final int levelNumber
+- final int levelNumber implemented empty body methods implemented
 - Board board
 - State levelState
 - enum State = { EDITING, PLAYING }
@@ -56,7 +56,7 @@ Level
 
 ====================
 
-LevelConverter
+LevelConverter implemented empty body methods implemented
 - private static List<Tile> parseLine(String line)
 - factory: public static Level fileToLevel(String path) throws IOException, InvalidLevelException
 - public static void writeLevelToFile(Level level) throws IOException, InvalidLevelException
