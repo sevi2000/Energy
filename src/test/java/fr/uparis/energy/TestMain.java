@@ -1,4 +1,4 @@
-package fr.uparis;
+package fr.uparis.energy;
 
 import org.junit.jupiter.api.Test;
 
