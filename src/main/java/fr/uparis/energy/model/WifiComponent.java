@@ -2,9 +2,9 @@ package fr.uparis.energy.model;
 
 public class WifiComponent extends Component {
 
-    private boolean isPoweredByAnOther;
+    private boolean isPoweredByAnother;
     @Override
     public boolean isPowered() {
-        return super.isPowered() || isPoweredByAnOther;
+        return super.isPowered() || isPoweredByAnother;
     }
 }

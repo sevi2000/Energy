@@ -51,7 +51,7 @@ public class Board {
 
     }
 
-    public void popagateEnergy() {
+    public void propagateEnergy() {
 
     }
 

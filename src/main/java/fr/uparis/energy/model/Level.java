@@ -21,7 +21,7 @@ public class Level {
 
     public boolean start() {
         int i = 0;
-        while (isSolved() || i < 100) {
+        while (isSolved() && i < 100) {
             board.shuffle();
             i++;
         }

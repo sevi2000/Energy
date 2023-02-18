@@ -9,21 +9,21 @@ public class Tile {
     private Board parentBoard;
     private int orientation;
 
-    enum Direction {NORTH, NORTH_EAST, EAST, SOUTH_EAST, SOUTH_WEST, NORTH_WEST};
+    enum Direction {NORTH, NORTH_EAST, EAST, SOUTH_EAST, SOUTH, SOUTH_WEST, WEST, NORTH_WEST};
 
-    public void rotateClockwise() {
+    public Tile(Geometry geometry) {
+
+    }
+    public void rotateClockwise(boolean propagateEnergy) {
+
 
     }
 
-    public void rotateCounterClockwise() {
+    public void rotateCounterClockwise(boolean propagateEnergy) {
 
     }
 
     public void calculatePower() {
-
-    }
-
-    public Tile(Geometry geometry) {
 
     }
 
