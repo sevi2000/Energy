@@ -1,11 +1,13 @@
 package fr.uparis.energy.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
     private List<List<Tile>> tileGrid;
 
-    public Board(int width, int height) {
+    private Geometry geometry;
+    public Board(int width, int height, Geometry geometry) throws InvalidSizeException {
 
     }
 
@@ -47,5 +49,17 @@ public class Board {
 
     public void shuffle() {
 
+    }
+
+    public void popagateEnergy() {
+
+    }
+
+    private void turnOffEverything() {
+
+    }
+
+    private List<WifiComponent> getWifiComponents() {
+        return new ArrayList<>();
     }
 }

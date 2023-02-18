@@ -2,9 +2,10 @@ package fr.uparis.energy.model;
 
 public class Connector {
     private boolean exists;
-
     private boolean isPowered;
+    private Tile parentTile;
 
+    private Connector neighbor;
     public boolean exists() {
         return exists;
     }

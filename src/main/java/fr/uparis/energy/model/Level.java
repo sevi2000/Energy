@@ -19,7 +19,12 @@ public class Level {
         return false;
     }
 
-    public void start() {
-
+    public boolean start() {
+        int i = 0;
+        while (isSolved() || i < 100) {
+            board.shuffle();
+            i++;
+        }
+        return i != 100;
     }
 }
