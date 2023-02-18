@@ -1,42 +1,62 @@
-Board, Tile (avec sous-classes ou enum), Connector, abstract Component, BulbComponent, SourceComponent, WifiComponent, EmptyComponent
+enum Geometry = { SQUARE, HEXAGON }
+enum Direction = { NORTH, NORTH_EAST, EAST, SOUTH_EAST, SOUTH, SOUTH_WEST, WEST, NORTH_WEST }
 
 Board
 - List<List<Tile>> tiles
-- méthodes addRowOnTop addRowAtBottom addColumnAtLeft addColumnAtRight et remove
-- méthode boolean isSolved()
-- void shuffle()
-- public Board(int width, int heigth) throws InvalidSizeException
+- Geometry geometry
+- public Board(int width, int heigth, Geometry geometry) throws InvalidSizeException
+- void addRowOnTop(), addRowAtBottom(), addColumnAtLeft(), addColumnAtRight() & the same for remove
+- boolean isSolved()
+- void shuffle() // Gives a random orientation to each tile and calls propagateEnergy()
+- void propagateEnergy()
+- private void turnOffEverything()
+- private List<WifiComponent> getWifiComponents()
 
 Tile
-- List<Connector> connectors = 4 ou 6 connecteurs
-- Component component = vide, lampe, source ou borne wifi
-- int orientation entre 0 et 3 ou 0 et 5 et méthode rotate() ?
-- méthode calculatePower() : si un des bords ou la source a isPowered à true, alors tous les Connector existants et le Component ont isPowered à true ?
+- List<Connector> connectors = 4 or 6 connectors according to geometry
+- Component component
+- Geometry geometry
+- Board parentBoard
+- int orientation between 0 and 3 or 0 and 5 according to geometry?
+- public Tile(Geometry geometry)
+- void cycleComponent() // Replaces the current component by one of the next type
+- boolean toggleConnectorExists(Direction direction) // Toggles exists for the connector in the specified direction, returns true if the operation succeeded
+- void rotateClockwise(boolean propagateEnergy) // Cycles neighbors for all connectors, then does "for each neighbor, neighbor.setNeighbor(connector)" then calls parentBoard.propagateEnergy() if propagateEnergy is true
+- void rotateCounterClockwise(boolean propagateEnergy)
+- void calculatePower() // May be added later
 
 Connector
 - boolean exists
 - boolean isPowered
-- préciser comment gérer le connecteur sur la tuile adjacente : champ Connector voisin ou boolean isConnected
+- Tile parentTile?
+- Connector neighbor // null if the connector is facing outside
 
-classe abstraite ou interface Component :
-- boolean isPowered
+class Component
+- protected Tile parentTile
+- public boolean isPowered() // Returns true if one of the connectors is powered
 
-EmptyComponent et LampComponent n'ont pas de champ particulier
-SourceComponent renvoie toujours isPowered() à true
+EmptyComponent
 
+LampComponent
 
+SourceComponent
+- @Override boolean isPowered() { return true; }
 
-Level :
-- final int number
+WifiComponent
+- private boolean isPoweredByAnother
+- @Override boolean isPowered() { return super.isPowered() || isPowerByAnother; }
+
+Level
+- final int levelNumber
 - Board board
-- méthode isSolved()
-- méthode void start()
-- enum Level.State = { EDITING, PLAYING }
+- State levelState
+- enum State = { EDITING, PLAYING }
+- boolean isSolved()
+- boolean start() // Shuffles the board up to 100 times to put it a non-solved state, returns true if the board is non-solved at the end
 
+====================
 
-Parser :
-- factory qui parse un fichier et retourne Level ou null
-méthode qui écrit un Level dans un fichier
-
-
-Doit-on pouvoir augmenter et diminuer la taille de la grille
+LevelConverter
+- private static List<Tile> parseLine(String line)
+- factory: public static Level fileToLevel(String path) throws IOException, InvalidLevelException
+- public static void writeLevelToFile(Level level) throws IOException, InvalidLevelException
