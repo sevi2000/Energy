@@ -10,6 +10,7 @@ public class Tile {
     private int orientation;
 
     enum Direction {NORTH, NORTH_EAST, EAST, SOUTH_EAST, SOUTH_WEST, NORTH_WEST};
+
     public void rotateClockwise() {
 
     }
