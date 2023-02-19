@@ -2,7 +2,6 @@ package fr.uparis.energy.utils;
 
 import fr.uparis.energy.model.Level;
 import fr.uparis.energy.model.Tile;
-
 import java.io.IOError;
 import java.io.IOException;
 import java.util.List;
@@ -17,7 +16,5 @@ public class LevelConverter {
         return null;
     }
 
-    public static void writeLevelToFile(Level level) throws IOException, InvalidLevelException {
-
-    }
+    public static void writeLevelToFile(Level level) throws IOException, InvalidLevelException {}
 }

@@ -4,9 +4,7 @@ public class Component {
 
     protected Tile parentTile;
 
-    protected Component() {
-
-    }
+    protected Component() {}
 
     public boolean isPowered() {
         return false;

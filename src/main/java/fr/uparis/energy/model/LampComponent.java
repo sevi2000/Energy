@@ -1,4 +1,3 @@
 package fr.uparis.energy.model;
 
-public class LampComponent extends Component {
-}
+public class LampComponent extends Component {}

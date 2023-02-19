@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'jacoco'
     id 'application'
+    id 'com.diffplug.spotless' version '6.15.0'
 }
 
 group 'fr.uparis.energy'
@@ -13,8 +14,11 @@ repositories {
 }
 
 dependencies {
+
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    implementation("com.diffplug.spotless:spotless-lib:2.35.0")
+    implementation("com.diffplug.spotless:spotless-plugin-gradle:6.15.0")
 }
 
 
@@ -25,5 +29,20 @@ test {
         events "passed", "skipped", "failed"
     }
 
+
     finalizedBy jacocoTestReport // report is always generated after tests run
+}
+
+spotless {
+    java {
+        target fileTree('.') {
+            include '**/*.java'
+            exclude '**/build/**', '**/build-*/**'
+        }
+        toggleOffOn()
+        palantirJavaFormat()
+        removeUnusedImports()
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
 }

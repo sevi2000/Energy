@@ -9,30 +9,28 @@ public class Tile {
     private Board parentBoard;
     private int orientation;
 
-    enum Direction {NORTH, NORTH_EAST, EAST, SOUTH_EAST, SOUTH, SOUTH_WEST, WEST, NORTH_WEST};
+    enum Direction {
+        NORTH,
+        NORTH_EAST,
+        EAST,
+        SOUTH_EAST,
+        SOUTH,
+        SOUTH_WEST,
+        WEST,
+        NORTH_WEST
+    };
 
-    public Tile(Geometry geometry) {
+    public Tile(Geometry geometry) {}
 
-    }
-    public void rotateClockwise(boolean propagateEnergy) {
+    public void rotateClockwise(boolean propagateEnergy) {}
 
+    public void rotateCounterClockwise(boolean propagateEnergy) {}
 
-    }
+    public void calculatePower() {}
 
-    public void rotateCounterClockwise(boolean propagateEnergy) {
-
-    }
-
-    public void calculatePower() {
-
-    }
-
-    public void cycleComponent() {
-
-    }
+    public void cycleComponent() {}
 
     public boolean toggleConnectorExists(Direction direction) {
         return false;
     }
-
 }
