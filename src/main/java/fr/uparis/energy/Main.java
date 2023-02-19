@@ -1,4 +1,4 @@
-package fr.uparis.energy.model;
+package fr.uparis.energy;
 
 public class Main {
     public static void main(String[] args) {
