@@ -1,0 +1,15 @@
+propagateEnergy() {
+    pour chaque tuile contenant une source : tile.propagate()
+    si une borne wifi est alimentée, allumer toutes les bornes wifi
+    pour chaque tuile wifi : tile.propagate()
+}
+
+tile.propagate() {
+    l = liste des voisins connectés non-allumés
+    pour chaque tui de l {
+        tui.allumer()
+    }
+    pour chaque tui de l {
+        tui.propagate()
+    }
+}
