@@ -36,7 +36,7 @@ jobs:
       run: |
            git config user.email "action@github.com"
            git config user.name "GitHubAction"
-           git pull --rebase
+           
            if [[ `git status --porcelain | wc -l` = 0 ]];
            then
             git add -A
