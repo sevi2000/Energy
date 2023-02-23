@@ -32,3 +32,16 @@ jobs:
       uses: gradle/gradle-build-action@v2
       with:
         arguments: build test spotlessApply
+    - name: Push after testing
+      run: |
+           git config user.email "action@github.com"
+           git config user.name "GitHubAction"
+           git pull --rebase
+           if [[ `git status --porcelain | wc -l` = 0 ]];
+           then
+            git add -A
+            git commit -m "Formated code"
+            git push
+           fi
+           
+           
