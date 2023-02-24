@@ -8,7 +8,7 @@ Board empty body methods implemented
 - boolean isSolved()
 - void shuffle() // Gives a random orientation to each tile and calls propagateEnergy()
 - void propagateEnergy()
-- private void turnOffEverything()
+- private void turnOffEverything(): sets isPowered and isPoweredByAnother to false
 - private List<WifiComponent> getWifiComponents()
 
 Tile empty body methods implemented
@@ -17,6 +17,7 @@ Tile empty body methods implemented
 - Geometry geometry
 - Board parentBoard
 - int orientation between 0 and 3 or 0 and 5 according to geometry?
+- boolean isPowered
 - enum Direction = { NORTH, NORTH_EAST, EAST, SOUTH_EAST, SOUTH, SOUTH_WEST, WEST, NORTH_WEST }
 - public Tile(Geometry geometry)
 - void cycleComponent() // Replaces the current component by one of the next type
@@ -24,36 +25,38 @@ Tile empty body methods implemented
 - void rotateClockwise(boolean propagateEnergy) // Cycles neighbors for all connectors, then does "for each neighbor, neighbor.setNeighbor(connector)" then calls parentBoard.propagateEnergy() if propagateEnergy is true
 - void rotateCounterClockwise(boolean propagateEnergy)
 - void calculatePower() // May be added later
+- public void setPowered(boolean powerState)
+- public boolean isPowered():
+  - if contains a source: return true
+  - if contains a wifi: return isPowered || component.isPoweredByAnother()
+  - else: return isPowered
 
 Connector empty body methods implemented
 - boolean exists
-- boolean isPowered
 - Tile parentTile?
 - Connector neighbor // null if the connector is facing outside
 - public Connector(Tile parentTile)
 
-class Component empty body methods implemented
+Component empty body methods implemented
 - protected Tile parentTile
 - protected Component()
-- public boolean isPowered() // Returns true if one of the connectors is powered
 
 EmptyComponent
 
 LampComponent
 
 SourceComponent
-- @Override boolean isPowered() { return true; }
 
 WifiComponent empty body methods implemented
 - private boolean isPoweredByAnother
-- @Override boolean isPowered() { return super.isPowered() || isPowerByAnother; }
+- getter and setter for isPoweredByAnother
 
 Level empty body methods implemented
 - final int levelNumber
 - Board board
 - State levelState
 - enum State = { EDITING, PLAYING }
-- public Level(State state)
+- public Level(int number, Board board, State state)
 - boolean isSolved()
 - boolean start() // Shuffles the board up to 100 times to put it a non-solved state, returns true if the board is non-solved at the end
 
@@ -61,5 +64,6 @@ Level empty body methods implemented
 
 LevelConverter empty body methods implemented
 - private static List<Tile> parseLine(String line)
-- factory: public static Level fileToLevel(String path) throws IOException, InvalidLevelException
+- factory: public static Level fileToLevel(String path) throws IOException, InvalidLevelException:
+  - first creates all tiles and connectors with neighbor == null, then a second pass gives its neighbor to each connector
 - public static void writeLevelToFile(Level level) throws IOException, InvalidLevelException
