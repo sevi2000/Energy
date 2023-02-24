@@ -3,7 +3,7 @@ enum Geometry = { SQUARE, HEXAGON }
 Board empty body methods implemented
 - List<List<Tile>> tiles
 - Geometry geometry
-- public Board(int width, int heigth, Geometry geometry) throws InvalidSizeException
+- public Board(int width, int height, Geometry geometry) throws InvalidSizeException
 - void addRowOnTop(), addRowAtBottom(), addColumnAtLeft(), addColumnAtRight() & the same for remove
 - boolean isSolved()
 - void shuffle() // Gives a random orientation to each tile and calls propagateEnergy()
@@ -30,9 +30,11 @@ Connector empty body methods implemented
 - boolean isPowered
 - Tile parentTile?
 - Connector neighbor // null if the connector is facing outside
+- public Connector(Tile parentTile)
 
 class Component empty body methods implemented
 - protected Tile parentTile
+- protected Component()
 - public boolean isPowered() // Returns true if one of the connectors is powered
 
 EmptyComponent
@@ -42,21 +44,22 @@ LampComponent
 SourceComponent
 - @Override boolean isPowered() { return true; }
 
-WifiComponent implemented empty body methods implemented
+WifiComponent empty body methods implemented
 - private boolean isPoweredByAnother
 - @Override boolean isPowered() { return super.isPowered() || isPowerByAnother; }
 
-Level
-- final int levelNumber implemented empty body methods implemented
+Level empty body methods implemented
+- final int levelNumber
 - Board board
 - State levelState
 - enum State = { EDITING, PLAYING }
+- public Level(State state)
 - boolean isSolved()
 - boolean start() // Shuffles the board up to 100 times to put it a non-solved state, returns true if the board is non-solved at the end
 
 ====================
 
-LevelConverter implemented empty body methods implemented
+LevelConverter empty body methods implemented
 - private static List<Tile> parseLine(String line)
 - factory: public static Level fileToLevel(String path) throws IOException, InvalidLevelException
 - public static void writeLevelToFile(Level level) throws IOException, InvalidLevelException
