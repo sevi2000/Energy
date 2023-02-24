@@ -1,4 +1,5 @@
 propagateEnergy() {
+    éteindre le plateau
     pour chaque tuile contenant une source : tile.propagate()
     si une borne wifi est alimentée, allumer toutes les bornes wifi
     pour chaque tuile wifi : tile.propagate()
