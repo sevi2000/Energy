@@ -35,12 +35,13 @@ jobs:
     - name: Push after testing
       run: |
            git config user.email "action@github.com"
-           git config user.name "GitHubAction"
+           git config user.name "GitHub Action"
            
-           if [[ `git status --porcelain | wc -l` = 0 ]];
-           then
+           echo "This is a GitHub Action"
+           
+           if [ $(git status --porcelain | wc -l) != 0 ]; then
             git add -A
-            git commit -m "Formated code"
+            git commit -m "Formatted code"
             git push
            fi
            
