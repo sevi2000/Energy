@@ -1,0 +1,2 @@
+un seul bord connecté et pas de composant est interdit ; dans le puzzle résolu un bord avec un fil doit être en face d'un autre bord avec un fil -> vérifier toutes les contraintes de fil etc au moment de sauvegarder
+dans la banque 2, le bouton jouer est grisé si le niveau est vide ou toujours gagnant (même si on shuffle 100 fois), on autorise la sauvegarde d'un niveau vide ou toujours gagnant
