@@ -20,9 +20,7 @@ public class Tile {
         NORTH_WEST
     };
 
-    public Tile(Geometry geometry, int[] connectedEdges, String component) {
-
-    }
+    public Tile(Geometry geometry, int[] connectedEdges, String component) {}
 
     public void rotateClockwise(boolean propagateEnergy) {}
 

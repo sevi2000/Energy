@@ -36,14 +36,14 @@ public class LevelConverter {
         List<Tile> tileRow = new ArrayList<Tile>(numberOfColumns);
         while (matcher.find()) {
             String connectedEdges = matcher.group(2).trim();
-            int[] connectedEdgesArray =
-                    Arrays.stream(connectedEdges.split(" ")).mapToInt(Integer::parseInt).toArray();
+            int[] connectedEdgesArray = Arrays.stream(connectedEdges.split(" "))
+                    .mapToInt(Integer::parseInt)
+                    .toArray();
 
             // Check that group 2 contains integers in strictly ascending order
-            if (!isStrictlySorted(connectedEdgesArray))
-                throw new InvalidLevelException();
+            if (!isStrictlySorted(connectedEdgesArray)) throw new InvalidLevelException();
 
-            //Tile tile = new Tile(geometry)
+            // Tile tile = new Tile(geometry)
 
             for (int i = 1; i <= matcher.groupCount(); i++) {
                 System.out.println("Group " + i + ": " + matcher.group(i));
