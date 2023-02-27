@@ -18,6 +18,11 @@ public enum Geometry {
         return Geometry.HEXAGON;
     }
 
+    @Override
+    public String toString() {
+        return super.toString().substring(0, 1);
+    }
+
     public int card() {
         return card[this.ordinal()];
     }

@@ -29,4 +29,13 @@ public class Level {
         }
         return i != 100;
     }
+
+    public int getNumber() {
+        return this.levelNumber;
+    }
+
+    @Override
+    public String toString() {
+        return this.board.toString();
+    }
 }

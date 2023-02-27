@@ -1,6 +1,6 @@
 package fr.uparis.energy.model;
 
-public class Component {
+public abstract class Component {
 
     protected Tile parentTile;
 
@@ -9,4 +9,6 @@ public class Component {
     public boolean isPowered() {
         return false;
     }
+
+    public abstract String toString();
 }

@@ -47,4 +47,21 @@ public class Tile {
     public boolean toggleConnectorExists(Direction direction) {
         return false;
     }
+
+    private String connectorsToString() {
+        String res = "";
+        for (int i = 0; i < connectors.size(); i++) {
+            if (connectors.get(i).exists()) res += i + " ";
+        }
+        return res.trim();
+    }
+
+    @Override
+    public String toString() {
+        String existingConnectorsList = this.connectorsToString();
+        return String.format(
+                existingConnectorsList.length() == 0 ? "%s%s" : "%s %s",
+                this.component.toString(),
+                existingConnectorsList);
+    }
 }

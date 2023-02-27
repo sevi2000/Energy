@@ -12,4 +12,9 @@ public class WifiComponent extends Component {
     public void setPoweredByAnother(boolean state) {
         this.isPoweredByAnother = state;
     }
+
+    @Override
+    public String toString() {
+        return "W";
+    }
 }

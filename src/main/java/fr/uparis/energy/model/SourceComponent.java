@@ -5,4 +5,9 @@ public class SourceComponent extends Component {
     public boolean isPowered() {
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "S";
+    }
 }
