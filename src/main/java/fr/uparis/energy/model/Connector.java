@@ -7,8 +7,9 @@ public class Connector {
 
     private Connector neighbor;
 
-    public Connector(Tile parentTile) {
+    public Connector(Tile parentTile, boolean exists) {
         this.parentTile = parentTile;
+        this.exists = exists;
     }
 
     public boolean exists() {

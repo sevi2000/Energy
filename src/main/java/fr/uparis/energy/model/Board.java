@@ -12,7 +12,9 @@ public class Board {
 
     public void addRowOnTop() {}
 
-    public void addRowAtBottom() {}
+    public void addRowAtBottom(List<Tile> row) {
+        tileGrid.add(row);
+    }
 
     public void addColumnAtLeft() {}
 

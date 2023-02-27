@@ -1,5 +1,6 @@
 package fr.uparis.energy.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Tile {
@@ -20,7 +21,20 @@ public class Tile {
         NORTH_WEST
     };
 
-    public Tile(Geometry geometry, int[] connectedEdges, String component) {}
+    public Tile(Geometry geometry, boolean[] connectedEdges, String component) {
+        this.geometry = geometry;
+        switch (component) {
+            case "L" -> this.component = new LampComponent();
+            case "W" -> this.component = new WifiComponent();
+            case "." -> this.component = new EmptyComponent();
+            case "S" -> this.component = new SourceComponent();
+        }
+
+        connectors = new ArrayList<>();
+        for (int i = 0; i < geometry.card(); i++) {
+            connectors.add(new Connector(this, connectedEdges[i]));
+        }
+    }
 
     public void rotateClockwise(boolean propagateEnergy) {}
 

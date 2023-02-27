@@ -11,9 +11,10 @@ public class Level {
         PLAYING
     }
 
-    public Level(State state) {
-        this.levelNumber = -1;
+    public Level(int levelNumber, State state, Board board) {
+        this.levelNumber = levelNumber;
         this.state = state;
+        this.board = board;
     }
 
     public boolean isSolved() {
