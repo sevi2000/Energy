@@ -124,7 +124,7 @@ public class LevelConverter {
      * @throws IOException if file opening goes wrong
      * @throws InvalidSizeException if the line length does not fit with the board size
      */
-    public static Level fileToLevel(String path, Level.State state)
+    public static Level fileToLevel(URL path, Level.State state)
             throws IOError, InvalidLevelException, IOException, InvalidSizeException {
         URI uri = null;
         try {
@@ -156,5 +156,7 @@ public class LevelConverter {
      * @throws IOException if file opening goes wrong
      * @throws InvalidLevelException if the level is not correct
      */
-    public static void writeLevelToFile(Level level) throws IOException, InvalidLevelException {}
+    public static void writeLevelToFile(Level level) throws IOException, InvalidLevelException {
+        Files.writeString(Path.of("/tmp/level" + level.getNumber() + ".nrg"), level.toString(), StandardCharsets.UTF_8);
+    }
 }
