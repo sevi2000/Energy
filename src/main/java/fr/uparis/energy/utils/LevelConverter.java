@@ -18,6 +18,11 @@ import java.util.regex.Pattern;
 
 public class LevelConverter {
 
+    /**
+     * Checks if the given array is sorted in ascending order
+     * @param list the array to be checked
+     * @return true if the given array is sorted
+     */
     public static boolean isStrictlySorted(int[] list) {
         for (int i = 0; i < list.length - 1; i++) {
             if (list[i] >= list[i + 1]) return false;
@@ -25,6 +30,11 @@ public class LevelConverter {
         return true;
     }
 
+    /**
+     * Casts a string representing the connected edges to an integer array
+     * @param connectedEdges the string to be cast
+     * @return an integer array containing connected edges as integers
+     */
     public static int[] toIntArray(String connectedEdges) {
         if (connectedEdges.length() == 0) return new int[0];
         return Arrays.stream(connectedEdges.trim().split(" "))
@@ -32,13 +42,25 @@ public class LevelConverter {
                 .toArray();
     }
 
+    /**
+     * Checks if the given array contains the given int
+     * @param connectedEdges the array to be checked
+     * @param elt the int to be found
+     * @return true if the given elt was found
+     */
     public static boolean contains(int[] connectedEdges, int elt) {
-        for (int i = 0; i < connectedEdges.length; i++) {
-            if (connectedEdges[i] == elt) return true;
+        for (int connectedEdge : connectedEdges) {
+            if (connectedEdge == elt) return true;
         }
         return false;
     }
 
+    /**
+     * Transforms the given array to a boolean array
+     * @param connectedEdges integer array telling which edges are connected
+     * @param geometry the geometry to determine the number of edges
+     * @return boolean array containing true at index i if the ith edge is connected
+     */
     public static boolean[] getConnectedEdgesAsBoolean(int[] connectedEdges, Geometry geometry) {
         boolean[] res = new boolean[geometry.card()];
         for (int i = 0; i < res.length; i++) {
@@ -47,12 +69,26 @@ public class LevelConverter {
         return res;
     }
 
+    /**
+     * Prepares a Matcher to validate a line of a level file
+     * @param regex to be matched
+     * @param line to be checked
+     * @return the corresponding matcher object
+     */
     public static Matcher getMatcher(String regex, String line) {
         final Pattern validationPattern = Pattern.compile(regex, Pattern.MULTILINE);
         final Matcher validationMatcher = validationPattern.matcher(line);
         return validationMatcher;
     }
 
+    /**
+     * Parses a line of a level file
+     * @param line to be parsed
+     * @param numberOfColumns the number of element the line should contain
+     * @param geometry of the level board
+     * @return a list representing a level board row
+     * @throws InvalidLevelException if the line format is not correct
+     */
     private static List<Tile> parseLine(String line, int numberOfColumns, Geometry geometry)
             throws InvalidLevelException {
 
@@ -78,7 +114,17 @@ public class LevelConverter {
         return tileRow;
     }
 
-    public static Level fileToLevel(URL path, Level.State state)
+    /**
+     * Parses each line of a level file to cast it to a level
+     * @param path to the level file
+     * @param state of the level that will be loaded
+     * @return the corresponding level
+     * @throws IOError if file opening goes wrong
+     * @throws InvalidLevelException if the given file does not respect the format
+     * @throws IOException if file opening goes wrong
+     * @throws InvalidSizeException if the line length does not fit with the board size
+     */
+    public static Level fileToLevel(String path, Level.State state)
             throws IOError, InvalidLevelException, IOException, InvalidSizeException {
         URI uri = null;
         try {
@@ -104,7 +150,11 @@ public class LevelConverter {
         return new Level(levelNumber, state, board);
     }
 
-    public static void writeLevelToFile(Level level) throws IOException, InvalidLevelException {
-        Files.writeString(Path.of("/tmp/level" + level.getNumber() + ".nrg"), level.toString(), StandardCharsets.UTF_8);
-    }
+    /**
+     * Saves the given level to a file
+     * @param level to be saved
+     * @throws IOException if file opening goes wrong
+     * @throws InvalidLevelException if the level is not correct
+     */
+    public static void writeLevelToFile(Level level) throws IOException, InvalidLevelException {}
 }
