@@ -76,22 +76,45 @@ public class Board {
                 Tile t = tileGrid.get(i).get(j);
                 Map<Connector, Tile.Direction> existingConnectors = t.getExistingConnectors();
                 for (Connector c : existingConnectors.keySet()) {
-                    Connector neighbor =
-                            switch (existingConnectors.get(c)) {
-                                case NORTH -> tileGrid.get(i - 1).get(j).getConnector(Tile.Direction.SOUTH);
-                                case NORTH_EAST -> null;
-                                case EAST -> null;
-                                case SOUTH_EAST -> null;
-                                case SOUTH -> tileGrid.get(i + 1).get(j).getConnector(Tile.Direction.NORTH);
-                                case SOUTH_WEST -> null;
-                                case WEST -> null;
-                                case NORTH_WEST -> null;
-                            };
-                    if (existingConnectors.get(c) == Tile.Direction.NORTH) {
-                        c.setNeighbor(tileGrid.get(i - 1).get(j).getConnector(Tile.Direction.SOUTH));
-                    } else if (existingConnectors.get(c) == Tile.Direction.SOUTH) {
-                        c.setNeighbor(tileGrid.get(i + 1).get(j).getConnector(Tile.Direction.NORTH));
+                    Connector neighbor = null;
+                    try {
+                        switch (existingConnectors.get(c)) {
+                            case NORTH -> neighbor = tileGrid.get(i - 1).get(j).getConnector(Tile.Direction.SOUTH);
+                            case NORTH_EAST -> {
+                                if (j % 2 == 0) {
+                                    neighbor = tileGrid.get(i - 1).get(j + 1).getConnector(Tile.Direction.SOUTH_WEST);
+                                } else {
+                                    neighbor = tileGrid.get(i).get(j + 1).getConnector(Tile.Direction.SOUTH_WEST);
+                                }
+                            }
+                            case EAST -> neighbor = tileGrid.get(i).get(j + 1).getConnector(Tile.Direction.WEST);
+                            case SOUTH_EAST -> {
+                                if (j % 2 == 0) {
+                                    neighbor = tileGrid.get(i).get(j + 1).getConnector(Tile.Direction.NORTH_WEST);
+                                } else {
+                                    neighbor = tileGrid.get(i + 1).get(j + 1).getConnector(Tile.Direction.NORTH_WEST);
+                                }
+                            }
+                            case SOUTH -> neighbor = tileGrid.get(i + 1).get(j).getConnector(Tile.Direction.NORTH);
+                            case SOUTH_WEST -> {
+                                if (j % 2 == 0) {
+                                    neighbor = tileGrid.get(i).get(j - 1).getConnector(Tile.Direction.NORTH_EAST);
+                                } else {
+                                    neighbor = tileGrid.get(i + 1).get(j - 1).getConnector(Tile.Direction.NORTH_EAST);
+                                }
+                            }
+                            case WEST -> neighbor = tileGrid.get(i).get(j - 1).getConnector(Tile.Direction.EAST);
+                            case NORTH_WEST -> {
+                                if (j % 2 == 0) {
+                                    neighbor = tileGrid.get(i - 1).get(j - 1).getConnector(Tile.Direction.SOUTH_EAST);
+                                } else {
+                                    neighbor = tileGrid.get(i).get(j - 1).getConnector(Tile.Direction.SOUTH_EAST);
+                                }
+                            }
+                        }
+                    } catch (IndexOutOfBoundsException e) {
                     }
+                    c.setNeighbor(neighbor);
                 }
             }
         }

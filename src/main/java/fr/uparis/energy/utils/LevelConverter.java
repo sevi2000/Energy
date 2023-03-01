@@ -147,6 +147,7 @@ public class LevelConverter {
             board.addRowAtBottom(parseLine(line, width, geometry));
         }
         int levelNumber = Integer.parseInt(f.getName().split("\\.")[0].substring(5, 6));
+        board.initNeighbors();
         return new Level(levelNumber, state, board);
     }
 

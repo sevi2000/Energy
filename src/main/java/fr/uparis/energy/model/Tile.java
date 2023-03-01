@@ -41,6 +41,7 @@ public class Tile {
                     case 3 -> WEST;
                     default -> throw new IllegalStateException("Unexpected value: " + index);};
             }
+            return res;
         }
 
         int getIndex(Geometry geom) {

@@ -28,7 +28,7 @@ public class TestLevelConverter {
     @Test
     public void testReadFromAndWriteToFile()
             throws URISyntaxException, IOException, InvalidSizeException, InvalidLevelException {
-        URI levelLocation =git
+        URI levelLocation =
                 getClass().getClassLoader().getResource("levels/level11.nrg").toURI();
         Level l = LevelConverter.fileToLevel(levelLocation.toURL(), Level.State.EDITING);
         assertEquals(new String(Files.readAllBytes(Path.of(levelLocation)), StandardCharsets.UTF_8), l.toString());
