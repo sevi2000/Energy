@@ -62,7 +62,7 @@ Level empty body methods implemented
 
 ====================
 
-LevelConverter empty body methods implemented
+LevelConverter - Implementation complete
 - private static List<Tile> parseLine(String line)
 - factory: public static Level fileToLevel(String path) throws IOException, InvalidLevelException:
   - first creates all tiles and connectors with neighbor == null, then a second pass gives its neighbor to each connector
