@@ -2,6 +2,7 @@ package fr.uparis.energy.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Board {
     private List<List<Tile>> tileGrid;
@@ -67,6 +68,33 @@ public class Board {
             ret = ret + "\n";
         }
         return ret;
+    }
+
+    public void initNeighbors() {
+        for (int i = 0; i < this.height; i++) {
+            for (int j = 0; j < this.width; j++) {
+                Tile t = tileGrid.get(i).get(j);
+                Map<Connector, Tile.Direction> existingConnectors = t.getExistingConnectors();
+                for (Connector c : existingConnectors.keySet()) {
+                    Connector neighbor =
+                            switch (existingConnectors.get(c)) {
+                                case NORTH -> tileGrid.get(i - 1).get(j).getConnector(Tile.Direction.SOUTH);
+                                case NORTH_EAST -> null;
+                                case EAST -> null;
+                                case SOUTH_EAST -> null;
+                                case SOUTH -> tileGrid.get(i + 1).get(j).getConnector(Tile.Direction.NORTH);
+                                case SOUTH_WEST -> null;
+                                case WEST -> null;
+                                case NORTH_WEST -> null;
+                            };
+                    if (existingConnectors.get(c) == Tile.Direction.NORTH) {
+                        c.setNeighbor(tileGrid.get(i - 1).get(j).getConnector(Tile.Direction.SOUTH));
+                    } else if (existingConnectors.get(c) == Tile.Direction.SOUTH) {
+                        c.setNeighbor(tileGrid.get(i + 1).get(j).getConnector(Tile.Direction.NORTH));
+                    }
+                }
+            }
+        }
     }
 
     @Override

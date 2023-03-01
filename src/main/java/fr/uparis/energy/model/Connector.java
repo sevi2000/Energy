@@ -27,4 +27,12 @@ public class Connector {
     public void setPowered(boolean powered) {
         isPowered = powered;
     }
+
+    public void setParentTile(Tile t) {
+        this.parentTile = t;
+    }
+
+    public void setNeighbor(Connector c) {
+        this.neighbor = c;
+    }
 }
