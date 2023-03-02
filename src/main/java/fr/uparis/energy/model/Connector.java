@@ -1,44 +1,56 @@
 package fr.uparis.energy.model;
 
+/**
+ * Represents a connector held by a Tile.
+ */
 public class Connector {
     private boolean exists;
-    // private boolean isPowered;
     private final Tile parentTile;
 
     private Direction direction;
 
     private Connector neighbor;
 
+    /**
+     * Builds a Connector with the given specification.
+     * @param parentTile on which this connector is
+     * @param exists if this connector represents a wire
+     * @param direction side on which the connector is
+     */
     public Connector(Tile parentTile, boolean exists, Direction direction) {
         this.parentTile = parentTile;
         this.exists = exists;
         this.direction = direction;
     }
 
+    /**
+     * Checks if this connector exists. It means if we can pass energy through it.
+     * @return true if it exists.
+     */
     public boolean exists() {
         return exists;
     }
 
+    /**
+     * Existance setter
+     * @param exists value to set.
+     */
     public void setExists(boolean exists) {
         this.exists = exists;
     }
 
-    // public boolean isPowered() {
-    // return isPowered;
-    // }
-
-    // public void setPowered(boolean powered) {
-    // isPowered = powered;
-    // }
-
-    /*public void setParentTile(Tile t) {
-        this.parentTile = t;
-    }*/
-
+    /**
+     * Neighbor setter.
+     * @param c to connect to.
+     */
     public void setNeighbor(Connector c) {
         this.neighbor = c;
     }
 
+    /**
+     * Direction getter.
+     * @return the direction of this connector according to its parentTile.
+     */
     public Direction getDirection() {
         return this.direction;
     }

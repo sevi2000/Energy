@@ -16,6 +16,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Utils class to store and retrieve a level from a file.
+ */
 public class LevelConverter {
 
     /**
@@ -47,8 +50,8 @@ public class LevelConverter {
     /**
      * Checks if the given array contains the given int
      *
-     * @param connectedEdges the array to be checked
-     * @param elt the int to be found
+     * @param array the array to be checked
+     * @param element the int to be found
      * @return true if the given elt was found
      */
     public static boolean contains(int[] array, int element) {
@@ -170,7 +173,6 @@ public class LevelConverter {
      *
      * @param level to be saved
      * @throws IOException if file opening goes wrong
-     * @throws InvalidLevelException if the level is not correct
      */
     public static void writeLevelToFile(Level level) throws IOException {
         String energyDirectory = System.getProperty("user.home") + System.getProperty("file.separator") + ".energy";
