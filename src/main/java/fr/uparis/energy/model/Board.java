@@ -26,9 +26,11 @@ public class Board {
 
     public void addRowOnTop() {}
 
-    public void setRow(int lineNumber, List<Tile> row) throws InvalidSizeException {
+    public void setRow(int lineNumber, List<Tile> row, boolean setNeighbors) throws InvalidSizeException {
         if (this.getWidth() != row.size()) throw new InvalidSizeException();
         tileGrid.set(lineNumber, row);
+
+        if (setNeighbors) this.setNeighbors();
     }
 
     public void addRowAtBottom() {}

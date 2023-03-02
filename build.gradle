@@ -41,6 +41,7 @@ spotless {
         }
         toggleOffOn()
         palantirJavaFormat()
+        //googleJavaFormat()
         removeUnusedImports()
         trimTrailingWhitespace()
         endWithNewline()

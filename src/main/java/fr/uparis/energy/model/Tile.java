@@ -78,6 +78,7 @@ public class Tile {
 
     /**
      * Gives the right index of the connector depending on geometry
+     *
      * @param dir the requested connector direction
      * @return the corresponding connector
      */

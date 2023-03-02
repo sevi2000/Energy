@@ -20,6 +20,7 @@ public class LevelConverter {
 
     /**
      * Checks if the given array is sorted in ascending order
+     *
      * @param list the array to be checked
      * @return true if the given array is sorted
      */
@@ -32,6 +33,7 @@ public class LevelConverter {
 
     /**
      * Casts a string representing the connected edges to an integer array
+     *
      * @param connectedEdges the string to be cast
      * @return an integer array containing connected edges as integers
      */
@@ -44,6 +46,7 @@ public class LevelConverter {
 
     /**
      * Checks if the given array contains the given int
+     *
      * @param connectedEdges the array to be checked
      * @param elt the int to be found
      * @return true if the given elt was found
@@ -57,6 +60,7 @@ public class LevelConverter {
 
     /**
      * Transforms the given array to a boolean array
+     *
      * @param connectedEdges integer array telling which edges are connected
      * @param geometry the geometry to determine the number of edges
      * @return boolean array containing true at index i if the ith edge is connected
@@ -71,6 +75,7 @@ public class LevelConverter {
 
     /**
      * Prepares a Matcher to validate a line of a level file
+     *
      * @param regex to be matched
      * @param line to be checked
      * @return the corresponding matcher object
@@ -82,6 +87,7 @@ public class LevelConverter {
 
     /**
      * Parses a line of a level file
+     *
      * @param line to be parsed
      * @param numberOfColumns the number of element the line should contain
      * @param geometry of the level board
@@ -116,6 +122,7 @@ public class LevelConverter {
 
     /**
      * Parses each line of a level file to cast it to a level
+     *
      * @param path to the level file
      * @param state of the level that will be loaded
      * @return the corresponding level
@@ -147,8 +154,9 @@ public class LevelConverter {
         Board board = new Board(width, height, geometry);
         List<String> lines = content.subList(1, content.size());
         for (int i = 0; i < lines.size(); i++) {
-            board.setRow(i, parseLine(lines.get(i), width, geometry));
+            board.setRow(i, parseLine(lines.get(i), width, geometry), false);
         }
+        board.setNeighbors();
 
         Matcher levelNumberMatcher = getMatcher("^level([0-9]+)\\.nrg$", f.getName());
         if (!levelNumberMatcher.find()) throw new IllegalArgumentException();
@@ -159,6 +167,7 @@ public class LevelConverter {
 
     /**
      * Saves the given level to a file
+     *
      * @param level to be saved
      * @throws IOException if file opening goes wrong
      * @throws InvalidLevelException if the level is not correct
