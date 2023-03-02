@@ -12,6 +12,6 @@ public class Main {
     public static void main(String[] args) throws InvalidSizeException, IOException, InvalidLevelException {
         Level l = LevelConverter.fileToLevel(
                 Main.class.getClassLoader().getResource("levels/level3.nrg"), Level.State.PLAYING);
-        LevelConverter.writeLevelToFile(l);
+        // LevelConverter.writeLevelToFile(l);
     }
 }

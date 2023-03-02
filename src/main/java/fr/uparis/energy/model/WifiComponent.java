@@ -4,10 +4,10 @@ public class WifiComponent extends Component {
 
     private boolean isPoweredByAnother;
 
-    @Override
+    /*@Override
     public boolean isPowered() {
         return super.isPowered() || isPoweredByAnother;
-    }
+    }*/
 
     public void setPoweredByAnother(boolean state) {
         this.isPoweredByAnother = state;

@@ -48,9 +48,9 @@ public class LevelConverter {
      * @param elt the int to be found
      * @return true if the given elt was found
      */
-    public static boolean contains(int[] connectedEdges, int elt) {
-        for (int connectedEdge : connectedEdges) {
-            if (connectedEdge == elt) return true;
+    public static boolean contains(int[] array, int element) {
+        for (int e : array) {
+            if (e == element) return true;
         }
         return false;
     }
@@ -76,9 +76,8 @@ public class LevelConverter {
      * @return the corresponding matcher object
      */
     public static Matcher getMatcher(String regex, String line) {
-        final Pattern validationPattern = Pattern.compile(regex, Pattern.MULTILINE);
-        final Matcher validationMatcher = validationPattern.matcher(line);
-        return validationMatcher;
+        final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
+        return pattern.matcher(line);
     }
 
     /**
@@ -104,6 +103,7 @@ public class LevelConverter {
         while (matcher.find()) {
             String connectedEdges = matcher.group(2).trim();
             int[] connectedEdgesArray = toIntArray(connectedEdges);
+
             // Check that group 2 contains integers in strictly ascending order
             if (!isStrictlySorted(connectedEdgesArray)) throw new InvalidLevelException();
 
@@ -125,7 +125,7 @@ public class LevelConverter {
      * @throws InvalidSizeException if the line length does not fit with the board size
      */
     public static Level fileToLevel(URL path, Level.State state)
-            throws IOError, InvalidLevelException, IOException, InvalidSizeException {
+            throws InvalidLevelException, IOException, InvalidSizeException {
         URI uri = null;
         try {
             uri = path.toURI();
@@ -134,6 +134,8 @@ public class LevelConverter {
         }
         File f = new File(uri);
         List<String> content = Files.readAllLines(Path.of(uri));
+
+        // Parse the first line
         String[] config = content.get(0).trim().split(" ");
         int width = Integer.parseInt(config[1]);
         int height = Integer.parseInt(config[0]);
@@ -143,11 +145,15 @@ public class LevelConverter {
         if (content.size() - 1 != height) throw new InvalidLevelException();
 
         Board board = new Board(width, height, geometry);
-        for (String line : content.subList(1, content.size())) {
-            board.addRowAtBottom(parseLine(line, width, geometry));
+        List<String> lines = content.subList(1, content.size());
+        for (int i = 0; i < lines.size(); i++) {
+            board.setRow(i, parseLine(lines.get(i), width, geometry));
         }
-        int levelNumber = Integer.parseInt(f.getName().split("\\.")[0].substring(5, 6));
-        board.initNeighbors();
+
+        Matcher levelNumberMatcher = getMatcher("^level([0-9]+)\\.nrg$", f.getName());
+        if (!levelNumberMatcher.find()) throw new IllegalArgumentException();
+        int levelNumber = Integer.parseInt(levelNumberMatcher.group(1));
+
         return new Level(levelNumber, state, board);
     }
 
@@ -157,7 +163,13 @@ public class LevelConverter {
      * @throws IOException if file opening goes wrong
      * @throws InvalidLevelException if the level is not correct
      */
-    public static void writeLevelToFile(Level level) throws IOException, InvalidLevelException {
-        Files.writeString(Path.of("/tmp/level" + level.getNumber() + ".nrg"), level.toString(), StandardCharsets.UTF_8);
+    public static void writeLevelToFile(Level level) throws IOException {
+        String energyDirectory = System.getProperty("user.home") + System.getProperty("file.separator") + ".energy";
+        File directory = new File(energyDirectory);
+        directory.mkdir();
+        Files.writeString(
+                Path.of(energyDirectory + System.getProperty("file.separator") + "level" + level.getNumber() + ".nrg"),
+                level.toString(),
+                StandardCharsets.UTF_8);
     }
 }

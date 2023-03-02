@@ -1,99 +1,39 @@
 package fr.uparis.energy.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Tile {
-    private List<Connector> connectors;
+    private final List<Connector> connectors = new ArrayList<>();
     private Component component;
-    private Geometry geometry;
-    private Board parentBoard;
-    private int orientation;
-
-    enum Direction {
-        NORTH,
-        NORTH_EAST,
-        EAST,
-        SOUTH_EAST,
-        SOUTH,
-        SOUTH_WEST,
-        WEST,
-        NORTH_WEST;
-
-        static Direction getFromIndex(Geometry geometry, int index) {
-            Direction res = null;
-            switch (geometry) {
-                case HEXAGON -> res = switch (index) {
-                    case 0 -> NORTH;
-                    case 1 -> NORTH_EAST;
-                    case 2 -> SOUTH_EAST;
-                    case 3 -> SOUTH;
-                    case 4 -> SOUTH_WEST;
-                    case 5 -> NORTH_WEST;
-                    default -> throw new IllegalStateException("Unexpected value: " + index);};
-
-                case SQUARE -> res = switch (index) {
-                    case 0 -> NORTH;
-                    case 1 -> EAST;
-                    case 2 -> SOUTH;
-                    case 3 -> WEST;
-                    default -> throw new IllegalStateException("Unexpected value: " + index);};
-            }
-            return res;
-        }
-
-        int getIndex(Geometry geom) {
-            int res = -1;
-            switch (geom) {
-                case SQUARE -> res = switch (this) {
-                    case NORTH -> 0;
-                    case EAST -> 1;
-                    case SOUTH -> 2;
-                    case WEST -> 3;
-                    default -> -1;};
-
-                case HEXAGON -> res = switch (this) {
-                    case NORTH -> 0;
-                    case NORTH_EAST -> 1;
-                    case SOUTH_EAST -> 2;
-                    case SOUTH -> 3;
-                    case SOUTH_WEST -> 4;
-                    case NORTH_WEST -> 5;
-                    default -> -1;};
-            }
-            return res;
-        }
-
-        public Direction getOpposite() {
-            Direction res =
-                    switch (this) {
-                        case NORTH -> SOUTH;
-                        case NORTH_EAST -> SOUTH_WEST;
-                        case EAST -> WEST;
-                        case SOUTH_EAST -> NORTH_WEST;
-                        case SOUTH -> NORTH;
-                        case SOUTH_WEST -> NORTH_EAST;
-                        case WEST -> EAST;
-                        case NORTH_WEST -> SOUTH_EAST;
-                    };
-            return res;
-        }
-    }
+    private final Geometry geometry;
+    // private Board parentBoard;
+    // private int orientation;
 
     public Tile(Geometry geometry, boolean[] connectedEdges, String component) {
         this.geometry = geometry;
-        switch (component) {
-            case "L" -> this.component = new LampComponent();
-            case "W" -> this.component = new WifiComponent();
-            case "." -> this.component = new EmptyComponent();
-            case "S" -> this.component = new SourceComponent();
-        }
 
-        connectors = new ArrayList<>();
+        this.component = switch (component) {
+            case "L" -> new LampComponent();
+            case "W" -> new WifiComponent();
+            case "." -> new EmptyComponent();
+            case "S" -> new SourceComponent();
+            default -> throw new IllegalArgumentException();};
+
+        // connectors = new ArrayList<>();
         for (int i = 0; i < geometry.card(); i++) {
-            connectors.add(new Connector(this, connectedEdges[i]));
+            connectors.add(new Connector(this, connectedEdges[i], geometry.getDirections()[i]));
+        }
+    }
+
+    public Tile(Geometry geometry) {
+        this.geometry = geometry;
+
+        this.component = new EmptyComponent();
+
+        // connectors = new ArrayList<>();
+        for (int i = 0; i < geometry.card(); i++) {
+            connectors.add(new Connector(this, false, geometry.getDirections()[i]));
         }
     }
 
@@ -101,13 +41,13 @@ public class Tile {
 
     public void rotateCounterClockwise(boolean propagateEnergy) {}
 
-    public void calculatePower() {}
+    // public void calculatePower() {}
 
     public void cycleComponent() {}
 
-    public boolean toggleConnectorExists(Direction direction) {
+    /*public boolean toggleConnectorExists(Direction direction) {
         return false;
-    }
+    }*/
 
     private String connectorsToString() {
         String res = "";
@@ -126,7 +66,7 @@ public class Tile {
                 existingConnectorsList);
     }
 
-    public Map<Connector, Direction> getExistingConnectors() {
+    /*public Map<Connector, Direction> getExistingConnectors() {
         HashMap<Connector, Direction> existingConnectors = new HashMap<>();
         for (Connector c : this.connectors) {
             if (c.exists()) {
@@ -134,14 +74,20 @@ public class Tile {
             }
         }
         return existingConnectors;
-    }
+    }*/
 
     /**
      * Gives the right index of the connector depending on geometry
      * @param dir the requested connector direction
      * @return the corresponding connector
      */
-    public Connector getConnector(Direction dir) {
-        return this.connectors.get(dir.getIndex(this.geometry));
+    public Connector getConnector(Direction direction) {
+        for (Connector c : connectors) if (c.getDirection() == direction) return c;
+        throw new IllegalArgumentException();
+        // return this.connectors.get(direction.getIndex(this.geometry));
+    }
+
+    public List<Connector> getConnectors() {
+        return this.connectors;
     }
 }

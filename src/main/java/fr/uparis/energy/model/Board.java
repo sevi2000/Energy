@@ -2,31 +2,36 @@ package fr.uparis.energy.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Board {
-    private List<List<Tile>> tileGrid;
+    private final List<List<Tile>> tileGrid;
 
-    private Geometry geometry;
+    private final Geometry geometry;
 
-    private int width;
+    // private int width;
 
-    private int height;
+    // private int height;
 
     public Board(int width, int height, Geometry geometry) throws InvalidSizeException {
         if (width <= 0 || height <= 0) throw new InvalidSizeException();
-        this.width = width;
-        this.height = height;
+        // this.width = width;
+        // this.height = height;
         this.geometry = geometry;
-        this.tileGrid = new ArrayList<>();
+        this.tileGrid = new ArrayList<>(height);
+        for (int i = 0; i < height; i++) this.tileGrid.add(new ArrayList<>(width));
+
+        for (int i = 0; i < height; i++)
+            for (int j = 0; j < width; j++) tileGrid.get(i).add(new Tile(this.geometry));
     }
 
     public void addRowOnTop() {}
 
-    public void addRowAtBottom(List<Tile> row) throws InvalidSizeException {
-        if (this.width != row.size()) throw new InvalidSizeException();
-        tileGrid.add(row);
+    public void setRow(int lineNumber, List<Tile> row) throws InvalidSizeException {
+        if (this.getWidth() != row.size()) throw new InvalidSizeException();
+        tileGrid.set(lineNumber, row);
     }
+
+    public void addRowAtBottom() {}
 
     public void addColumnAtLeft() {}
 
@@ -55,14 +60,13 @@ public class Board {
     }
 
     private String config() {
-        return String.format(
-                "%d %d %s", this.tileGrid.size(), this.tileGrid.get(0).size(), geometry.toString());
+        return String.format("%d %d %s", this.getHeight(), this.getWidth(), geometry.toString());
     }
 
     private String tileGridToString() {
         String ret = "";
-        for (int h = 0; h < this.height; h++) {
-            for (int w = 0; w < this.width; w++) {
+        for (int h = 0; h < this.getHeight(); h++) {
+            for (int w = 0; w < this.getWidth(); w++) {
                 ret = ret + tileGrid.get(h).get(w).toString() + " ";
             }
             ret = ret + "\n";
@@ -70,58 +74,33 @@ public class Board {
         return ret;
     }
 
-    public void initNeighbors() {
-        for (int i = 0; i < this.height; i++) {
-            for (int j = 0; j < this.width; j++) {
+    @Override
+    public String toString() {
+        return this.config() + "\n" + this.tileGridToString();
+    }
+
+    public void setNeighbors() {
+        for (int i = 0; i < this.getHeight(); i++) {
+            for (int j = 0; j < this.getWidth(); j++) {
                 Tile t = tileGrid.get(i).get(j);
-                Map<Connector, Tile.Direction> existingConnectors = t.getExistingConnectors();
-                for (Connector c : existingConnectors.keySet()) {
-                    Connector neighbor = null;
+                for (Connector c : t.getConnectors()) {
                     try {
-                        switch (existingConnectors.get(c)) {
-                            case NORTH -> neighbor = tileGrid.get(i - 1).get(j).getConnector(Tile.Direction.SOUTH);
-                            case NORTH_EAST -> {
-                                if (j % 2 == 0) {
-                                    neighbor = tileGrid.get(i - 1).get(j + 1).getConnector(Tile.Direction.SOUTH_WEST);
-                                } else {
-                                    neighbor = tileGrid.get(i).get(j + 1).getConnector(Tile.Direction.SOUTH_WEST);
-                                }
-                            }
-                            case EAST -> neighbor = tileGrid.get(i).get(j + 1).getConnector(Tile.Direction.WEST);
-                            case SOUTH_EAST -> {
-                                if (j % 2 == 0) {
-                                    neighbor = tileGrid.get(i).get(j + 1).getConnector(Tile.Direction.NORTH_WEST);
-                                } else {
-                                    neighbor = tileGrid.get(i + 1).get(j + 1).getConnector(Tile.Direction.NORTH_WEST);
-                                }
-                            }
-                            case SOUTH -> neighbor = tileGrid.get(i + 1).get(j).getConnector(Tile.Direction.NORTH);
-                            case SOUTH_WEST -> {
-                                if (j % 2 == 0) {
-                                    neighbor = tileGrid.get(i).get(j - 1).getConnector(Tile.Direction.NORTH_EAST);
-                                } else {
-                                    neighbor = tileGrid.get(i + 1).get(j - 1).getConnector(Tile.Direction.NORTH_EAST);
-                                }
-                            }
-                            case WEST -> neighbor = tileGrid.get(i).get(j - 1).getConnector(Tile.Direction.EAST);
-                            case NORTH_WEST -> {
-                                if (j % 2 == 0) {
-                                    neighbor = tileGrid.get(i - 1).get(j - 1).getConnector(Tile.Direction.SOUTH_EAST);
-                                } else {
-                                    neighbor = tileGrid.get(i).get(j - 1).getConnector(Tile.Direction.SOUTH_EAST);
-                                }
-                            }
-                        }
+                        c.setNeighbor(tileGrid.get(i + c.getDirection().getHeightOffset(j))
+                                .get(j + c.getDirection().getWidthOffset())
+                                .getConnector(c.getDirection().getOppositeDirection()));
                     } catch (IndexOutOfBoundsException e) {
+                        c.setNeighbor(null);
                     }
-                    c.setNeighbor(neighbor);
                 }
             }
         }
     }
 
-    @Override
-    public String toString() {
-        return this.config() + "\n" + this.tileGridToString();
+    public int getWidth() {
+        return tileGrid.get(0).size();
+    }
+
+    public int getHeight() {
+        return tileGrid.size();
     }
 }

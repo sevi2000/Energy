@@ -7,16 +7,15 @@ import fr.uparis.energy.model.Level;
 import fr.uparis.energy.utils.InvalidLevelException;
 import fr.uparis.energy.utils.LevelConverter;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
 
 public class TestLevelConverter {
     @Test
-    public void testEmpty() {
+    public void testEmptyIsSorted() {
         assertTrue(LevelConverter.isStrictlySorted(new int[0]));
     }
 
@@ -26,11 +25,9 @@ public class TestLevelConverter {
     }
 
     @Test
-    public void testReadFromAndWriteToFile()
-            throws URISyntaxException, IOException, InvalidSizeException, InvalidLevelException {
-        URI levelLocation =
-                getClass().getClassLoader().getResource("levels/level11.nrg").toURI();
-        Level l = LevelConverter.fileToLevel(levelLocation.toURL(), Level.State.EDITING);
-        assertEquals(new String(Files.readAllBytes(Path.of(levelLocation)), StandardCharsets.UTF_8), l.toString());
+    public void testFileToLevel() throws URISyntaxException, IOException, InvalidSizeException, InvalidLevelException {
+        URL levelLocation = getClass().getClassLoader().getResource("levels/level11.nrg");
+        Level l = LevelConverter.fileToLevel(levelLocation, Level.State.PLAYING);
+        assertEquals(Files.readString(Path.of(levelLocation.toURI())), l.toString());
     }
 }

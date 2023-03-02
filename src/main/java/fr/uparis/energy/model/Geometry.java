@@ -7,15 +7,11 @@ public enum Geometry {
     private static int[] card = {4, 6};
 
     public static Geometry fromString(String s) {
-        switch (s) {
-            case "H" -> {
-                return Geometry.HEXAGON;
-            }
-            case "S" -> {
-                return Geometry.SQUARE;
-            }
-        }
-        return Geometry.HEXAGON;
+        return switch (s) {
+            case "H" -> Geometry.HEXAGON;
+            case "S" -> Geometry.SQUARE;
+            default -> throw new IllegalArgumentException();
+        };
     }
 
     @Override
@@ -25,5 +21,12 @@ public enum Geometry {
 
     public int card() {
         return card[this.ordinal()];
+    }
+
+    public Direction[] getDirections() {
+        return switch (this) {
+            case SQUARE -> Direction4.values();
+            case HEXAGON -> Direction6.values();
+        };
     }
 }

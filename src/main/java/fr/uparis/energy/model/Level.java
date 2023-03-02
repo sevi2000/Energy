@@ -2,17 +2,17 @@ package fr.uparis.energy.model;
 
 public class Level {
 
-    private final int levelNumber;
-    private Board board;
-    private State state;
+    private final int number;
+    private final Board board;
+    private final State state;
 
     public enum State {
         EDITING,
-        PLAYING
+        PLAYING;
     }
 
-    public Level(int levelNumber, State state, Board board) {
-        this.levelNumber = levelNumber;
+    public Level(int number, State state, Board board) {
+        this.number = number;
         this.state = state;
         this.board = board;
     }
@@ -31,7 +31,7 @@ public class Level {
     }
 
     public int getNumber() {
-        return this.levelNumber;
+        return this.number;
     }
 
     @Override
