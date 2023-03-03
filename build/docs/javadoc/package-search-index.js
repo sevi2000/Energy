@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"fr.uparis.energy"},{"l":"fr.uparis.energy.model"},{"l":"fr.uparis.energy.utils"}];updateSearchResults();
