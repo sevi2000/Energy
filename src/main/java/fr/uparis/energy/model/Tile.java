@@ -1,7 +1,6 @@
 package fr.uparis.energy.model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -88,14 +87,14 @@ public class Tile {
      * Allows to change this tile component.
      */
     public void cycleComponent() {
-        List<String> componentLabels = List.of(new String[]{"S", "L", "W", "."});
-        Map <String, Component>component = Map.of(
+        List<String> componentLabels = List.of(new String[] {"S", "L", "W", "."});
+        Map<String, Component> component = Map.of(
                 "S", new SourceComponent(),
                 "L", new LampComponent(),
                 "W", new WifiComponent(),
                 ".", new EmptyComponent());
         int nextIndex = (componentLabels.indexOf(this.component.toString()) + 1) % componentLabels.size();
-        this.component =  component.get(componentLabels.get(nextIndex));
+        this.component = component.get(componentLabels.get(nextIndex));
     }
 
     /**
