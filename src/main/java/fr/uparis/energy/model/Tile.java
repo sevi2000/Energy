@@ -1,7 +1,9 @@
 package fr.uparis.energy.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Represents a tile that is held by a board.
@@ -51,18 +53,50 @@ public class Tile {
      * Rotates given tile by 90 or 60 degrees clockwise depending on its geometry.
      * @param propagateEnergy tells if we need to try propagating energy.
      */
-    public void rotateClockwise(boolean propagateEnergy) {}
+    public void rotateClockwise(boolean propagateEnergy) {
+        Connector current = this.connectors.get(0);
+        Connector next = this.connectors.get(1);
+        boolean tmp = next.exists();
+        next.setExists(current.exists());
+        for (int i = 2; i < connectors.size(); i++) {
+            current = this.connectors.get(i);
+            boolean swapBuffer = current.exists();
+            current.setExists(tmp);
+            tmp = swapBuffer;
+        }
+        this.connectors.get(0).setExists(tmp);
+        if (propagateEnergy) this.propagate();
+    }
+
+    /**
+     * Propagates energy through existing connectors.
+     */
+    private void propagate() {}
 
     /**
      * Rotates given tile by 90 or 60 degrees counter clockwise depending on its geometry.
      * @param propagateEnergy tells if we need to try propagating energy.
      */
-    public void rotateCounterClockwise(boolean propagateEnergy) {}
+    public void rotateCounterClockwise(boolean propagateEnergy) {
+        for (int i = 0; i < geometry.card() - 1; i++) {
+            this.rotateClockwise(propagateEnergy);
+        }
+        if (propagateEnergy) this.propagate();
+    }
 
     /**
      * Allows to change this tile component.
      */
-    public void cycleComponent() {}
+    public void cycleComponent() {
+        List<String> componentLabels = List.of(new String[]{"S", "L", "W", "."});
+        Map <String, Component>component = Map.of(
+                "S", new SourceComponent(),
+                "L", new LampComponent(),
+                "W", new WifiComponent(),
+                ".", new EmptyComponent());
+        int nextIndex = (componentLabels.indexOf(this.component.toString()) + 1) % componentLabels.size();
+        this.component =  component.get(componentLabels.get(nextIndex));
+    }
 
     /**
      * Textual representation of this tile connector.
@@ -106,5 +140,13 @@ public class Tile {
      */
     public List<Connector> getConnectors() {
         return this.connectors;
+    }
+
+    public Geometry getGeometry() {
+        return this.geometry;
+    }
+
+    public Component getComponent() {
+        return this.component;
     }
 }

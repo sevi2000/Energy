@@ -9,5 +9,7 @@ public abstract class Component {
      * Representation of a component.
      * @return a String representing this component.
      */
-    public abstract String toString();
+    public  String toString(){
+        return "";
+    }
 }

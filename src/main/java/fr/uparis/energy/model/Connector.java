@@ -54,4 +54,16 @@ public class Connector {
     public Direction getDirection() {
         return this.direction;
     }
+
+    /**
+     * Direction setter.
+     * @param direction the new value
+     */
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+
+    public Connector getNeighbor() {
+        return this.neighbor;
+    }
 }
