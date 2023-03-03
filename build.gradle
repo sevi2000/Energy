@@ -44,8 +44,21 @@ spotless {
         }
         toggleOffOn()
         palantirJavaFormat()
+        //googleJavaFormat()
         removeUnusedImports()
         trimTrailingWhitespace()
         endWithNewline()
+    }
+}
+sourceSets{
+    main {
+        java {
+            srcDir(["src/main/java"])
+        }
+        resources {
+
+            srcDirs= ["src/main/resources"]
+
+        }
     }
 }

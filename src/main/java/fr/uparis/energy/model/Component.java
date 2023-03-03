@@ -1,12 +1,13 @@
 package fr.uparis.energy.model;
 
-public class Component {
+/**
+ * Class representing a component held by a Tile.
+ */
+public abstract class Component {
 
-    protected Tile parentTile;
-
-    protected Component() {}
-
-    public boolean isPowered() {
-        return false;
-    }
+    /**
+     * Representation of a component.
+     * @return a String representing this component.
+     */
+    public abstract String toString();
 }
