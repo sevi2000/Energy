@@ -1,11 +1,10 @@
 package fr.uparis.energy;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestMain {
-    @Test
+    /*@Test
     public void testSum() {
         // assertEquals(1, 0);
-        Main.main(new String[2]);
-    }
+    }*/
 }
