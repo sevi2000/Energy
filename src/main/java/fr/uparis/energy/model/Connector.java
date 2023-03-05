@@ -54,4 +54,12 @@ public class Connector {
     public Direction getDirection() {
         return this.direction;
     }
+
+    /**
+     * Neighbor getter.
+     * @return the neighbor Connector of this Connector.
+     */
+    public Connector getNeighbor() {
+        return this.neighbor;
+    }
 }
