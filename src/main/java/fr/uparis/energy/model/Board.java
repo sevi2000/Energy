@@ -147,7 +147,7 @@ public class Board {
     }
 
     /**
-     * Initializes connectors neighbors for each connector of each tile.
+     * Initializes the neighbor of each connector of each tile.
      */
     public void setNeighbors() {
         for (int i = 0; i < this.getHeight(); i++) {
