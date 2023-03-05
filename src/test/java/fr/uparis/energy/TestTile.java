@@ -48,9 +48,17 @@ public class TestTile {
 
     @Test
     public void testCycleComponent() {
-        boolean[] connectors = {true, false, false, false, false, false};
+        boolean[] connectors = {true, false, false, false};
         Tile t = new Tile(Geometry.SQUARE, connectors, "S");
         t.cycleComponent();
         assertEquals(LampComponent.class, t.getComponent().getClass());
+    }
+
+    @Test
+    public void testCycleComponentWrap() {
+        boolean[] connectors = {true, false, false, false};
+        Tile t = new Tile(Geometry.SQUARE, connectors, ".");
+        t.cycleComponent();
+        assertEquals(SourceComponent.class, t.getComponent().getClass());
     }
 }

@@ -19,6 +19,8 @@ public class Tile {
      * @param component of this tile.
      */
     public Tile(Geometry geometry, boolean[] connectedEdges, String component) {
+        if (connectedEdges.length != geometry.card()) throw new IllegalArgumentException();
+
         this.geometry = geometry;
 
         this.component = switch (component) {
@@ -84,7 +86,7 @@ public class Tile {
     }
 
     /**
-     * Allows to change this tile component.
+     * Allows to change this tile's component.
      */
     public void cycleComponent() {
         List<String> componentLabels = List.of(new String[] {"S", "L", "W", "."});
