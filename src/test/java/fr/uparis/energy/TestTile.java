@@ -34,15 +34,15 @@ public class TestTile {
     public void testRotateClockwiseHexagon() {
         boolean[] connectors = {false, false, false, false, false, true};
         Tile t = new Tile(Geometry.HEXAGON, connectors, ".");
-        t.rotateClockwise(false);
+        t.rotateClockwise(true);
         assertTrue(t.getConnectors().get(0).exists());
     }
 
     @Test
     public void testRotateCounterClockwiseHexagon() {
         boolean[] connectors = {true, false, false, false, false, false};
-        Tile t = new Tile(Geometry.HEXAGON, connectors, ".");
-        t.rotateCounterClockwise(false);
+        Tile t = new Tile(Geometry.HEXAGON, connectors, "W");
+        t.rotateCounterClockwise(true);
         assertTrue(t.getConnectors().get(5).exists());
     }
 
@@ -60,5 +60,22 @@ public class TestTile {
         Tile t = new Tile(Geometry.SQUARE, connectors, ".");
         t.cycleComponent();
         assertEquals(SourceComponent.class, t.getComponent().getClass());
+    }
+
+    @Test
+    public void testConstructorException() {
+        boolean[] connectors = {true, false, false, false, false, false};
+        assertThrows(IllegalArgumentException.class, () -> {
+            Tile t = new Tile(Geometry.SQUARE, connectors, ".");
+        });
+    }
+
+    @Test
+    public void testGetConnectorException() {
+        boolean[] connectors = {true, false, false, false};
+        Tile t = new Tile(Geometry.SQUARE, connectors, ".");
+        assertThrows(IllegalArgumentException.class, () -> {
+            t.getConnector(Direction6.NORTH_EAST);
+        });
     }
 }
