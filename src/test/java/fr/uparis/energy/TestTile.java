@@ -18,7 +18,7 @@ public class TestTile {
     public void testRotateClockwiseSquare() {
         boolean[] connectors = {false, false, false, true};
         Tile t = new Tile(Geometry.SQUARE, connectors, ".");
-        t.rotateClockwise(false);
+        t.rotateClockwise();
         assertTrue(t.getConnectors().get(0).exists());
     }
 
@@ -26,7 +26,7 @@ public class TestTile {
     public void testRotateCounterClockwiseSquare() {
         boolean[] connectors = {true, false, false, false};
         Tile t = new Tile(Geometry.SQUARE, connectors, ".");
-        t.rotateCounterClockwise(false);
+        t.rotateCounterClockwise();
         assertTrue(t.getConnectors().get(3).exists());
     }
 
@@ -34,7 +34,7 @@ public class TestTile {
     public void testRotateClockwiseHexagon() {
         boolean[] connectors = {false, false, false, false, false, true};
         Tile t = new Tile(Geometry.HEXAGON, connectors, ".");
-        t.rotateClockwise(true);
+        t.rotateClockwise();
         assertTrue(t.getConnectors().get(0).exists());
     }
 
@@ -42,7 +42,7 @@ public class TestTile {
     public void testRotateCounterClockwiseHexagon() {
         boolean[] connectors = {true, false, false, false, false, false};
         Tile t = new Tile(Geometry.HEXAGON, connectors, "W");
-        t.rotateCounterClockwise(true);
+        t.rotateCounterClockwise();
         assertTrue(t.getConnectors().get(5).exists());
     }
 

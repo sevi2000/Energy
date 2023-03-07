@@ -31,10 +31,10 @@ public class Level {
 
     /**
      * Checks if the level is solved (i.e. we won)
-     * @return true it all tiles which contain lamps are powered.
+     * @return true if all tiles which contain a lamp are powered.
      */
     public boolean isSolved() {
-        return false;
+        return this.board.isSolved();
     }
 
     /**
@@ -43,8 +43,9 @@ public class Level {
      */
     public boolean start() {
         int i = 0;
-        while (isSolved() && i < 100) {
+        while (this.isSolved() && i < 100) {
             board.shuffle();
+            board.propagateEnergy();
             i++;
         }
         return i != 100;

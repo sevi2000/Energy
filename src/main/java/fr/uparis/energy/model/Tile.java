@@ -12,6 +12,8 @@ public class Tile {
     private Component component;
     private final Geometry geometry;
 
+    private boolean isPowered = false;
+
     /**
      * Builds a Tile with the given specification.
      * @param geometry of this tile.
@@ -37,6 +39,21 @@ public class Tile {
     }
 
     /**
+     * Tells if this tile is powered.
+     * @return the power state of this tile.
+     */
+    public boolean isPowered() {
+        return switch (this.component.toString()) {
+            case "S" -> true;
+            default -> this.isPowered;
+        };
+    }
+
+    public void setPowered(boolean state) {
+        this.isPowered = state;
+    }
+
+    /**
      * Builds a Tile with the given geometry, an empty component and no connectors.
      * @param geometry of the resulting tile.
      */
@@ -54,7 +71,7 @@ public class Tile {
      * Rotates given tile by 90 or 60 degrees clockwise depending on its geometry.
      * @param propagateEnergy tells if we need to try propagating energy.
      */
-    public void rotateClockwise(boolean propagateEnergy) {
+    public void rotateClockwise() {
         Connector current = this.connectors.get(0);
         Connector next = this.connectors.get(1);
         boolean tmp = next.exists();
@@ -66,23 +83,30 @@ public class Tile {
             tmp = swapBuffer;
         }
         this.connectors.get(0).setExists(tmp);
-        if (propagateEnergy) this.propagate();
     }
 
     /**
-     * Propagates energy through existing connectors.
+     * Propagates energy through existing connectors to the neighbor tiles. Should only be called
+     * on a tile whose isPowered() is true.
      */
-    private void propagate() {}
+    public void propagateEnergyToNeighbors() {
+        List<Tile> connectedNeighborsNotPowered = new ArrayList<>();
+        for (Connector c : this.connectors)
+            if (c.hasPath() && !c.getNeighbor().getParentTile().isPowered())
+                connectedNeighborsNotPowered.add(c.getNeighbor().getParentTile());
+
+        for (Tile t : connectedNeighborsNotPowered) t.setPowered(true);
+        for (Tile t : connectedNeighborsNotPowered) t.propagateEnergyToNeighbors();
+    }
 
     /**
      * Rotates given tile by 90 or 60 degrees counter clockwise depending on its geometry.
      * @param propagateEnergy tells if we need to try propagating energy.
      */
-    public void rotateCounterClockwise(boolean propagateEnergy) {
+    public void rotateCounterClockwise() {
         for (int i = 0; i < geometry.card() - 1; i++) {
-            this.rotateClockwise(propagateEnergy);
+            this.rotateClockwise();
         }
-        if (propagateEnergy) this.propagate();
     }
 
     /**

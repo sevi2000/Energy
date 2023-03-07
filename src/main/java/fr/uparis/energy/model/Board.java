@@ -2,9 +2,11 @@ package fr.uparis.energy.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
- * Represents the board of a level.
+ * Represents the board of a level. Any modification made to the board or any of its tiles
+ * must be followed by a call to Board.propagateEnergy().
  */
 public class Board {
 
@@ -17,7 +19,7 @@ public class Board {
      * @param width of the board.
      * @param height of the board.
      * @param geometry of the board.
-     * @throws InvalidSizeException if with or height lower than 0.
+     * @throws InvalidSizeException if width or height lower than 1.
      */
     public Board(int width, int height, Geometry geometry) throws InvalidSizeException {
         if (width <= 0 || height <= 0) throw new InvalidSizeException();
@@ -32,7 +34,15 @@ public class Board {
     /**
      * Adds a row before the first one.
      */
-    public void addRowOnTop() {}
+    public void addRowOnTop() {
+        List<Tile> newRow = new ArrayList<>(this.getWidth());
+        for (int i = 0; i < this.getWidth(); i++) {
+            newRow.add(new Tile(this.geometry));
+        }
+        this.tileGrid.add(0, newRow);
+
+        this.setNeighbors();
+    }
 
     /**
      * Sets the given row at the given index.
@@ -51,67 +61,136 @@ public class Board {
     /**
      * Adds a row after the last one.
      */
-    public void addRowAtBottom() {}
+    public void addRowAtBottom() {
+        List<Tile> newRow = new ArrayList<>(this.getWidth());
+        for (int i = 0; i < this.getWidth(); i++) {
+            newRow.add(new Tile(this.geometry));
+        }
+        this.tileGrid.add(newRow);
+
+        this.setNeighbors();
+    }
 
     /**
      * Adds a column before the first one.
      */
-    public void addColumnAtLeft() {}
+    public void addColumnAtLeft() {
+        for (int i = 0; i < this.getHeight(); i++) {
+            this.tileGrid.get(i).add(0, new Tile(this.geometry));
+        }
+
+        this.setNeighbors();
+    }
 
     /**
      * Adds a column after the last one.
      */
-    public void addColumnAtRight() {}
+    public void addColumnAtRight() {
+        for (int i = 0; i < this.getHeight(); i++) {
+            this.tileGrid.get(i).add(new Tile(this.geometry));
+        }
+
+        this.setNeighbors();
+    }
 
     /**
      * Removes the fist row.
      */
-    public void removeRowOnTop() {}
+    public void removeRowOnTop() {
+        this.tileGrid.remove(0);
+
+        this.setNeighbors();
+    }
 
     /**
      * Removes the last row.
      */
-    public void removeRowAtBottom() {}
+    public void removeRowAtBottom() {
+        this.tileGrid.remove(this.getHeight() - 1);
+
+        this.setNeighbors();
+    }
 
     /**
      * Removes the first column.
      */
-    public void removeColumnAtLeft() {}
+    public void removeColumnAtLeft() {
+        for (int i = 0; i < this.getHeight(); i++) {
+            this.tileGrid.get(i).remove(0);
+        }
+
+        this.setNeighbors();
+    }
 
     /**
      * Removes the last column.
      */
-    public void removeColumnAtRight() {}
+    public void removeColumnAtRight() {
+        int currentWidth = this.getWidth();
+        for (int i = 0; i < this.getHeight(); i++) {
+            this.tileGrid.get(i).remove(currentWidth - 1);
+        }
+
+        this.setNeighbors();
+    }
 
     /**
      * Checks if the board is solved.
      * @return true if the board is in a solved state.
      */
     public boolean isSolved() {
-        return false;
+        List<Tile> lampTiles = this.getTilesWithComponent("L");
+        for (Tile tile : lampTiles) if (!tile.isPowered()) return false;
+        return true;
     }
 
     /**
      * Shuffles the board by rotating each tile randomly.
      */
-    public void shuffle() {}
+    public void shuffle() {
+        Random rand = new Random();
+        for (Tile tile : this.getAllTiles()) {
+            int numberOfRotations = rand.nextInt(0, this.geometry.card());
+            for (int i = 0; i < numberOfRotations; i++) {
+                tile.rotateClockwise();
+            }
+        }
+    }
 
     /**
      * Propagates the energy to the different tiles.
      */
-    public void propagateEnergy() {}
+    public void propagateEnergy() {
+        this.turnOffEverything();
+        for (Tile t : this.getTilesWithComponent("S")) t.propagateEnergyToNeighbors();
+
+        boolean oneWifiIsPowered = false;
+        for (Tile t : this.getTilesWithComponent("W")) if (t.isPowered()) oneWifiIsPowered = true;
+
+        if (oneWifiIsPowered) {
+            for (Tile t : this.getTilesWithComponent("W")) t.setPowered(true);
+            for (Tile t : this.getTilesWithComponent("W")) t.propagateEnergyToNeighbors();
+        }
+    }
 
     /**
      * Turns each tile off except the sources.
      */
-    private void turnOffEverything() {}
+    private void turnOffEverything() {
+        for (Tile t : this.getAllTiles()) t.setPowered(false);
+    }
 
-    /**
-     * Gives Wi-Fi components of the board
-     * @return a list containing the Wi-Fi components.
-     */
-    private List<WifiComponent> getWifiComponents() {
-        return new ArrayList<>();
+    private List<Tile> getAllTiles() {
+        List<Tile> allTiles = new ArrayList<>();
+        for (List<Tile> line : this.tileGrid) allTiles.addAll(line);
+        return allTiles;
+    }
+
+    // TODO Check the argument of this method
+    private List<Tile> getTilesWithComponent(String component) {
+        List<Tile> res = new ArrayList<>();
+        for (Tile tile : this.getAllTiles()) if (tile.getComponent().toString().equals(component)) res.add(tile);
+        return res;
     }
 
     /**

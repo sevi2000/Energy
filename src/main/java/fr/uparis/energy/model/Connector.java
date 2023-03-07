@@ -62,4 +62,12 @@ public class Connector {
     public Connector getNeighbor() {
         return this.neighbor;
     }
+
+    public Tile getParentTile() {
+        return this.parentTile;
+    }
+
+    public boolean hasPath() {
+        return this.exists && this.neighbor.exists();
+    }
 }
