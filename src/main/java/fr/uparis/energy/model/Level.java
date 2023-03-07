@@ -9,6 +9,10 @@ public class Level {
     private final Board board;
     private final State state;
 
+    public Board getBoard() {
+        return this.board;
+    }
+
     /**
      * This level state.
      */
