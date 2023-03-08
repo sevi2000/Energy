@@ -9,6 +9,10 @@ public class Level {
     private final Board board;
     private final State state;
 
+    public Board getBoard() {
+        return this.board;
+    }
+
     /**
      * This level state.
      */
@@ -18,7 +22,7 @@ public class Level {
     }
 
     /**
-     * Builds a level with the given specifications.
+     * Builds a level with the given specifications and calls propagateEnergy().
      * @param number of the level.
      * @param state of the level.
      * @param board of the level.
@@ -27,14 +31,15 @@ public class Level {
         this.number = number;
         this.state = state;
         this.board = board;
+        this.board.propagateEnergy();
     }
 
     /**
      * Checks if the level is solved (i.e. we won)
-     * @return true it all tiles which contain lamps are powered.
+     * @return true if all tiles which contain a lamp are powered.
      */
     public boolean isSolved() {
-        return false;
+        return this.board.isSolved();
     }
 
     /**
@@ -43,8 +48,9 @@ public class Level {
      */
     public boolean start() {
         int i = 0;
-        while (isSolved() && i < 100) {
+        while (this.isSolved() && i < 100) {
             board.shuffle();
+            board.propagateEnergy();
             i++;
         }
         return i != 100;
@@ -65,5 +71,9 @@ public class Level {
     @Override
     public String toString() {
         return this.board.toString();
+    }
+
+    public String toStringWithEnergy() {
+        return this.board.toStringWithEnergy();
     }
 }
