@@ -7,7 +7,7 @@ public class Connector {
     private boolean exists;
     private final Tile parentTile;
 
-    private Direction direction;
+    private final Direction direction;
 
     private Connector neighbor;
 
@@ -57,9 +57,19 @@ public class Connector {
 
     /**
      * Neighbor getter.
-     * @return the neighbor Connector of this Connector.
+     * @return the neighbor Connector of this Connector, or null if this Connector is facing
+     * the emptiness around the board.
      */
     public Connector getNeighbor() {
         return this.neighbor;
+    }
+
+    public Tile getParentTile() {
+        return this.parentTile;
+    }
+
+    public boolean hasPath() {
+        if (this.getNeighbor() == null) return false;
+        return this.exists() && this.getNeighbor().exists();
     }
 }

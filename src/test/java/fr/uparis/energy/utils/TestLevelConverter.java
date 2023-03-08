@@ -1,11 +1,9 @@
-package fr.uparis.energy;
+package fr.uparis.energy.utils;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import fr.uparis.energy.model.InvalidSizeException;
 import fr.uparis.energy.model.Level;
-import fr.uparis.energy.utils.InvalidLevelException;
-import fr.uparis.energy.utils.LevelConverter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
