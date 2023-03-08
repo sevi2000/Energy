@@ -22,7 +22,7 @@ public class Level {
     }
 
     /**
-     * Builds a level with the given specifications.
+     * Builds a level with the given specifications and calls propagateEnergy().
      * @param number of the level.
      * @param state of the level.
      * @param board of the level.
@@ -31,6 +31,7 @@ public class Level {
         this.number = number;
         this.state = state;
         this.board = board;
+        this.board.propagateEnergy();
     }
 
     /**

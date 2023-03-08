@@ -14,7 +14,7 @@ public class TestBoard {
     public void testBoardSolvedInASolvedLevel() throws InvalidSizeException, IOException, InvalidLevelException {
         URL levelLocation = getClass().getClassLoader().getResource("levels/level1.nrg");
         Level l = LevelConverter.fileToLevel(levelLocation, Level.State.PLAYING);
-        l.getBoard().propagateEnergy();
+        //l.getBoard().propagateEnergy();
         assertTrue(l.isSolved());
     }
 
@@ -22,11 +22,8 @@ public class TestBoard {
     public void testBoardSolvedInANonSolvedLevel() throws InvalidSizeException, IOException, InvalidLevelException {
         URL levelLocation = getClass().getClassLoader().getResource("levels/level3.nrg");
         Level l = LevelConverter.fileToLevel(levelLocation, Level.State.PLAYING);
-        if (l.start()) {
-            l.getBoard().propagateEnergy();
-            // Files.writeString(Path.of("/tmp/energy.log"), l.toStringWithEnergy());
-            assertFalse(l.isSolved());
-        }
+        l.start();
+        assertFalse(l.isSolved());
     }
 
     @Test
@@ -74,5 +71,10 @@ public class TestBoard {
         int expected = b.getHeight() - 1;
         b.removeRowAtBottom();
         assertEquals(expected, b.getHeight());
+    }
+
+    @Test
+    public void sevi() {
+        assertNotNull(null);
     }
 }
