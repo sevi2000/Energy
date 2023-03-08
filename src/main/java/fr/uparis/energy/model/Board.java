@@ -150,7 +150,7 @@ public class Board {
     public void shuffle() {
         Random rand = new Random();
         for (Tile tile : this.getAllTiles()) {
-            int numberOfRotations = rand.nextInt(0, this.geometry.card());
+            int numberOfRotations = rand.nextInt(0, tile.getGeometry().card());
             for (int i = 0; i < numberOfRotations; i++) {
                 tile.rotateClockwise();
             }
