@@ -91,10 +91,11 @@ public class Tile {
      */
     public void propagateEnergyToNeighbors() {
         List<Tile> connectedNeighborsNotPowered = new ArrayList<>();
-        for (Connector c : this.connectors)
+        for (Connector c : this.connectors) {
+            if (c.getNeighbor() == null) continue;
             if (c.hasPath() && !c.getNeighbor().getParentTile().isPowered())
                 connectedNeighborsNotPowered.add(c.getNeighbor().getParentTile());
-
+        }
         for (Tile t : connectedNeighborsNotPowered) t.setPowered(true);
         for (Tile t : connectedNeighborsNotPowered) t.propagateEnergyToNeighbors();
     }
