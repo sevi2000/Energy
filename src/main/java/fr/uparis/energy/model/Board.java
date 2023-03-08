@@ -186,8 +186,8 @@ public class Board {
         return allTiles;
     }
 
-    // TODO Check the argument of this method
     private List<Tile> getTilesWithComponent(String component) {
+        if (!Component.getKinds().contains(component)) throw new IllegalArgumentException();
         List<Tile> res = new ArrayList<>();
         for (Tile tile : this.getAllTiles()) if (tile.getComponent().toString().equals(component)) res.add(tile);
         return res;

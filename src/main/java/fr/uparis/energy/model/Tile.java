@@ -114,7 +114,7 @@ public class Tile {
      * Allows to change this tile's component.
      */
     public void cycleComponent() {
-        List<String> componentLabels = List.of(new String[] {"S", "L", "W", "."});
+        List<String> componentLabels = Component.getKinds();
         Map<String, Component> component = Map.of(
                 "S", new SourceComponent(),
                 "L", new LampComponent(),
