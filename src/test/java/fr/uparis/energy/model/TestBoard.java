@@ -72,9 +72,4 @@ public class TestBoard {
         b.removeRowAtBottom();
         assertEquals(expected, b.getHeight());
     }
-
-    @Test
-    public void sevi() {
-        assertNotNull(null);
-    }
 }
