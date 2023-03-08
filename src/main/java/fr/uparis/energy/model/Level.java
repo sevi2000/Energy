@@ -71,4 +71,8 @@ public class Level {
     public String toString() {
         return this.board.toString();
     }
+
+    public String toStringWithEnergy() {
+        return this.board.toStringWithEnergy();
+    }
 }

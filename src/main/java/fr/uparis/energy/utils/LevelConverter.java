@@ -168,6 +168,19 @@ public class LevelConverter {
         return new Level(levelNumber, state, board);
     }
 
+    public static Level getLevelFromResources(int number, Level.State state) {
+        URL levelLocation = LevelConverter.class.getClassLoader().getResource("levels/level" + number + ".nrg");
+        if (levelLocation == null) throw new IllegalArgumentException();
+
+        Level l = null;
+        try {
+            l = fileToLevel(levelLocation, state);
+        } catch (Exception e) {
+        }
+
+        return l;
+    }
+
     /**
      * Saves the given level to a file
      *

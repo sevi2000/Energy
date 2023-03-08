@@ -6,7 +6,7 @@ import java.util.Random;
 
 /**
  * Represents the board of a level. Any modification made to the board or any of its tiles
- * must be followed by a call to Board.propagateEnergy().
+ * must be followed by a call to Board.propagateEnergy(). A board is forced to be at least 1x1.
  */
 public class Board {
 
@@ -97,8 +97,8 @@ public class Board {
      * Removes the fist row.
      */
     public void removeRowOnTop() {
+        if (this.getHeight() == 1) return;
         this.tileGrid.remove(0);
-
         this.setNeighbors();
     }
 
@@ -106,8 +106,8 @@ public class Board {
      * Removes the last row.
      */
     public void removeRowAtBottom() {
+        if (this.getHeight() == 1) return;
         this.tileGrid.remove(this.getHeight() - 1);
-
         this.setNeighbors();
     }
 
@@ -115,6 +115,7 @@ public class Board {
      * Removes the first column.
      */
     public void removeColumnAtLeft() {
+        if (this.getWidth() == 1) return;
         for (int i = 0; i < this.getHeight(); i++) {
             this.tileGrid.get(i).remove(0);
         }
@@ -126,6 +127,7 @@ public class Board {
      * Removes the last column.
      */
     public void removeColumnAtRight() {
+        if (this.getWidth() == 1) return;
         int currentWidth = this.getWidth();
         for (int i = 0; i < this.getHeight(); i++) {
             this.tileGrid.get(i).remove(currentWidth - 1);
@@ -259,5 +261,20 @@ public class Board {
      */
     public int getHeight() {
         return tileGrid.size();
+    }
+
+    private String tileGridToStringWithEnergy() {
+        String ret = "";
+        for (int h = 0; h < this.getHeight(); h++) {
+            for (int w = 0; w < this.getWidth(); w++) {
+                ret = ret + tileGrid.get(h).get(w).toStringWithEnergy() + " ";
+            }
+            ret = ret + "\n";
+        }
+        return ret;
+    }
+
+    public String toStringWithEnergy() {
+        return this.config() + "\n" + this.tileGridToStringWithEnergy();
     }
 }

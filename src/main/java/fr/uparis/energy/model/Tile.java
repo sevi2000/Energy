@@ -149,6 +149,15 @@ public class Tile {
                 existingConnectorsList);
     }
 
+    public String toStringWithEnergy() {
+        String existingConnectorsList = this.connectorsToString();
+        return String.format(
+                existingConnectorsList.length() == 0 ? "%s%s%s" : "%s%s %s",
+                this.component.toString(),
+                this.isPowered() ? "*" : "",
+                existingConnectorsList);
+    }
+
     /**
      * Gives the right index of the connector depending on geometry
      *
