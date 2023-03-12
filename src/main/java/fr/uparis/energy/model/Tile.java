@@ -69,7 +69,6 @@ public class Tile {
 
     /**
      * Rotates given tile by 90 or 60 degrees clockwise depending on its geometry.
-     * @param propagateEnergy tells if we need to try propagating energy.
      */
     public void rotateClockwise() {
         Connector current = this.connectors.get(0);
@@ -102,7 +101,6 @@ public class Tile {
 
     /**
      * Rotates given tile by 90 or 60 degrees counter clockwise depending on its geometry.
-     * @param propagateEnergy tells if we need to try propagating energy.
      */
     public void rotateCounterClockwise() {
         for (int i = 0; i < geometry.card() - 1; i++) {

@@ -30,7 +30,7 @@ jobs:
     - name: Build and test with Gradle
       uses: gradle/gradle-build-action@v2
       with:
-        arguments: spotlessApply build test
+        arguments: spotlessApply build test javadoc
     - name: Format code and commit
       run: |
            git config user.email "action@github.com"
@@ -43,5 +43,3 @@ jobs:
             git commit -m "Formatted code"
             git push
            fi
-           
-           
