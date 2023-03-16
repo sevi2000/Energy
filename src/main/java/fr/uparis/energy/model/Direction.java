@@ -6,10 +6,22 @@ package fr.uparis.energy.model;
 public interface Direction {
 
     /**
+     * {@return an array containing all directions}
+     */
+    Direction[] elements();
+
+    /**
+     * {@return the ordinal of this direction}
+     */
+    int ord();
+
+    /**
      * Returns the opposite direction of the caller.
      * @return a Direction object representing the opposite side.
      */
-    public Direction getOppositeDirection();
+    default Direction getOppositeDirection() {
+        return this.elements()[(this.ord() + this.elements().length / 2) % this.elements().length];
+    }
 
     /**
      * Gives the line number depending on Direction value and column index parity.

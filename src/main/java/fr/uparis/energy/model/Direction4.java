@@ -6,18 +6,14 @@ public enum Direction4 implements Direction {
     SOUTH,
     WEST;
 
-    /**
-     * Gives the opposite Direction of the caller.
-     * @return Direction object representing the caller's opposite.
-     */
     @Override
-    public Direction getOppositeDirection() {
-        return switch (this) {
-            case NORTH -> SOUTH;
-            case EAST -> WEST;
-            case SOUTH -> NORTH;
-            case WEST -> EAST;
-        };
+    public Direction[] elements() {
+        return Direction4.values();
+    }
+
+    @Override
+    public int ord() {
+        return this.ordinal();
     }
 
     /**

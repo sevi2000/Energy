@@ -9,15 +9,13 @@ public enum Direction6 implements Direction {
     NORTH_WEST;
 
     @Override
-    public Direction getOppositeDirection() {
-        return switch (this) {
-            case NORTH -> SOUTH;
-            case NORTH_EAST -> SOUTH_WEST;
-            case SOUTH_EAST -> NORTH_WEST;
-            case SOUTH -> NORTH;
-            case SOUTH_WEST -> NORTH_EAST;
-            case NORTH_WEST -> SOUTH_EAST;
-        };
+    public Direction[] elements() {
+        return Direction6.values();
+    }
+
+    @Override
+    public int ord() {
+        return this.ordinal();
     }
 
     /**
