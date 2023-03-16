@@ -141,7 +141,7 @@ public class Board {
      * @return true if the board is in a solved state.
      */
     public boolean isSolved() {
-        List<Tile> lampTiles = this.getTilesWithComponent("L");
+        List<Tile> lampTiles = this.getTilesWithComponent(Component.LAMP);
         for (Tile tile : lampTiles) if (!tile.isPowered()) return false;
         return true;
     }
@@ -164,14 +164,14 @@ public class Board {
      */
     public void propagateEnergy() {
         this.turnOffEverything();
-        for (Tile t : this.getTilesWithComponent("S")) t.propagateEnergyToNeighbors();
+        for (Tile t : this.getTilesWithComponent(Component.SOURCE)) t.propagateEnergyToNeighbors();
 
         boolean oneWifiIsPowered = false;
-        for (Tile t : this.getTilesWithComponent("W")) if (t.isPowered()) oneWifiIsPowered = true;
+        for (Tile t : this.getTilesWithComponent(Component.WIFI)) if (t.isPowered()) oneWifiIsPowered = true;
 
         if (oneWifiIsPowered) {
-            for (Tile t : this.getTilesWithComponent("W")) t.setPowered(true);
-            for (Tile t : this.getTilesWithComponent("W")) t.propagateEnergyToNeighbors();
+            for (Tile t : this.getTilesWithComponent(Component.WIFI)) t.setPowered(true);
+            for (Tile t : this.getTilesWithComponent(Component.WIFI)) t.propagateEnergyToNeighbors();
         }
     }
 
@@ -188,10 +188,10 @@ public class Board {
         return allTiles;
     }
 
-    private List<Tile> getTilesWithComponent(String component) {
-        if (!Component.getKinds().contains(component)) throw new IllegalArgumentException();
+    private List<Tile> getTilesWithComponent(Component component) {
+        if (component == null) throw new IllegalArgumentException();
         List<Tile> res = new ArrayList<>();
-        for (Tile tile : this.getAllTiles()) if (tile.getComponent().toString().equals(component)) res.add(tile);
+        for (Tile tile : this.getAllTiles()) if (tile.getComponent() == component) res.add(tile);
         return res;
     }
 

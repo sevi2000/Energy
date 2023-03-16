@@ -16,7 +16,7 @@ public class TestTile {
     @Test
     public void testRotateClockwiseSquare() {
         boolean[] connectors = {false, false, false, true};
-        Tile t = new Tile(Geometry.SQUARE, connectors, ".");
+        Tile t = new Tile(Geometry.SQUARE, connectors, Component.EMPTY);
         t.rotateClockwise();
         assertTrue(t.getConnectors().get(0).exists());
     }
@@ -24,7 +24,7 @@ public class TestTile {
     @Test
     public void testRotateCounterClockwiseSquare() {
         boolean[] connectors = {true, false, false, false};
-        Tile t = new Tile(Geometry.SQUARE, connectors, ".");
+        Tile t = new Tile(Geometry.SQUARE, connectors, Component.EMPTY);
         t.rotateCounterClockwise();
         assertTrue(t.getConnectors().get(3).exists());
     }
@@ -32,7 +32,7 @@ public class TestTile {
     @Test
     public void testRotateClockwiseHexagon() {
         boolean[] connectors = {false, false, false, false, false, true};
-        Tile t = new Tile(Geometry.HEXAGON, connectors, ".");
+        Tile t = new Tile(Geometry.HEXAGON, connectors, Component.EMPTY);
         t.rotateClockwise();
         assertTrue(t.getConnectors().get(0).exists());
     }
@@ -40,7 +40,7 @@ public class TestTile {
     @Test
     public void testRotateCounterClockwiseHexagon() {
         boolean[] connectors = {true, false, false, false, false, false};
-        Tile t = new Tile(Geometry.HEXAGON, connectors, "W");
+        Tile t = new Tile(Geometry.HEXAGON, connectors, Component.WIFI);
         t.rotateCounterClockwise();
         assertTrue(t.getConnectors().get(5).exists());
     }
@@ -48,33 +48,29 @@ public class TestTile {
     @Test
     public void testCycleComponent() {
         boolean[] connectors = {true, false, false, false};
-        Tile t = new Tile(Geometry.SQUARE, connectors, "S");
+        Tile t = new Tile(Geometry.SQUARE, connectors, Component.SOURCE);
         t.cycleComponent();
-        assertEquals(LampComponent.class, t.getComponent().getClass());
+        assertEquals(Component.LAMP, t.getComponent());
     }
 
     @Test
     public void testCycleComponentWrap() {
         boolean[] connectors = {true, false, false, false};
-        Tile t = new Tile(Geometry.SQUARE, connectors, ".");
+        Tile t = new Tile(Geometry.SQUARE, connectors, Component.EMPTY);
         t.cycleComponent();
-        assertEquals(SourceComponent.class, t.getComponent().getClass());
+        assertEquals(Component.SOURCE, t.getComponent());
     }
 
     @Test
     public void testWrongConnectorsSizeException() {
         boolean[] connectors = {true, false, false, false, false, false};
-        assertThrows(IllegalArgumentException.class, () -> {
-            Tile t = new Tile(Geometry.SQUARE, connectors, ".");
-        });
+        assertThrows(IllegalArgumentException.class, () -> new Tile(Geometry.SQUARE, connectors, Component.EMPTY));
     }
 
     @Test
     public void testGetConnectorException() {
         boolean[] connectors = {true, false, false, false};
-        Tile t = new Tile(Geometry.SQUARE, connectors, ".");
-        assertThrows(IllegalArgumentException.class, () -> {
-            t.getConnector(Direction6.NORTH_EAST);
-        });
+        Tile t = new Tile(Geometry.SQUARE, connectors, Component.EMPTY);
+        assertThrows(IllegalArgumentException.class, () -> t.getConnector(Direction6.NORTH_EAST));
     }
 }
