@@ -2,7 +2,6 @@ package fr.uparis.energy.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Represents a tile that is held by a board.
@@ -20,17 +19,12 @@ public class Tile {
      * @param connectedEdges of this tile.
      * @param component of this tile.
      */
-    public Tile(Geometry geometry, boolean[] connectedEdges, String component) {
+    public Tile(Geometry geometry, boolean[] connectedEdges, Component component) {
         if (connectedEdges.length != geometry.card()) throw new IllegalArgumentException();
 
         this.geometry = geometry;
 
-        this.component = switch (component) {
-            case "L" -> new LampComponent();
-            case "W" -> new WifiComponent();
-            case "." -> new EmptyComponent();
-            case "S" -> new SourceComponent();
-            default -> throw new IllegalArgumentException();};
+        this.component = component;
 
         // connectors = new ArrayList<>();
         for (int i = 0; i < geometry.card(); i++) {
@@ -43,10 +37,7 @@ public class Tile {
      * @return the power state of this tile.
      */
     public boolean isPowered() {
-        return switch (this.component.toString()) {
-            case "S" -> true;
-            default -> this.isPowered;
-        };
+        return this.component == Component.SOURCE ? true : this.isPowered;
     }
 
     public void setPowered(boolean state) {
@@ -60,7 +51,7 @@ public class Tile {
     public Tile(Geometry geometry) {
         this.geometry = geometry;
 
-        this.component = new EmptyComponent();
+        this.component = Component.EMPTY;
 
         for (int i = 0; i < geometry.card(); i++) {
             connectors.add(new Connector(this, false, geometry.getDirections()[i]));
@@ -112,14 +103,9 @@ public class Tile {
      * Allows to change this tile's component.
      */
     public void cycleComponent() {
-        List<String> componentLabels = Component.getKinds();
-        Map<String, Component> component = Map.of(
-                "S", new SourceComponent(),
-                "L", new LampComponent(),
-                "W", new WifiComponent(),
-                ".", new EmptyComponent());
-        int nextIndex = (componentLabels.indexOf(this.component.toString()) + 1) % componentLabels.size();
-        this.component = component.get(componentLabels.get(nextIndex));
+
+        int nextIndex = (Component.valuesAsList().indexOf(this.component) + 1) % Component.values().length;
+        this.component = Component.values()[nextIndex];
     }
 
     /**

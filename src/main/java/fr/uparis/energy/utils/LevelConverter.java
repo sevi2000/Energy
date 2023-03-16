@@ -116,7 +116,10 @@ public class LevelConverter {
             // Check that group 2 contains integers in strictly ascending order
             if (!isStrictlySorted(connectedEdgesArray)) throw new InvalidLevelException();
 
-            Tile tile = new Tile(geometry, getConnectedEdgesAsBoolean(connectedEdgesArray, geometry), matcher.group(1));
+            Tile tile = new Tile(
+                    geometry,
+                    getConnectedEdgesAsBoolean(connectedEdgesArray, geometry),
+                    Component.getFromLabel(matcher.group(1)));
             tileRow.add(tile);
         }
 

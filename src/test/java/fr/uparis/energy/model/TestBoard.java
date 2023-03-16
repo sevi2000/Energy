@@ -36,9 +36,7 @@ public class TestBoard {
 
     @Test
     public void testBoardConstructorException() {
-        assertThrows(InvalidSizeException.class, () -> {
-            Board board = new Board(0, 0, Geometry.SQUARE);
-        });
+        assertThrows(InvalidSizeException.class, () -> new Board(0, 0, Geometry.SQUARE));
     }
 
     @Test
