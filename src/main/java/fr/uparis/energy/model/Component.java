@@ -14,11 +14,11 @@ public enum Component {
     WIFI("W"),
     EMPTY(".");
 
-    private static final Map<String, Component> map = new HashMap<>();
+    private static final Map<String, Component> MAP = new HashMap<>();
 
     static {
-        for (Component c : values()) {
-            map.put(c.toString(), c);
+        for (Component c : Component.values()) {
+            Component.MAP.put(c.toString(), c);
         }
     }
 
@@ -29,7 +29,7 @@ public enum Component {
     }
 
     public static Component getFromLabel(String label) {
-        return map.get(label);
+        return Component.MAP.get(label);
     }
 
     @Override
