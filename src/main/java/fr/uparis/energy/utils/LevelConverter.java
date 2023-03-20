@@ -22,6 +22,12 @@ import java.util.regex.Pattern;
 public class LevelConverter {
 
     /**
+     * Class constructor.
+     * This constructor is private to prevent creating a LevelConverter.
+     */
+    private LevelConverter() {}
+
+    /**
      * Checks if the given array is sorted in ascending order
      *
      * @param list the array to be checked
@@ -179,6 +185,7 @@ public class LevelConverter {
         try {
             l = fileToLevel(levelLocation, state);
         } catch (Exception e) {
+           System.exit(1);
         }
 
         return l;

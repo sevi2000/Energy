@@ -8,10 +8,10 @@ import java.io.IOException;
 import java.net.URL;
 import org.junit.jupiter.api.Test;
 
-public class TestBoard {
+class TestBoard {
 
     @Test
-    public void testBoardSolvedInASolvedLevel() throws InvalidSizeException, IOException, InvalidLevelException {
+     void testBoardSolvedInASolvedLevel() throws InvalidSizeException, IOException, InvalidLevelException {
         URL levelLocation = getClass().getClassLoader().getResource("levels/level1.nrg");
         Level l = LevelConverter.fileToLevel(levelLocation, Level.State.PLAYING);
         // l.getBoard().propagateEnergy();
@@ -19,7 +19,7 @@ public class TestBoard {
     }
 
     @Test
-    public void testBoardSolvedInANonSolvedLevel() throws InvalidSizeException, IOException, InvalidLevelException {
+    void testBoardSolvedInANonSolvedLevel() throws InvalidSizeException, IOException, InvalidLevelException {
         URL levelLocation = getClass().getClassLoader().getResource("levels/level3.nrg");
         Level l = LevelConverter.fileToLevel(levelLocation, Level.State.PLAYING);
         l.start();
@@ -27,7 +27,7 @@ public class TestBoard {
     }
 
     @Test
-    public void testShuffleWorks() {
+    void testShuffleWorks() {
         Level l = LevelConverter.getLevelFromResources(4, Level.State.PLAYING);
         Level l2 = LevelConverter.getLevelFromResources(4, Level.State.PLAYING);
         l2.start();
@@ -35,12 +35,12 @@ public class TestBoard {
     }
 
     @Test
-    public void testBoardConstructorException() {
+    void testBoardConstructorException() {
         assertThrows(InvalidSizeException.class, () -> new Board(0, 0, Geometry.SQUARE));
     }
 
     @Test
-    public void testAddColumnAtLeft() throws InvalidSizeException {
+    void testAddColumnAtLeft() throws InvalidSizeException {
         Board b = new Board(1, 1, Geometry.HEXAGON);
         int expected = b.getWidth() + 1;
         b.addColumnAtLeft();
@@ -48,7 +48,7 @@ public class TestBoard {
     }
 
     @Test
-    public void testAddRowAtBottom() throws InvalidSizeException {
+    void testAddRowAtBottom() throws InvalidSizeException {
         Board b = new Board(1, 1, Geometry.HEXAGON);
         int expected = b.getHeight() + 1;
         b.addRowAtBottom();
@@ -56,7 +56,7 @@ public class TestBoard {
     }
 
     @Test
-    public void testRemoveColumnAtLeft() throws InvalidSizeException {
+    void testRemoveColumnAtLeft() throws InvalidSizeException {
         Board b = new Board(2, 2, Geometry.HEXAGON);
         int expected = b.getWidth() - 1;
         b.removeColumnAtLeft();
@@ -64,7 +64,7 @@ public class TestBoard {
     }
 
     @Test
-    public void testRemoveRowAtBottom() throws InvalidSizeException {
+    void testRemoveRowAtBottom() throws InvalidSizeException {
         Board b = new Board(2, 2, Geometry.HEXAGON);
         int expected = b.getHeight() - 1;
         b.removeRowAtBottom();
