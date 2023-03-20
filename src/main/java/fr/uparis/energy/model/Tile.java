@@ -26,7 +26,6 @@ public class Tile {
 
         this.component = component;
 
-        // connectors = new ArrayList<>();
         for (int i = 0; i < geometry.card(); i++) {
             connectors.add(new Connector(this, connectedEdges[i], geometry.getDirections()[i]));
         }
@@ -113,11 +112,11 @@ public class Tile {
      * @return a String that can be written in a level file.
      */
     private String connectorsToString() {
-        String res = "";
+        StringBuilder res = new StringBuilder();
         for (int i = 0; i < connectors.size(); i++) {
-            if (connectors.get(i).exists()) res += i + " ";
+            if (connectors.get(i).exists()) res.append(i + " ");
         }
-        return res.trim();
+        return res.toString().trim();
     }
 
     /**

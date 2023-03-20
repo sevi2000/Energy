@@ -209,14 +209,14 @@ public class Board {
      * @return a string representing the tiles of this board.
      */
     private String tileGridToString() {
-        String ret = "";
+        StringBuilder ret = new StringBuilder();
         for (int h = 0; h < this.getHeight(); h++) {
             for (int w = 0; w < this.getWidth(); w++) {
-                ret = ret + tileGrid.get(h).get(w).toString() + " ";
+                ret.append(tileGrid.get(h).get(w).toString() + " ");
             }
-            ret = ret + "\n";
+            ret.append("\n");
         }
-        return ret;
+        return ret.toString();
     }
 
     /**
@@ -265,14 +265,14 @@ public class Board {
     }
 
     private String tileGridToStringWithEnergy() {
-        String ret = "";
+        StringBuilder ret = new StringBuilder();
         for (int h = 0; h < this.getHeight(); h++) {
             for (int w = 0; w < this.getWidth(); w++) {
-                ret = ret + tileGrid.get(h).get(w).toStringWithEnergy() + " ";
+                ret.append(tileGrid.get(h).get(w).toStringWithEnergy() + " ");
             }
-            ret = ret + "\n";
+            ret.append("\n");
         }
-        return ret;
+        return ret.toString();
     }
 
     public String toStringWithEnergy() {
