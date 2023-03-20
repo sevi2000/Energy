@@ -22,6 +22,11 @@ dependencies {
     implementation("com.diffplug.spotless:spotless-plugin-gradle:6.15.0")
 }
 
+jacocoTestReport {
+    reports {
+        xml.enabled true
+    }
+}
 
 test {
     useJUnitPlatform()
@@ -51,7 +56,8 @@ spotless {
 
 sonar {
   properties {
-    property "sonar.projectKey", "test"
+    property "sonar.login", "admin"
+    property "sonar.password", "F9Erj73eUynRrGP"
   }
 }
 
