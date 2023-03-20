@@ -4,17 +4,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-public class TestTile {
+class TestTile {
     @Test
-    public void testGeometryConstructor() {
+    void testGeometryConstructor() {
         Tile t = new Tile(Geometry.HEXAGON);
-        assertEquals(t.getGeometry(), Geometry.HEXAGON);
+        assertEquals(Geometry.HEXAGON, t.getGeometry());
         Tile t1 = new Tile(Geometry.SQUARE);
-        assertEquals(t1.getGeometry(), Geometry.SQUARE);
+        assertEquals(Geometry.SQUARE, t1.getGeometry());
     }
 
     @Test
-    public void testRotateClockwiseSquare() {
+    void testRotateClockwiseSquare() {
         boolean[] connectors = {false, false, false, true};
         Tile t = new Tile(Geometry.SQUARE, connectors, Component.EMPTY);
         t.rotateClockwise();
@@ -22,7 +22,7 @@ public class TestTile {
     }
 
     @Test
-    public void testRotateCounterClockwiseSquare() {
+    void testRotateCounterClockwiseSquare() {
         boolean[] connectors = {true, false, false, false};
         Tile t = new Tile(Geometry.SQUARE, connectors, Component.EMPTY);
         t.rotateCounterClockwise();
@@ -30,7 +30,7 @@ public class TestTile {
     }
 
     @Test
-    public void testRotateClockwiseHexagon() {
+    void testRotateClockwiseHexagon() {
         boolean[] connectors = {false, false, false, false, false, true};
         Tile t = new Tile(Geometry.HEXAGON, connectors, Component.EMPTY);
         t.rotateClockwise();
@@ -38,7 +38,7 @@ public class TestTile {
     }
 
     @Test
-    public void testRotateCounterClockwiseHexagon() {
+    void testRotateCounterClockwiseHexagon() {
         boolean[] connectors = {true, false, false, false, false, false};
         Tile t = new Tile(Geometry.HEXAGON, connectors, Component.WIFI);
         t.rotateCounterClockwise();
@@ -46,7 +46,7 @@ public class TestTile {
     }
 
     @Test
-    public void testCycleComponent() {
+    void testCycleComponent() {
         boolean[] connectors = {true, false, false, false};
         Tile t = new Tile(Geometry.SQUARE, connectors, Component.SOURCE);
         t.cycleComponent();
@@ -54,7 +54,7 @@ public class TestTile {
     }
 
     @Test
-    public void testCycleComponentWrap() {
+    void testCycleComponentWrap() {
         boolean[] connectors = {true, false, false, false};
         Tile t = new Tile(Geometry.SQUARE, connectors, Component.EMPTY);
         t.cycleComponent();
@@ -62,13 +62,13 @@ public class TestTile {
     }
 
     @Test
-    public void testWrongConnectorsSizeException() {
+    void testWrongConnectorsSizeException() {
         boolean[] connectors = {true, false, false, false, false, false};
         assertThrows(IllegalArgumentException.class, () -> new Tile(Geometry.SQUARE, connectors, Component.EMPTY));
     }
 
     @Test
-    public void testGetConnectorException() {
+    void testGetConnectorException() {
         boolean[] connectors = {true, false, false, false};
         Tile t = new Tile(Geometry.SQUARE, connectors, Component.EMPTY);
         assertThrows(IllegalArgumentException.class, () -> t.getConnector(Direction6.NORTH_EAST));
