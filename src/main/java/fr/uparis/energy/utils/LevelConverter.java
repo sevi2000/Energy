@@ -185,7 +185,7 @@ public class LevelConverter {
         try {
             l = fileToLevel(levelLocation, state);
         } catch (Exception e) {
-           System.exit(1);
+            System.exit(1);
         }
 
         return l;

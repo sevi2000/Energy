@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 class TestBoard {
 
     @Test
-     void testBoardSolvedInASolvedLevel() throws InvalidSizeException, IOException, InvalidLevelException {
+    void testBoardSolvedInASolvedLevel() throws InvalidSizeException, IOException, InvalidLevelException {
         URL levelLocation = getClass().getClassLoader().getResource("levels/level1.nrg");
         Level l = LevelConverter.fileToLevel(levelLocation, Level.State.PLAYING);
         // l.getBoard().propagateEnergy();
