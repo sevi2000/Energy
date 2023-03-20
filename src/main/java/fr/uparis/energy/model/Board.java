@@ -14,6 +14,8 @@ public class Board {
 
     private final Geometry geometry;
 
+    private final Random rand = new Random();
+
     /**
      * Builds an empty board with the given dimensions.
      * @param width of the board.
@@ -150,7 +152,6 @@ public class Board {
      * Shuffles the board by rotating each tile randomly.
      */
     public void shuffle() {
-        Random rand = new Random();
         for (Tile tile : this.getAllTiles()) {
             int numberOfRotations = rand.nextInt(0, tile.getGeometry().card());
             for (int i = 0; i < numberOfRotations; i++) {
