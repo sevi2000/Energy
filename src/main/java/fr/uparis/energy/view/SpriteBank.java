@@ -1,15 +1,9 @@
 package fr.uparis.energy.view;
 
-import fr.uparis.energy.model.Level;
-import fr.uparis.energy.utils.LevelConverter;
-
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import javax.imageio.ImageIO;
 
 public class SpriteBank {
 
@@ -17,15 +11,18 @@ public class SpriteBank {
 
     private static int SQUARE_IMAGE_WIDTH = 120;
     private static int HEXAGON_IMAGE_HEIGHT = 120;
+
     public SpriteBank() throws IOException {
         mainImage = ImageIO.read(getClass().getClassLoader().getResource("images/tiles.png"));
     }
 
-    public  BufferedImage getNotPoweredLamp() {
-        return mainImage.getSubimage(2 * SQUARE_IMAGE_WIDTH, 1 * SQUARE_IMAGE_WIDTH, SQUARE_IMAGE_WIDTH,SQUARE_IMAGE_WIDTH);
+    public BufferedImage getNotPoweredLamp() {
+        return mainImage.getSubimage(
+                2 * SQUARE_IMAGE_WIDTH, 1 * SQUARE_IMAGE_WIDTH, SQUARE_IMAGE_WIDTH, SQUARE_IMAGE_WIDTH);
     }
 
-    public  BufferedImage getPoweredLamp() {
-        return mainImage.getSubimage(3 * SQUARE_IMAGE_WIDTH, 1 * SQUARE_IMAGE_WIDTH, SQUARE_IMAGE_WIDTH,SQUARE_IMAGE_WIDTH);
+    public BufferedImage getPoweredLamp() {
+        return mainImage.getSubimage(
+                3 * SQUARE_IMAGE_WIDTH, 1 * SQUARE_IMAGE_WIDTH, SQUARE_IMAGE_WIDTH, SQUARE_IMAGE_WIDTH);
     }
 }

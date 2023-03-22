@@ -1,14 +1,13 @@
 package fr.uparis.energy;
 
 import fr.uparis.energy.view.MainView;
-
-import javax.swing.*;
 import java.io.IOException;
+import javax.swing.*;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        JFrame frame =  new JFrame("Energy");
+        JFrame frame = new JFrame("Energy");
         frame.getContentPane().add(new MainView());
         frame.setResizable(false);
         frame.pack();
