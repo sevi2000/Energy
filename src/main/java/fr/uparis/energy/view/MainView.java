@@ -7,11 +7,9 @@ import java.io.IOException;
 import javax.swing.*;
 
 public class MainView extends JPanel {
-    SpriteBank sb;
 
     public MainView() throws IOException {
         setPreferredSize(new Dimension(800, 800));
-        this.sb = new SpriteBank();
         repaint();
     }
 
@@ -25,6 +23,6 @@ public class MainView extends JPanel {
         g.drawImage(sb.getHexagonNotPoweredLamp(),200,100,null);
         g.drawImage(sb.getHexagonPoweredLamp(),300,100,null);*/
         // g.drawImage(sb.getSquarePoweredLamp(),100,100,null);
-        g.drawImage(sb.getSprite(Geometry.SQUARE, State.POWERED, Component.LAMP), 100, 100, null);
+        g.drawImage(SpriteBank.getComponent(Geometry.SQUARE, PowerState.NOT_POWERED, Component.WIFI), 100, 100, null);
     }
 }

@@ -1,6 +1,6 @@
 package fr.uparis.energy.view;
 
-public enum State {
+public enum PowerState {
     POWERED,
     NOT_POWERED
 }
