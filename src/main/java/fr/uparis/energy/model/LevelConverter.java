@@ -5,7 +5,5 @@ public class LevelConverter {
         return null;
     }
 
-    public static void writeLevelToFile() {
-
-    }
+    public static void writeLevelToFile() {}
 }
