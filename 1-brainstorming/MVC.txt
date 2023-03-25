@@ -1,0 +1,116 @@
+/*interface Observable
+- void addObserver(Observer)
+- void notifyObservers() = for o o.update(this)
+
+Board implements Observable
+
+interface Observer
+- void update(Observable)
+
+BoardView implements Observer*/
+
+================================================================================
+
+main():
+- new jframe
+- jframe.setContentPane(new MainMenu())
+
+class MainMenu extends JPanel vertical
+- MainMenu(JFrame jf) {
+    this.add(JLabel("Energy"))
+    label1 = new JLabel("Bank 1")
+    label1.setMouseListener { jf.setContentPane() }
+    this.add(label1)
+    idem pour label2
+    help et quit trivial
+}
+
+class Bank1 extends JPanel
+- protected int selectedLevel = 1
+- Bank1(JFrame jf) {
+    this.add(JLabel("Bank 1"))
+    for i in 1 .. nbLevels:
+        JLabel l = new JLabel(i)
+        l.addMouseListener { selectedLevel = i }
+        this.add(l)
+        
+        JLabel goBack = new JLabel("Go back")
+        goBack.addMouseListener { jf.setContentPane(new MainMenu()) }
+        
+        Jlabel play = new JLabel("Play")
+        play.addMouseListener { jf.setContentPane(new PlayLevelView(selectedLevel)) }
+        this.add(play)
+}
+
+class Bank2 extends Bank1
+- Bank2(JFrame jf) {
+    super(jf)
+    
+    JLabel edit = new JLabel("Edit")
+    edit.addMouseListener { jf.setContentPane(new EditLevelView(selectedLevel)) }
+    
+    JLabel empty = new JLabel("Empty")
+    empty.addMouseListener { new JDialog confirm; if confirm emptyLevel }
+    this.add(empty)
+    
+    JLabel changeGeom = new JLabel("Change geometry")
+    empty.addMouseListener { new JDialog confirm; if confirm changeGeom }
+    this.add(changeGeom)
+}
+
+class PlayLevelView extends JPanel
+- private Level level
+- PlayLevelView(JFrame jf, Level l) {
+    level = l
+    this.add(JLabel("Level " + level.numero))
+    BoardView bv = new BoardView(level.getBoard())
+    bv.addMouseListener(new PlayingBoardController(bv, level.getBoard()))
+    this.add(new BoardView(level.getBoard()))
+    bouton quitter trivial
+}
+
+BoardView extends JPanel
+- private Board board;
+BoardView(Board b) {
+    this.board = b;
+    this.repaint();
+}
+//- @Override update(Observable a) { board = (Board)a; this.repaint() }
+- paintComponent() {
+    en fonction de la géométrie dessiner chaque tuile de board etc.
+}
+
+PlayingBoardController extends MouseAdapter
+- PlayingBoardController(BoardView, Board)
+- @Override mouseClicked(x, y) {
+    test d'intériorité -> obtenir Tile t
+    t.rotateClockwise();
+    board.propagateEnergy()
+    bv.repaint();
+}
+
+class EditLevelView extends JPanel
+- private Level level
+- EditLevelView(JFrame jf, Level l) {
+    level = l
+    this.add(JLabel("Level " + level.numero + " editor"))
+    BoardView bv = new BoardView(level.getBoard())
+    bv.addMouseListener(new EditingBoardController(bv, level.getBoard()))
+    this.add(new BoardView(level.getBoard()))
+    // Boutons qui changent la taille du niveau
+    bouton quitter { if level.isSolved() proposer de sauvegarder }
+}
+
+EditingBoardController extends MouseAdapter
+- EditingBoardController(BoardView, Board)
+- @Override mouseClicked(x, y) {
+    test d'intériorité -> obtenir Tile t et la région cliquée à l'intérieur de t
+    t.cycleComponent() ou t.getConnectors()[3].setExists(true)
+    board.propagateEnergy()
+    bv.repaint();
+}
+
+
+// Embryon de test d'intériorité
+// 8x8 carrés de côté 200 = 1600x1600 px
+// clic en (799,799) = clic sur le carré (3,3) (en partant de 0) car 799/200 = 3 (arrondi à l'inférieur)
