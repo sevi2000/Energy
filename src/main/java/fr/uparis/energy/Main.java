@@ -1,9 +1,6 @@
 package fr.uparis.energy;
 
-import com.diffplug.spotless.cpp.CppDefaults;
 import fr.uparis.energy.view.MainMenu;
-import fr.uparis.energy.view.MainView;
-
 import java.awt.*;
 import java.io.IOException;
 import javax.swing.*;
