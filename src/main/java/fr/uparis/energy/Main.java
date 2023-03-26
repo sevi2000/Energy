@@ -1,5 +1,5 @@
 package fr.uparis.energy;
-import com.diffplug.spotless.cpp.CppDefaults;
+
 import fr.uparis.energy.utils.LevelConverter;
 import fr.uparis.energy.view.MainMenu;
 import java.awt.*;

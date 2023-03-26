@@ -3,9 +3,8 @@ package fr.uparis.energy.view;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.*;
-import java.awt.event.MouseListener;
 import java.net.URISyntaxException;
+import javax.swing.*;
 
 public class MainMenu extends JPanel {
 
@@ -23,13 +22,12 @@ public class MainMenu extends JPanel {
                 JPanel bg = null;
                 try {
                     bg = new Bank1();
-                    //bg.setBackground(Color.green);
+                    // bg.setBackground(Color.green);
                     jf.setContentPane(bg);
                     jf.setVisible(true);
                 } catch (URISyntaxException ex) {
                     throw new RuntimeException(ex);
                 }
-
             }
         });
         this.add(play);
@@ -65,6 +63,4 @@ public class MainMenu extends JPanel {
         res.setAlignmentY(JComponent.CENTER_ALIGNMENT);
         return res;
     }
-
-
 }

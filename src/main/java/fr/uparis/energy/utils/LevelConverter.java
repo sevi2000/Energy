@@ -215,14 +215,15 @@ public class LevelConverter {
         }
         return str.toString();
     }
+
     public static List<Integer> getBank1LevelsNums() throws URISyntaxException {
         ArrayList<Integer> res = new ArrayList<>();
         ClassLoader cl = LevelConverter.class.getClassLoader();
         URL path = cl.getResource("levels");
-        String dir =  path.getPath();
+        String dir = path.getPath();
         File levels = new File(dir);
-        File[] list =  levels.listFiles();
-        for (File f: list) {
+        File[] list = levels.listFiles();
+        for (File f : list) {
             res.add(Integer.parseInt(extractNumber(f.getName())));
         }
         Collections.sort(res);
