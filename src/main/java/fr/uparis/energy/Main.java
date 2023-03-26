@@ -15,7 +15,6 @@ public class Main {
         JFrame frame = new JFrame("Energy");
         frame.getContentPane().add(new MainMenu(frame));
         JPanel bg = new JPanel();
-        frame.setResizable(false);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
