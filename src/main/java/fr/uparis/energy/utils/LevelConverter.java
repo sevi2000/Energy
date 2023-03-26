@@ -6,13 +6,12 @@ import java.io.FileNotFoundException;
 import java.io.IOError;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -205,5 +204,28 @@ public class LevelConverter {
                 Path.of(energyDirectory + System.getProperty("file.separator") + "level" + level.getNumber() + ".nrg"),
                 level.toString(),
                 StandardCharsets.UTF_8);
+    }
+
+    private static String extractNumber(String levelName) {
+        StringBuilder str = new StringBuilder();
+        for (int i = 0; i < levelName.length(); i++) {
+            if (Character.isDigit(levelName.charAt(i))) {
+                str.append(levelName.charAt(i));
+            }
+        }
+        return str.toString();
+    }
+    public static List<Integer> getBank1LevelsNums() throws URISyntaxException {
+        ArrayList<Integer> res = new ArrayList<>();
+        ClassLoader cl = LevelConverter.class.getClassLoader();
+        URL path = cl.getResource("levels");
+        String dir =  path.getPath();
+        File levels = new File(dir);
+        File[] list =  levels.listFiles();
+        for (File f: list) {
+            res.add(Integer.parseInt(extractNumber(f.getName())));
+        }
+        Collections.sort(res);
+        return res;
     }
 }

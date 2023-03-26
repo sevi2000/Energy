@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.*;
+import java.awt.event.MouseListener;
+import java.net.URISyntaxException;
 
 public class MainMenu extends JPanel {
 
@@ -17,10 +19,17 @@ public class MainMenu extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                JPanel bg = new JPanel();
-                bg.setBackground(Color.green);
-                jf.setContentPane(bg);
-                jf.setVisible(true);
+
+                JPanel bg = null;
+                try {
+                    bg = new Bank1();
+                    //bg.setBackground(Color.green);
+                    jf.setContentPane(bg);
+                    jf.setVisible(true);
+                } catch (URISyntaxException ex) {
+                    throw new RuntimeException(ex);
+                }
+
             }
         });
         this.add(play);
@@ -57,10 +66,5 @@ public class MainMenu extends JPanel {
         return res;
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
 
-        System.out.println("paint");
-    }
 }
