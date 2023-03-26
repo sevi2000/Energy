@@ -1,11 +1,12 @@
 package fr.uparis.energy.view;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
+import javax.swing.*;
 
 public class Common {
-    private Common(){}
+    private Common() {}
+
     public static JLabel createButton(String title, MouseAdapter l) {
         JLabel res = new JLabel(title);
         res.setOpaque(true);

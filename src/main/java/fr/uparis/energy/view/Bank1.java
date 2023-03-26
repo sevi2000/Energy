@@ -1,14 +1,11 @@
 package fr.uparis.energy.view;
 
-import fr.uparis.energy.model.Level;
 import fr.uparis.energy.utils.LevelConverter;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javax.swing.*;
 
@@ -18,6 +15,7 @@ public class Bank1 extends JPanel {
 
     static JFrame parent;
     private static ArrayList<JLabel> levelButtons = new ArrayList<>();
+
     Bank1(JFrame parent) throws URISyntaxException {
         this.parent = parent;
         selected = -1;
@@ -28,7 +26,6 @@ public class Bank1 extends JPanel {
         this.add(Box.createRigidArea(new Dimension(0, 200)));
         this.add(bottomMenu());
         this.add(Box.createRigidArea(new Dimension(0, 200)));
-
     }
 
     private static JLabel bank1() {
@@ -62,7 +59,7 @@ public class Bank1 extends JPanel {
                 System.out.println("selected level = " + selected);
                 reset();
                 if (selected == Integer.parseInt(res.getText())) {
-                    res.setBorder(BorderFactory.createLineBorder(Color.RED,2));
+                    res.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
                     res.setBackground(Color.lightGray);
                 }
                 super.mouseClicked(e);
@@ -95,16 +92,16 @@ public class Bank1 extends JPanel {
     }
 
     private static void reset() {
-        for(JLabel label : levelButtons) {
-            label.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        for (JLabel label : levelButtons) {
+            label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
             label.setBackground(Color.GRAY);
         }
     }
 
     public static JPanel bottomMenu() {
         JPanel res = new JPanel();
-        res.setLayout(new GridLayout(1,3));
-        JLabel play = Common.createButton("Play",null);
+        res.setLayout(new GridLayout(1, 3));
+        JLabel play = Common.createButton("Play", null);
         JLabel back = Common.createButton("Back", new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -113,8 +110,8 @@ public class Bank1 extends JPanel {
                 parent.setVisible(true);
             }
         });
-        play.setPreferredSize(new Dimension(200,20));
-        back.setPreferredSize(new Dimension(200,20));
+        play.setPreferredSize(new Dimension(200, 20));
+        back.setPreferredSize(new Dimension(200, 20));
         res.add(play);
         res.add(Box.createRigidArea(new Dimension(0, 200)));
         res.add(back);

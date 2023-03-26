@@ -53,9 +53,7 @@ public class MainMenu extends JPanel {
     private JPanel titlePane() {
         JPanel res = new JPanel();
         JLabel title = new JLabel("Energy");
-        title.setFont(new Font("Arial",Font.BOLD,50));
+        title.setFont(new Font("Arial", Font.BOLD, 50));
         return res;
     }
-
-
 }
