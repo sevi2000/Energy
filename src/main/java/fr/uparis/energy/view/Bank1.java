@@ -1,24 +1,22 @@
 package fr.uparis.energy.view;
 
 import fr.uparis.energy.utils.LevelConverter;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.*;
 
 public class Bank1 extends JPanel {
 
     static int selected = -1;
 
-    static JFrame parent;
+    static JFrame parentWindow;
     private static ArrayList<JLabel> levelButtons = new ArrayList<>();
-
-    Bank1(JFrame parent) throws URISyntaxException {
-        this.parent = parent;
-        selected = -1;
+    Bank1(JFrame parent) {
+        Bank1.parentWindow = parent;
         this.setPreferredSize(new Dimension(800, 800));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(bank1());
@@ -30,7 +28,7 @@ public class Bank1 extends JPanel {
 
     private static JLabel bank1() {
         JLabel res = new JLabel("BANK 1");
-        res.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+        res.setAlignmentX(Component.CENTER_ALIGNMENT);
         res.setPreferredSize(new Dimension(200, 200));
         res.setForeground(Color.BLACK);
         res.setBackground(Color.GRAY);
@@ -64,21 +62,11 @@ public class Bank1 extends JPanel {
                 }
                 super.mouseClicked(e);
             }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                super.mouseEntered(e);
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                super.mouseExited(e);
-            }
         });
         return res;
     }
 
-    public static JPanel levelsPanel() throws URISyntaxException {
+    public static JPanel levelsPanel() {
         JPanel res = new JPanel();
         res.setPreferredSize(new Dimension(200, 200));
         List<Integer> lvls = LevelConverter.getBank1LevelsNums();
@@ -106,8 +94,8 @@ public class Bank1 extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                parent.setContentPane(new MainMenu(parent));
-                parent.setVisible(true);
+                parentWindow.setContentPane(new MainMenu(parentWindow));
+                parentWindow.setVisible(true);
             }
         });
         play.setPreferredSize(new Dimension(200, 20));

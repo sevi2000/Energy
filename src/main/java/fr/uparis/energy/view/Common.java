@@ -18,8 +18,8 @@ public class Common {
         res.setFont(font);
 
         res.addMouseListener(l);
-        res.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-        res.setAlignmentY(JComponent.CENTER_ALIGNMENT);
+        res.setAlignmentX(Component.CENTER_ALIGNMENT);
+        res.setAlignmentY(Component.CENTER_ALIGNMENT);
         return res;
     }
 }

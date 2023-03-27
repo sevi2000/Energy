@@ -1,17 +1,15 @@
 package fr.uparis.energy.view;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.net.URISyntaxException;
-import javax.swing.*;
 
 public class MainMenu extends JPanel {
-    JFrame parent;
+    JFrame parentWindow;
 
     public MainMenu(JFrame jf) {
-        // this.setLayout(new BoxLayout());
-        parent = jf;
+        parentWindow = jf;
         setPreferredSize(new Dimension(800, 800));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(titlePane());
@@ -22,14 +20,9 @@ public class MainMenu extends JPanel {
                 super.mouseClicked(e);
 
                 JPanel bg = null;
-                try {
                     bg = new Bank1(jf);
-                    // bg.setBackground(Color.green);
                     jf.setContentPane(bg);
                     jf.setVisible(true);
-                } catch (URISyntaxException ex) {
-                    throw new RuntimeException(ex);
-                }
             }
         });
         this.add(play);

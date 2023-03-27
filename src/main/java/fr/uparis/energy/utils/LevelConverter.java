@@ -1,17 +1,20 @@
 package fr.uparis.energy.utils;
 
 import fr.uparis.energy.model.*;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOError;
 import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -216,7 +219,7 @@ public class LevelConverter {
         return str.toString();
     }
 
-    public static List<Integer> getBank1LevelsNums() throws URISyntaxException {
+    public static List<Integer> getBank1LevelsNums() {
         ArrayList<Integer> res = new ArrayList<>();
         ClassLoader cl = LevelConverter.class.getClassLoader();
         URL path = cl.getResource("levels");
