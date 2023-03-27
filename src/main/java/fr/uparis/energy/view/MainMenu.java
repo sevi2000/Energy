@@ -1,9 +1,9 @@
 package fr.uparis.energy.view;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.*;
 
 public class MainMenu extends JPanel {
     JFrame parentWindow;
@@ -20,9 +20,9 @@ public class MainMenu extends JPanel {
                 super.mouseClicked(e);
 
                 JPanel bg = null;
-                    bg = new Bank1(jf);
-                    jf.setContentPane(bg);
-                    jf.setVisible(true);
+                bg = new Bank1(jf);
+                jf.setContentPane(bg);
+                jf.setVisible(true);
             }
         });
         this.add(play);

@@ -1,7 +1,6 @@
 package fr.uparis.energy.utils;
 
 import fr.uparis.energy.model.*;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOError;

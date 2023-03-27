@@ -2,7 +2,6 @@ package fr.uparis.energy;
 
 import fr.uparis.energy.utils.LevelConverter;
 import fr.uparis.energy.view.MainMenu;
-
 import javax.swing.*;
 
 public class Main {

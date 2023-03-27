@@ -1,13 +1,12 @@
 package fr.uparis.energy.view;
 
 import fr.uparis.energy.utils.LevelConverter;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.*;
 
 public class Bank1 extends JPanel {
 
@@ -15,6 +14,7 @@ public class Bank1 extends JPanel {
 
     static JFrame parentWindow;
     private static ArrayList<JLabel> levelButtons = new ArrayList<>();
+
     Bank1(JFrame parent) {
         Bank1.parentWindow = parent;
         this.setPreferredSize(new Dimension(800, 800));
