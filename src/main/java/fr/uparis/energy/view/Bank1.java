@@ -17,30 +17,41 @@ public class Bank1 extends JPanel {
 
     Bank1(JFrame parent) {
         Bank1.parentWindow = parent;
-        this.setPreferredSize(new Dimension(800, 800));
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(bank1());
-        this.add(levelsPanel());
-        this.add(Box.createRigidArea(new Dimension(0, 200)));
-        this.add(bottomMenu());
-        this.add(Box.createRigidArea(new Dimension(0, 200)));
+        ArrayList<Component> components = new ArrayList<>();
+        this.setPreferredSize(new Dimension(800,800));
+        components.add(bank1());
+        Component box =  Box.createRigidArea(new Dimension(0, 100));
+        box.setBackground(Color.RED);
+        components.add(box);
+        components.add(levelsPanel());
+        components.add(box);
+        components.add(bottomMenu());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.anchor = GridBagConstraints.CENTER;
+        this.setLayout( new GridBagLayout());
+
+        JPanel contentPane = Common.centeredPane(components, 200, 1);
+        parent.revalidate();
+        add(contentPane, gbc);
     }
 
     private static JLabel bank1() {
         JLabel res = new JLabel("BANK 1");
         res.setAlignmentX(Component.CENTER_ALIGNMENT);
-        res.setPreferredSize(new Dimension(200, 200));
+        //res.setPreferredSize(new Dimension(200, 200));
         res.setForeground(Color.BLACK);
         res.setBackground(Color.GRAY);
         res.setAlignmentX(SwingConstants.CENTER);
         res.setAlignmentY(SwingConstants.CENTER);
-        Font font = new Font("Arial", Font.BOLD, 50);
+        Font font = new Font("Arial", Font.BOLD, 70);
         res.setFont(font);
+        res.setBackground(Color.RED);
         return res;
     }
 
     private static JLabel levelSelectionLabel(String label) {
         JLabel res = new JLabel(label);
+        res.setPreferredSize(new Dimension(60,60));
         res.setForeground(Color.BLACK);
         res.setBackground(Color.GRAY);
         res.setAlignmentX(SwingConstants.CENTER);
