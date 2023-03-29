@@ -26,9 +26,8 @@ public class Common {
     public static JPanel centeredPane(ArrayList<Component> children, int border, int col) {
         JPanel content = new JPanel();
         content.setLayout(new GridLayout(children.size(), col));
-        for (Component component: children)
-            content.add(component);
-        content.setBorder(BorderFactory.createEmptyBorder(border,border,border,border));
+        for (Component component : children) content.add(component);
+        content.setBorder(BorderFactory.createEmptyBorder(border, border, border, border));
         return content;
     }
 }

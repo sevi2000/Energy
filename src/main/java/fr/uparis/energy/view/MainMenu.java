@@ -10,7 +10,6 @@ import javax.swing.*;
 public class MainMenu extends JPanel {
     JFrame parentWindow;
 
-
     public MainMenu(JFrame jf) {
         parentWindow = jf;
         JLabel play = Common.createButton("Play", new MouseListener() {
@@ -24,23 +23,16 @@ public class MainMenu extends JPanel {
             }
 
             @Override
-            public void mousePressed(MouseEvent mouseEvent) {
-
-            }
+            public void mousePressed(MouseEvent mouseEvent) {}
 
             @Override
-            public void mouseReleased(MouseEvent mouseEvent) {
-
-            }
+            public void mouseReleased(MouseEvent mouseEvent) {}
 
             @Override
-            public void mouseEntered(MouseEvent mouseEvent) {
-            }
+            public void mouseEntered(MouseEvent mouseEvent) {}
 
             @Override
-            public void mouseExited(MouseEvent mouseEvent) {
-
-            }
+            public void mouseExited(MouseEvent mouseEvent) {}
         });
 
         JLabel quit = Common.createButton("Quit", new MouseAdapter() {
@@ -64,10 +56,10 @@ public class MainMenu extends JPanel {
         components.add(Box.createRigidArea(new Dimension(0, 100)));
         components.add(quit);
 
-        this.setPreferredSize(new Dimension(800,800));
+        this.setPreferredSize(new Dimension(800, 800));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.anchor = GridBagConstraints.CENTER;
-        this.setLayout( new GridBagLayout());
+        this.setLayout(new GridBagLayout());
 
         JPanel contentPane = Common.centeredPane(components, 100, 1);
         jf.revalidate();
