@@ -1,7 +1,6 @@
 package fr.uparis.energy.model;
 
 import fr.uparis.energy.view.BoardObserver;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -18,7 +17,6 @@ public class Board implements BoardObservable {
 
     private final Random rand = new Random();
     private List<BoardObserver> boardObservers = new ArrayList<>();
-
 
     /**
      * Builds an empty board with the given dimensions.
@@ -289,7 +287,7 @@ public class Board implements BoardObservable {
     public ReadOnlyTile getTileAt(int i, int j) {
         if (!(0 <= i && i < this.getHeight())) throw new IllegalArgumentException();
         if (!(0 <= j && j < this.getWidth())) throw new IllegalArgumentException();
-        return (ReadOnlyTile)this.tileGrid.get(i).get(j);
+        return (ReadOnlyTile) this.tileGrid.get(i).get(j);
     }
 
     @Override
@@ -299,7 +297,6 @@ public class Board implements BoardObservable {
 
     @Override
     public void notifyObservers() {
-        for (BoardObserver o : this.boardObservers)
-            o.update(this);
+        for (BoardObserver o : this.boardObservers) o.update(this);
     }
 }

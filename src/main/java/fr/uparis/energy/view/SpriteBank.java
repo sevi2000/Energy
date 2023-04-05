@@ -9,7 +9,6 @@ import javax.imageio.ImageIO;
 public class SpriteBank {
     // TODO Get wire images
 
-
     private static BufferedImage mainImage;
 
     private static final int SQUARE_IMAGE_WIDTH = 120;
