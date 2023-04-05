@@ -7,6 +7,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class SpriteBank {
+    // TODO Get wire images
+
 
     private static BufferedImage mainImage;
 

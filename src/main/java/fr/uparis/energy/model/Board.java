@@ -1,5 +1,7 @@
 package fr.uparis.energy.model;
 
+import fr.uparis.energy.view.BoardObserver;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -8,13 +10,15 @@ import java.util.Random;
  * Represents the board of a level. Any modification made to the board or any of its tiles
  * must be followed by a call to Board.propagateEnergy(). A board is forced to be at least 1x1.
  */
-public class Board {
+public class Board implements BoardObservable {
 
     private final List<List<Tile>> tileGrid;
 
     private final Geometry geometry;
 
     private final Random rand = new Random();
+    private List<BoardObserver> boardObservers = new ArrayList<>();
+
 
     /**
      * Builds an empty board with the given dimensions.
@@ -252,6 +256,7 @@ public class Board {
      * Returns the width of this board.
      * @return size of a line.
      */
+    @Override
     public int getWidth() {
         return tileGrid.get(0).size();
     }
@@ -260,6 +265,7 @@ public class Board {
      * Returns the height of this board.
      * @return size of a column.
      */
+    @Override
     public int getHeight() {
         return tileGrid.size();
     }
@@ -277,5 +283,23 @@ public class Board {
 
     public String toStringWithEnergy() {
         return this.config() + "\n" + this.tileGridToStringWithEnergy();
+    }
+
+    @Override
+    public ReadOnlyTile getTileAt(int i, int j) {
+        if (!(0 <= i && i < this.getHeight())) throw new IllegalArgumentException();
+        if (!(0 <= j && j < this.getWidth())) throw new IllegalArgumentException();
+        return (ReadOnlyTile)this.tileGrid.get(i).get(j);
+    }
+
+    @Override
+    public void addObserver(BoardObserver o) {
+        this.boardObservers.add(o);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (BoardObserver o : this.boardObservers)
+            o.update(this);
     }
 }

@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Represents a tile that is held by a board.
  */
-public class Tile {
+public class Tile implements ReadOnlyTile {
     private final List<Connector> connectors = new ArrayList<>();
     private Component component;
     private final Geometry geometry;
@@ -164,7 +164,18 @@ public class Tile {
         return this.geometry;
     }
 
+    @Override
     public Component getComponent() {
         return this.component;
+    }
+
+    @Override
+    public boolean[] getConnectorsExist() {
+        boolean[] connectors = new boolean[this.geometry.card()];
+
+        for (int i = 0; i < this.geometry.card(); i++)
+            connectors[i] = this.connectors.get(i).exists();
+
+        return connectors;
     }
 }
