@@ -96,4 +96,11 @@ public class SpriteBank {
             }
         }
     }
+
+    public static BufferedImage getSquare(PowerState powerState) {
+        return switch (powerState) {
+            case NOT_POWERED -> SpriteBank.mainImage.getSubimage(0,0,SQUARE_IMAGE_WIDTH,SQUARE_IMAGE_HEIGHT);
+            case POWERED -> SpriteBank.mainImage.getSubimage(0,3,SQUARE_IMAGE_WIDTH,SQUARE_IMAGE_HEIGHT);
+        };
+    }
 }

@@ -4,6 +4,7 @@ import fr.uparis.energy.utils.LevelConverter;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
@@ -100,7 +101,33 @@ public class Bank1 extends JPanel {
     public static JPanel bottomMenu() {
         JPanel res = new JPanel();
         res.setLayout(new GridLayout(1, 3));
-        JLabel play = Common.createButton("Play", null);
+        JLabel play = Common.createButton("Play", new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent mouseEvent) {
+                parentWindow.setContentPane(new BoardView());
+                parentWindow.setVisible(true);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent mouseEvent) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent mouseEvent) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent mouseEvent) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent mouseEvent) {
+
+            }
+        });
         JLabel back = Common.createButton("Back", new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
