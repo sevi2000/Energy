@@ -12,4 +12,6 @@ public interface BoardObservable {
     void addObserver(BoardObserver o);
 
     void notifyObservers();
+
+    Geometry getGeometry();
 }

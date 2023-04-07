@@ -1,8 +1,7 @@
 package fr.uparis.energy.view;
 
 import fr.uparis.energy.model.BoardObservable;
-import fr.uparis.energy.model.Component;
-import fr.uparis.energy.model.Geometry;
+import fr.uparis.energy.model.ReadOnlyTile;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -23,15 +22,23 @@ public class BoardView extends JPanel implements BoardObserver {
 
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, this.getWidth(), this.getWidth());
-        drawTile(g);
+        drawTile(g, boardObservable.getTileAt(0, 2), 100, 100);
+        drawTile(g, boardObservable.getTileAt(1, 0), 200, 200);
         /*if (boardObservable == null)
         return;*/
 
     }
 
-    private void drawTile(Graphics g) {
-        g.drawImage(SpriteBank.getSquare(PowerState.NOT_POWERED), 100, 100, null);
-        g.drawImage(SpriteBank.getComponent(Geometry.SQUARE, PowerState.POWERED, Component.WIFI), 100, 100, null);
+    private void drawTile(Graphics g, ReadOnlyTile rt, int i, int j) {
+        switch (boardObservable.getGeometry()) {
+            case SQUARE -> g.drawImage(SpriteBank.getSquare(rt.getState()), i, j, null);
+            case HEXAGON -> {
+                g.drawImage(SpriteBank.getHexagon(rt.getState()), i, j, null);
+            }
+        }
+
+        g.drawImage(
+                SpriteBank.getComponent(boardObservable.getGeometry(), rt.getState(), rt.getComponent()), i, j, null);
     }
 
     @Override

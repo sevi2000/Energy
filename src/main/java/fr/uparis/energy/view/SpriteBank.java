@@ -103,4 +103,11 @@ public class SpriteBank {
             case POWERED -> SpriteBank.mainImage.getSubimage(0, 3, SQUARE_IMAGE_WIDTH, SQUARE_IMAGE_HEIGHT);
         };
     }
+
+    public static BufferedImage getHexagon(PowerState powerState) {
+        return switch (powerState) {
+            case NOT_POWERED -> SpriteBank.mainImage.getSubimage(0, 3, HEXAGON_IMAGE_WIDTH, HEXAGON_IMAGE_HEIGHT);
+            case POWERED -> SpriteBank.mainImage.getSubimage(3, 3, HEXAGON_IMAGE_WIDTH, HEXAGON_IMAGE_HEIGHT);
+        };
+    }
 }

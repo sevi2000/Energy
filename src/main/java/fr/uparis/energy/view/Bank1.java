@@ -1,5 +1,7 @@
 package fr.uparis.energy.view;
 
+import fr.uparis.energy.model.BoardObservable;
+import fr.uparis.energy.model.Level;
 import fr.uparis.energy.utils.LevelConverter;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -104,8 +106,13 @@ public class Bank1 extends JPanel {
         JLabel play = Common.createButton("Play", new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
-                parentWindow.setContentPane(new BoardView());
-                parentWindow.setVisible(true);
+                if (selected != -1) {
+                    Level lvl = LevelConverter.getLevelFromResources(selected, Level.State.PLAYING);
+                    BoardView bv = new BoardView();
+                    bv.update((BoardObservable) lvl.getBoard());
+                    parentWindow.setContentPane(bv);
+                    parentWindow.setVisible(true);
+                }
             }
 
             @Override

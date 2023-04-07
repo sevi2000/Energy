@@ -299,4 +299,9 @@ public class Board implements BoardObservable {
     public void notifyObservers() {
         for (BoardObserver o : this.boardObservers) o.update(this);
     }
+
+    @Override
+    public Geometry getGeometry() {
+        return this.geometry;
+    }
 }

@@ -1,5 +1,6 @@
 package fr.uparis.energy.model;
 
+import fr.uparis.energy.view.PowerState;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -177,5 +178,10 @@ public class Tile implements ReadOnlyTile {
             connectors[i] = this.connectors.get(i).exists();
 
         return connectors;
+    }
+
+    @Override
+    public PowerState getState() {
+        return PowerState.fromBoolean(this.isPowered);
     }
 }
