@@ -11,15 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 
-public class Bank1 extends JPanel {
+public class Bank1View extends JPanel {
 
     static int selected = -1;
 
     static JFrame parentWindow;
     private static ArrayList<JLabel> levelButtons = new ArrayList<>();
 
-    Bank1(JFrame parent) {
-        Bank1.parentWindow = parent;
+    Bank1View(JFrame parent) {
+        Bank1View.parentWindow = parent;
         ArrayList<Component> components = new ArrayList<>();
         this.setPreferredSize(new Dimension(800, 800));
         components.add(bank1());
@@ -67,7 +67,7 @@ public class Bank1 extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 System.out.println("clikeced");
-                Bank1.selected = Integer.parseInt(res.getText());
+                Bank1View.selected = Integer.parseInt(res.getText());
                 System.out.println("selected level = " + selected);
                 reset();
                 if (selected == Integer.parseInt(res.getText())) {
@@ -83,7 +83,7 @@ public class Bank1 extends JPanel {
     public static JPanel levelsPanel() {
         JPanel res = new JPanel();
         res.setPreferredSize(new Dimension(200, 200));
-        List<Integer> lvls = LevelConverter.getBank1LevelsNums();
+        List<Integer> lvls = LevelConverter.getBank1LevelNumbers();
         res.setLayout(new GridLayout(lvls.size() / 5 + 1, 5, 10, 10));
         for (Integer i : lvls) {
             JLabel lvlLabel = levelSelectionLabel(i.toString());
@@ -131,7 +131,7 @@ public class Bank1 extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                parentWindow.setContentPane(new MainMenu(parentWindow));
+                parentWindow.setContentPane(new MainMenuView(parentWindow));
                 parentWindow.setVisible(true);
             }
         });

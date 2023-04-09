@@ -7,17 +7,17 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.*;
 
-public class MainMenu extends JPanel {
+public class MainMenuView extends JPanel {
     JFrame parentWindow;
 
-    public MainMenu(JFrame jf) {
+    public MainMenuView(JFrame jf) {
         parentWindow = jf;
         JLabel play = Common.createButton("Play", new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
 
                 JPanel bg = null;
-                bg = new Bank1(jf);
+                bg = new Bank1View(jf);
                 jf.setContentPane(bg);
                 jf.setVisible(true);
             }

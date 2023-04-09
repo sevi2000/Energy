@@ -16,7 +16,8 @@ public class Board implements BoardObservable {
     private final Geometry geometry;
 
     private final Random rand = new Random();
-    private List<BoardObserver> boardObservers = new ArrayList<>();
+
+    private final List<BoardObserver> boardObservers = new ArrayList<>();
 
     /**
      * Builds an empty board with the given dimensions.

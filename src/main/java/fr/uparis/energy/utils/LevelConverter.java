@@ -209,22 +209,20 @@ public class LevelConverter {
     }
 
     private static String extractNumber(String levelName) {
-        StringBuilder str = new StringBuilder();
-        for (int i = 0; i < levelName.length(); i++) {
-            if (Character.isDigit(levelName.charAt(i))) {
-                str.append(levelName.charAt(i));
-            }
-        }
-        return str.toString();
+        Matcher matcher = LevelConverter.getMatcher("^level(\\d+)\\.nrg$", levelName);
+        if (!matcher.find()) throw new IllegalArgumentException();
+        return matcher.group(1);
     }
 
-    public static List<Integer> getBank1LevelsNums() {
-        ArrayList<Integer> res = new ArrayList<>();
+    public static List<Integer> getBank1LevelNumbers() {
+        List<Integer> res = new ArrayList<>();
         ClassLoader cl = LevelConverter.class.getClassLoader();
         URL path = cl.getResource("levels");
+        if (path == null) throw new IllegalStateException();
         String dir = path.getPath();
         File levels = new File(dir);
         File[] list = levels.listFiles();
+        if (list == null) throw new IllegalStateException();
         for (File f : list) {
             res.add(Integer.parseInt(extractNumber(f.getName())));
         }
