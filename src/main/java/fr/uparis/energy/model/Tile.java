@@ -37,7 +37,7 @@ public class Tile implements ReadOnlyTile {
      * @return the power state of this tile.
      */
     public boolean isPowered() {
-        return this.component == Component.SOURCE ? true : this.isPowered;
+        return this.component == Component.SOURCE || this.isPowered;
     }
 
     public void setPowered(boolean state) {
@@ -172,12 +172,12 @@ public class Tile implements ReadOnlyTile {
 
     @Override
     public boolean[] getConnectorsExist() {
-        boolean[] connectors = new boolean[this.geometry.card()];
+        boolean[] connectorsExist = new boolean[this.geometry.card()];
 
         for (int i = 0; i < this.geometry.card(); i++)
-            connectors[i] = this.connectors.get(i).exists();
+            connectorsExist[i] = this.connectors.get(i).exists();
 
-        return connectors;
+        return connectorsExist;
     }
 
     @Override

@@ -2,13 +2,12 @@ package fr.uparis.energy.view;
 
 import fr.uparis.energy.model.Level;
 import fr.uparis.energy.utils.LevelConverter;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.*;
 
 public class Bank1View extends JPanel {
     private int selectedLevel = -1;
@@ -20,7 +19,6 @@ public class Bank1View extends JPanel {
         List<Component> components = new ArrayList<>();
         this.setPreferredSize(new Dimension(800, 800));
         components.add(bank1Label());
-        //components.add(Box.createRigidArea(new Dimension(0, 10)));
         components.add(this.levelsPanel());
         components.add(Box.createRigidArea(new Dimension(0, 25)));
         components.add(this.bottomMenu());

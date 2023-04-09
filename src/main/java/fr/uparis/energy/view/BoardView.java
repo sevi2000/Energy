@@ -2,9 +2,8 @@ package fr.uparis.energy.view;
 
 import fr.uparis.energy.model.BoardObservable;
 import fr.uparis.energy.model.ReadOnlyTile;
-
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 public class BoardView extends JPanel implements BoardObserver {
     private BoardObservable boardObservable;
@@ -27,11 +26,10 @@ public class BoardView extends JPanel implements BoardObserver {
     }
 
     private void drawTile(Graphics g, ReadOnlyTile rot, int x, int y) {
-        g.drawImage(SpriteBank.getShape(this.boardObservable.getGeometry(), rot.getPowerState()),
-                x, y, null);
+        g.drawImage(SpriteBank.getShape(this.boardObservable.getGeometry(), rot.getPowerState()), x, y, null);
 
-        Image component = SpriteBank.getComponent(this.boardObservable.getGeometry(),
-                rot.getPowerState(), rot.getComponent());
+        Image component =
+                SpriteBank.getComponent(this.boardObservable.getGeometry(), rot.getPowerState(), rot.getComponent());
         g.drawImage(component, x, y, null);
     }
 

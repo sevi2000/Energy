@@ -1,9 +1,9 @@
 package fr.uparis.energy.view;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.util.List;
+import javax.swing.*;
 
 public class Common {
     private Common() {}
@@ -22,7 +22,7 @@ public class Common {
             res.addMouseListener(adapter);
             res.addMouseMotionListener(adapter);
         }
-        res.setHorizontalAlignment(JLabel.CENTER);
+        res.setHorizontalAlignment(SwingConstants.CENTER);
         return res;
     }
 

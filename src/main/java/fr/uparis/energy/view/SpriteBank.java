@@ -2,11 +2,10 @@ package fr.uparis.energy.view;
 
 import fr.uparis.energy.model.Component;
 import fr.uparis.energy.model.Geometry;
-
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import javax.imageio.ImageIO;
 
 public class SpriteBank {
     // TODO Get wire images
@@ -15,7 +14,6 @@ public class SpriteBank {
 
     private static final int SQUARE_IMAGE_WIDTH = 120;
     private static final int SQUARE_IMAGE_HEIGHT = 120;
-    private static final int HEXAGON_IMAGE_WIDTH = 120;
     private static final int HEXAGON_IMAGE_HEIGHT = 104;
 
     private SpriteBank() {}
@@ -32,10 +30,7 @@ public class SpriteBank {
 
     private static BufferedImage getImageAt(int i, int j) {
         int height = j >= 3 ? HEXAGON_IMAGE_HEIGHT : SQUARE_IMAGE_HEIGHT;
-        return mainImage.getSubimage(
-                SQUARE_IMAGE_WIDTH * j, SQUARE_IMAGE_HEIGHT * i,
-                SQUARE_IMAGE_WIDTH, height
-        );
+        return mainImage.getSubimage(SQUARE_IMAGE_WIDTH * j, SQUARE_IMAGE_HEIGHT * i, SQUARE_IMAGE_WIDTH, height);
     }
 
     public static BufferedImage getComponent(Geometry geometry, PowerState powerState, Component component) {
@@ -50,12 +45,13 @@ public class SpriteBank {
 
         int i = 1;
 
-        int j = switch (component) {
-            case SOURCE -> 0;
-            case WIFI -> 1;
-            case LAMP -> 2;
-            case EMPTY -> throw new IllegalStateException();
-        };
+        int j =
+                switch (component) {
+                    case SOURCE -> 0;
+                    case WIFI -> 1;
+                    case LAMP -> 2;
+                    case EMPTY -> throw new IllegalStateException();
+                };
 
         if (powerState == PowerState.POWERED) i += 3;
         if (geometry == Geometry.HEXAGON) j += 3;
