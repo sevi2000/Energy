@@ -1,10 +1,9 @@
 package fr.uparis.energy.view;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseListener;
 import java.util.List;
-import javax.swing.*;
 
 public class Common {
     private Common() {}
@@ -19,8 +18,10 @@ public class Common {
         res.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         res.setFont(font);
 
-        res.addMouseListener(adapter);
-        res.addMouseMotionListener(adapter);
+        if (adapter != null) {
+            res.addMouseListener(adapter);
+            res.addMouseMotionListener(adapter);
+        }
         res.setHorizontalAlignment(JLabel.CENTER);
         return res;
     }

@@ -181,7 +181,7 @@ public class Tile implements ReadOnlyTile {
     }
 
     @Override
-    public PowerState getState() {
-        return PowerState.fromBoolean(this.isPowered);
+    public PowerState getPowerState() {
+        return PowerState.fromBoolean(this.isPowered());
     }
 }

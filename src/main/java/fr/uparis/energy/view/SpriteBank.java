@@ -2,10 +2,11 @@ package fr.uparis.energy.view;
 
 import fr.uparis.energy.model.Component;
 import fr.uparis.energy.model.Geometry;
+
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
-import javax.imageio.ImageIO;
 
 public class SpriteBank {
     // TODO Get wire images
@@ -62,17 +63,16 @@ public class SpriteBank {
         return getImageAt(i, j);
     }
 
-    public static BufferedImage getSquare(PowerState powerState) {
-        return switch (powerState) {
-            case NOT_POWERED -> getImageAt(0, 0);
-            case POWERED -> getImageAt(3, 0);
-        };
-    }
-
-    public static BufferedImage getHexagon(PowerState powerState) {
-        return switch (powerState) {
-            case NOT_POWERED -> getImageAt(0, 3);
-            case POWERED -> getImageAt(3, 3);
-        };
+    public static BufferedImage getShape(Geometry geometry, PowerState powerState) {
+        if (geometry == Geometry.SQUARE)
+            return switch (powerState) {
+                case NOT_POWERED -> getImageAt(0, 0);
+                case POWERED -> getImageAt(3, 0);
+            };
+        else
+            return switch (powerState) {
+                case NOT_POWERED -> getImageAt(0, 3);
+                case POWERED -> getImageAt(3, 3);
+            };
     }
 }
