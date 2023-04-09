@@ -37,19 +37,19 @@ public class SpriteBank {
         );
     }
 
-    public static BufferedImage getComponent(Geometry geometry, PowerState powerState, Component cmp) {
-        if (cmp == Component.EMPTY)
+    public static BufferedImage getComponent(Geometry geometry, PowerState powerState, Component component) {
+        if (component == Component.EMPTY)
             return switch (geometry) {
                 case SQUARE -> getImageAt(1, 0);
                 case HEXAGON -> getImageAt(1, 3);
             };
 
-        if (cmp == Component.SOURCE && powerState == PowerState.NOT_POWERED)
+        if (component == Component.SOURCE && powerState == PowerState.NOT_POWERED)
             throw new IllegalArgumentException("Not powered source");
 
         int i = 1;
 
-        int j = switch (cmp) {
+        int j = switch (component) {
             case SOURCE -> 0;
             case WIFI -> 1;
             case LAMP -> 2;

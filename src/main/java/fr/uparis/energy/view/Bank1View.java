@@ -103,7 +103,7 @@ public class Bank1View extends JPanel {
     public static JPanel bottomMenu() {
         JPanel res = new JPanel();
         res.setLayout(new GridLayout(1, 3));
-        JLabel play = Common.createButton("Play", new MouseListener() {
+        JLabel play = Common.createButton("Play", new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
                 if (selected != -1) {
@@ -114,18 +114,6 @@ public class Bank1View extends JPanel {
                     parentWindow.setVisible(true);
                 }
             }
-
-            @Override
-            public void mousePressed(MouseEvent mouseEvent) {}
-
-            @Override
-            public void mouseReleased(MouseEvent mouseEvent) {}
-
-            @Override
-            public void mouseEntered(MouseEvent mouseEvent) {}
-
-            @Override
-            public void mouseExited(MouseEvent mouseEvent) {}
         });
         JLabel back = Common.createButton("Back", new MouseAdapter() {
             @Override
