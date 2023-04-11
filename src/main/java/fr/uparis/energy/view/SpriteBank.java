@@ -41,7 +41,7 @@ public class SpriteBank {
                 case HEXAGON -> getImageAt(1, 3);
             };
 
-        if (component == Component.SOURCE && powerState == PowerState.NOT_POWERED)
+        if (component == Component.SOURCE && powerState == PowerState.OFF)
             throw new IllegalArgumentException("Not powered source");
 
         int i = 1;
@@ -54,7 +54,7 @@ public class SpriteBank {
                     case EMPTY -> throw new IllegalStateException();
                 };
 
-        if (powerState == PowerState.POWERED) i += 3;
+        if (powerState == PowerState.ON) i += 3;
         if (geometry == Geometry.HEXAGON) j += 3;
 
         return getImageAt(i, j);
@@ -63,13 +63,13 @@ public class SpriteBank {
     public static BufferedImage getShape(Geometry geometry, PowerState powerState) {
         if (geometry == Geometry.SQUARE)
             return switch (powerState) {
-                case NOT_POWERED -> getImageAt(0, 0);
-                case POWERED -> getImageAt(3, 0);
+                case OFF -> getImageAt(0, 0);
+                case ON -> getImageAt(3, 0);
             };
         else
             return switch (powerState) {
-                case NOT_POWERED -> getImageAt(0, 3);
-                case POWERED -> getImageAt(3, 3);
+                case OFF -> getImageAt(0, 3);
+                case ON -> getImageAt(3, 3);
             };
     }
 }
