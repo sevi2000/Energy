@@ -16,7 +16,8 @@ public class Board implements BoardObservable {
     private final Geometry geometry;
 
     private final Random rand = new Random();
-    private List<BoardObserver> boardObservers = new ArrayList<>();
+
+    private final List<BoardObserver> boardObservers = new ArrayList<>();
 
     /**
      * Builds an empty board with the given dimensions.
@@ -287,7 +288,7 @@ public class Board implements BoardObservable {
     public ReadOnlyTile getTileAt(int i, int j) {
         if (!(0 <= i && i < this.getHeight())) throw new IllegalArgumentException();
         if (!(0 <= j && j < this.getWidth())) throw new IllegalArgumentException();
-        return (ReadOnlyTile) this.tileGrid.get(i).get(j);
+        return this.tileGrid.get(i).get(j);
     }
 
     @Override

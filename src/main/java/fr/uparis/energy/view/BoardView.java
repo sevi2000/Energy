@@ -2,9 +2,7 @@ package fr.uparis.energy.view;
 
 import fr.uparis.energy.model.BoardObservable;
 import fr.uparis.energy.model.ReadOnlyTile;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
+import java.awt.*;
 import javax.swing.*;
 
 public class BoardView extends JPanel implements BoardObserver {
@@ -12,33 +10,27 @@ public class BoardView extends JPanel implements BoardObserver {
 
     public BoardView() {
         this.setPreferredSize(new Dimension(800, 800));
-        System.out.println("built boardView");
         this.setBackground(Color.BLACK);
-        repaint();
+        this.repaint();
     }
 
     @Override
     public void paintComponent(Graphics g) {
-
         g.setColor(Color.BLACK);
-        g.fillRect(0, 0, this.getWidth(), this.getWidth());
-        drawTile(g, boardObservable.getTileAt(0, 2), 100, 100);
-        drawTile(g, boardObservable.getTileAt(1, 0), 200, 200);
-        /*if (boardObservable == null)
-        return;*/
+        g.fillRect(0, 0, this.getWidth(), this.getHeight());
 
+        if (this.boardObservable == null) return;
+
+        this.drawTile(g, boardObservable.getTileAt(0, 1), 100, 100);
+        this.drawTile(g, boardObservable.getTileAt(1, 0), 300, 300);
     }
 
-    private void drawTile(Graphics g, ReadOnlyTile rt, int i, int j) {
-        switch (boardObservable.getGeometry()) {
-            case SQUARE -> g.drawImage(SpriteBank.getSquare(rt.getState()), i, j, null);
-            case HEXAGON -> {
-                g.drawImage(SpriteBank.getHexagon(rt.getState()), i, j, null);
-            }
-        }
+    private void drawTile(Graphics g, ReadOnlyTile rot, int x, int y) {
+        g.drawImage(SpriteBank.getShape(this.boardObservable.getGeometry(), rot.getPowerState()), x, y, null);
 
-        g.drawImage(
-                SpriteBank.getComponent(boardObservable.getGeometry(), rt.getState(), rt.getComponent()), i, j, null);
+        Image component =
+                SpriteBank.getComponent(this.boardObservable.getGeometry(), rot.getPowerState(), rot.getComponent());
+        g.drawImage(component, x, y, null);
     }
 
     @Override

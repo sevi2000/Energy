@@ -2,9 +2,11 @@ package fr.uparis.energy.view;
 
 import fr.uparis.energy.model.Component;
 import fr.uparis.energy.model.Geometry;
+
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import javax.imageio.ImageIO;
+import java.net.URL;
 
 public class SpriteBank {
     // TODO Get wire images
@@ -13,101 +15,61 @@ public class SpriteBank {
 
     private static final int SQUARE_IMAGE_WIDTH = 120;
     private static final int SQUARE_IMAGE_HEIGHT = 120;
-    private static final int HEXAGON_IMAGE_WIDTH = 120;
     private static final int HEXAGON_IMAGE_HEIGHT = 104;
 
     private SpriteBank() {}
 
     static {
+        URL resource = SpriteBank.class.getClassLoader().getResource("images/tiles.png");
+        if (resource == null) throw new IllegalStateException();
         try {
-            SpriteBank.mainImage =
-                    ImageIO.read(SpriteBank.class.getClassLoader().getResource("images/tiles.png"));
+            SpriteBank.mainImage = ImageIO.read(resource);
         } catch (IOException e) {
+            throw new IllegalStateException();
         }
     }
 
-    public static BufferedImage getComponent(Geometry geometry, PowerState powerState, Component cmp) {
-        if (geometry == Geometry.SQUARE) {
-            if (powerState == PowerState.POWERED) {
-                return switch (cmp) {
-                    case LAMP -> SpriteBank.mainImage.getSubimage(
-                            2 * SQUARE_IMAGE_WIDTH, 4 * SQUARE_IMAGE_HEIGHT, SQUARE_IMAGE_WIDTH, SQUARE_IMAGE_HEIGHT);
-                    case EMPTY -> SpriteBank.mainImage.getSubimage(
-                            1 * SQUARE_IMAGE_WIDTH, 0 * SQUARE_IMAGE_HEIGHT, SQUARE_IMAGE_WIDTH, SQUARE_IMAGE_HEIGHT);
-                    case SOURCE -> SpriteBank.mainImage.getSubimage(
-                            0 * SQUARE_IMAGE_WIDTH, 4 * SQUARE_IMAGE_HEIGHT, SQUARE_IMAGE_WIDTH, SQUARE_IMAGE_HEIGHT);
-                    case WIFI -> SpriteBank.mainImage.getSubimage(
-                            1 * SQUARE_IMAGE_WIDTH, 4 * SQUARE_IMAGE_HEIGHT, SQUARE_IMAGE_WIDTH, SQUARE_IMAGE_HEIGHT);
-                };
-            } else {
-                return switch (cmp) {
-                    case LAMP -> SpriteBank.mainImage.getSubimage(
-                            1 * SQUARE_IMAGE_WIDTH, 1 * SQUARE_IMAGE_HEIGHT, SQUARE_IMAGE_WIDTH, SQUARE_IMAGE_HEIGHT);
-                    case EMPTY -> SpriteBank.mainImage.getSubimage(
-                            1 * SQUARE_IMAGE_WIDTH, 0 * SQUARE_IMAGE_HEIGHT, SQUARE_IMAGE_WIDTH, SQUARE_IMAGE_HEIGHT);
-                    case SOURCE -> throw new IllegalArgumentException();
-                    case WIFI -> SpriteBank.mainImage.getSubimage(
-                            1 * SQUARE_IMAGE_WIDTH, 1 * SQUARE_IMAGE_HEIGHT, SQUARE_IMAGE_WIDTH, SQUARE_IMAGE_HEIGHT);
-                };
-            }
-        } else { // else HEXAGON
-            if (powerState == PowerState.POWERED) {
-                return switch (cmp) {
-                    case LAMP -> SpriteBank.mainImage.getSubimage(
-                            5 * HEXAGON_IMAGE_WIDTH,
-                            4 * HEXAGON_IMAGE_HEIGHT,
-                            HEXAGON_IMAGE_WIDTH,
-                            HEXAGON_IMAGE_HEIGHT);
-                    case EMPTY -> SpriteBank.mainImage.getSubimage(
-                            1 * HEXAGON_IMAGE_WIDTH,
-                            0 * HEXAGON_IMAGE_HEIGHT,
-                            HEXAGON_IMAGE_WIDTH,
-                            HEXAGON_IMAGE_HEIGHT);
-                    case SOURCE -> SpriteBank.mainImage.getSubimage(
-                            3 * HEXAGON_IMAGE_WIDTH,
-                            4 * HEXAGON_IMAGE_HEIGHT,
-                            HEXAGON_IMAGE_WIDTH,
-                            HEXAGON_IMAGE_HEIGHT);
-                    case WIFI -> SpriteBank.mainImage.getSubimage(
-                            4 * HEXAGON_IMAGE_WIDTH,
-                            4 * HEXAGON_IMAGE_HEIGHT,
-                            HEXAGON_IMAGE_WIDTH,
-                            HEXAGON_IMAGE_HEIGHT);
-                };
-            } else {
-                return switch (cmp) {
-                    case LAMP -> SpriteBank.mainImage.getSubimage(
-                            5 * HEXAGON_IMAGE_WIDTH,
-                            1 * HEXAGON_IMAGE_HEIGHT,
-                            HEXAGON_IMAGE_WIDTH,
-                            HEXAGON_IMAGE_HEIGHT);
-                    case EMPTY -> SpriteBank.mainImage.getSubimage(
-                            1 * HEXAGON_IMAGE_WIDTH,
-                            0 * HEXAGON_IMAGE_HEIGHT,
-                            HEXAGON_IMAGE_WIDTH,
-                            HEXAGON_IMAGE_HEIGHT);
-                    case SOURCE -> throw new IllegalArgumentException();
-                    case WIFI -> SpriteBank.mainImage.getSubimage(
-                            4 * HEXAGON_IMAGE_WIDTH,
-                            1 * HEXAGON_IMAGE_HEIGHT,
-                            HEXAGON_IMAGE_WIDTH,
-                            HEXAGON_IMAGE_HEIGHT);
-                };
-            }
-        }
+    private static BufferedImage getImageAt(int i, int j) {
+        int height = j >= 3 ? HEXAGON_IMAGE_HEIGHT : SQUARE_IMAGE_HEIGHT;
+        return mainImage.getSubimage(SQUARE_IMAGE_WIDTH * j, SQUARE_IMAGE_HEIGHT * i, SQUARE_IMAGE_WIDTH, height);
     }
 
-    public static BufferedImage getSquare(PowerState powerState) {
-        return switch (powerState) {
-            case NOT_POWERED -> SpriteBank.mainImage.getSubimage(0, 0, SQUARE_IMAGE_WIDTH, SQUARE_IMAGE_HEIGHT);
-            case POWERED -> SpriteBank.mainImage.getSubimage(0, 3, SQUARE_IMAGE_WIDTH, SQUARE_IMAGE_HEIGHT);
-        };
+    public static BufferedImage getComponent(Geometry geometry, PowerState powerState, Component component) {
+        if (component == Component.EMPTY)
+            return switch (geometry) {
+                case SQUARE -> getImageAt(1, 0);
+                case HEXAGON -> getImageAt(1, 3);
+            };
+
+        if (component == Component.SOURCE && powerState == PowerState.OFF)
+            throw new IllegalArgumentException("Not powered source");
+
+        int i = 1;
+
+        int j =
+                switch (component) {
+                    case SOURCE -> 0;
+                    case WIFI -> 1;
+                    case LAMP -> 2;
+                    case EMPTY -> throw new IllegalStateException();
+                };
+
+        if (powerState == PowerState.ON) i += 3;
+        if (geometry == Geometry.HEXAGON) j += 3;
+
+        return getImageAt(i, j);
     }
 
-    public static BufferedImage getHexagon(PowerState powerState) {
-        return switch (powerState) {
-            case NOT_POWERED -> SpriteBank.mainImage.getSubimage(0, 3, HEXAGON_IMAGE_WIDTH, HEXAGON_IMAGE_HEIGHT);
-            case POWERED -> SpriteBank.mainImage.getSubimage(3, 3, HEXAGON_IMAGE_WIDTH, HEXAGON_IMAGE_HEIGHT);
-        };
+    public static BufferedImage getShape(Geometry geometry, PowerState powerState) {
+        if (geometry == Geometry.SQUARE)
+            return switch (powerState) {
+                case OFF -> getImageAt(0, 0);
+                case ON -> getImageAt(3, 0);
+            };
+        else
+            return switch (powerState) {
+                case OFF -> getImageAt(0, 3);
+                case ON -> getImageAt(3, 3);
+            };
     }
 }

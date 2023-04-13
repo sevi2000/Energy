@@ -7,5 +7,5 @@ public interface ReadOnlyTile {
 
     boolean[] getConnectorsExist();
 
-    PowerState getState();
+    PowerState getPowerState();
 }
