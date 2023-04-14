@@ -1,17 +1,17 @@
 package fr.uparis.energy.view;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.*;
 
 public class PlayingLevelView extends JPanel {
 
     public PlayingLevelView(JFrame jFrame) {
         this.setPreferredSize(new Dimension(800, 800));
-        //this.setLayout(new BoxLayout());
+        // this.setLayout(new BoxLayout());
 
         JLabel back = Common.createButton("Back", new MouseAdapter() {
             @Override
@@ -21,12 +21,11 @@ public class PlayingLevelView extends JPanel {
             }
         });
 
-
         List<Component> components = new ArrayList<>();
         components.add(back);
         components.add(new BoardView());
         components.add(Box.createRigidArea(new Dimension(0, 100)));
-        //components.add();
+        // components.add();
 
         this.setPreferredSize(new Dimension(800, 800));
 
@@ -40,5 +39,4 @@ public class PlayingLevelView extends JPanel {
 
         this.repaint();
     }
-
 }
