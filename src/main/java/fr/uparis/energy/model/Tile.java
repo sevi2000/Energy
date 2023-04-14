@@ -1,12 +1,13 @@
 package fr.uparis.energy.model;
 
+import fr.uparis.energy.view.PowerState;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Represents a tile that is held by a board.
  */
-public class Tile {
+public class Tile implements ReadOnlyTile {
     private final List<Connector> connectors = new ArrayList<>();
     private Component component;
     private final Geometry geometry;
@@ -36,7 +37,7 @@ public class Tile {
      * @return the power state of this tile.
      */
     public boolean isPowered() {
-        return this.component == Component.SOURCE ? true : this.isPowered;
+        return this.component == Component.SOURCE || this.isPowered;
     }
 
     public void setPowered(boolean state) {
@@ -164,7 +165,23 @@ public class Tile {
         return this.geometry;
     }
 
+    @Override
     public Component getComponent() {
         return this.component;
+    }
+
+    @Override
+    public boolean[] getConnectorsExist() {
+        boolean[] connectorsExist = new boolean[this.geometry.card()];
+
+        for (int i = 0; i < this.geometry.card(); i++)
+            connectorsExist[i] = this.connectors.get(i).exists();
+
+        return connectorsExist;
+    }
+
+    @Override
+    public PowerState getPowerState() {
+        return PowerState.fromBoolean(this.isPowered());
     }
 }

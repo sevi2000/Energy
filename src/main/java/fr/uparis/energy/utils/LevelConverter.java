@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -205,5 +206,27 @@ public class LevelConverter {
                 Path.of(energyDirectory + System.getProperty("file.separator") + "level" + level.getNumber() + ".nrg"),
                 level.toString(),
                 StandardCharsets.UTF_8);
+    }
+
+    private static String extractNumber(String levelName) {
+        Matcher matcher = LevelConverter.getMatcher("^level(\\d+)\\.nrg$", levelName);
+        if (!matcher.find()) throw new IllegalArgumentException();
+        return matcher.group(1);
+    }
+
+    public static List<Integer> getBank1LevelNumbers() {
+        List<Integer> res = new ArrayList<>();
+        ClassLoader cl = LevelConverter.class.getClassLoader();
+        URL path = cl.getResource("levels");
+        if (path == null) throw new IllegalStateException();
+        String dir = path.getPath();
+        File levels = new File(dir);
+        File[] list = levels.listFiles();
+        if (list == null) throw new IllegalStateException();
+        for (File f : list) {
+            res.add(Integer.parseInt(extractNumber(f.getName())));
+        }
+        Collections.sort(res);
+        return res;
     }
 }
