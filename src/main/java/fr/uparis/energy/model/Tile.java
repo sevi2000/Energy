@@ -161,6 +161,7 @@ public class Tile implements ReadOnlyTile {
         return this.connectors;
     }
 
+    @Override
     public Geometry getGeometry() {
         return this.geometry;
     }

@@ -72,4 +72,19 @@ public class SpriteBank {
                 case ON -> getImageAt(3, 3);
             };
     }
+    public enum WireType {
+        SQUARE_SHORT,
+        SQUARE_CURVED,
+        SQUARE_LONG,
+        HEXAGON_SHORT,
+        HEXAGON_CURVED_SHORT,
+        HEXAGON_CURVED_LONG,
+        HEXAGON_LONG
+    }
+    public static BufferedImage getWire(WireType w, PowerState state) {
+        int i = 2;
+        if (state == PowerState.ON)
+            i += 3;
+        return getImageAt(i,w.ordinal());
+    }
 }

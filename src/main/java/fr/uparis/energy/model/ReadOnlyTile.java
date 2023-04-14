@@ -8,4 +8,6 @@ public interface ReadOnlyTile {
     boolean[] getConnectorsExist();
 
     PowerState getPowerState();
+
+    Geometry getGeometry();
 }
