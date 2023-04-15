@@ -2,19 +2,21 @@ package fr.uparis.energy.view;
 
 import fr.uparis.energy.model.Component;
 import fr.uparis.energy.model.Geometry;
+
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
-import javax.imageio.ImageIO;
 
 public class SpriteBank {
     // TODO Get wire images
 
     private static BufferedImage mainImage;
 
-    private static final int SQUARE_IMAGE_WIDTH = 120;
-    private static final int SQUARE_IMAGE_HEIGHT = 120;
-    private static final int HEXAGON_IMAGE_HEIGHT = 104;
+    public static final int SQUARE_IMAGE_WIDTH = 120;
+    public static final int SQUARE_IMAGE_HEIGHT = 120;
+    public static final int HEXAGON_IMAGE_WIDTH = 120;
+    public static final int HEXAGON_IMAGE_HEIGHT = 104;
 
     private SpriteBank() {}
 
