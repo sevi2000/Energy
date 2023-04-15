@@ -4,9 +4,10 @@ import fr.uparis.energy.model.BoardObservable;
 import fr.uparis.energy.model.Component;
 import fr.uparis.energy.model.Geometry;
 import fr.uparis.energy.model.ReadOnlyTile;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import javax.swing.*;
 
 public class BoardView extends JPanel implements BoardObserver {
     private BoardObservable boardObservable;
@@ -29,20 +30,19 @@ public class BoardView extends JPanel implements BoardObserver {
     }
 
     private void drawTile(Graphics g, ReadOnlyTile rot, int x, int y, int width, int height) {
-        if (rot.getGeometry() == Geometry.SQUARE) {
-            g.drawImage(
-                    SpriteBank.getShape(this.boardObservable.getGeometry(), rot.getPowerState()),
-                    x,
-                    y,
-                    width,
-                    height,
-                    null);
+        g.drawImage(
+                SpriteBank.getShape(this.boardObservable.getGeometry(), rot.getPowerState()),
+                x,
+                y,
+                width,
+                height,
+                null);
 
-            Image component = SpriteBank.getComponent(
-                    this.boardObservable.getGeometry(), rot.getPowerState(), rot.getComponent());
-            g.drawImage(component, x, y, width, height, null);
+        Image component = SpriteBank.getComponent(
+                this.boardObservable.getGeometry(), rot.getPowerState(), rot.getComponent());
+        g.drawImage(component, x, y, width, height, null);
+        if (rot.getGeometry() == Geometry.SQUARE) {
             if (rot.getComponent() != Component.EMPTY) {
-                System.out.println("NON EMPTY COMPONENT");
                 BufferedImage wire = SpriteBank.getWire(SpriteBank.WireType.SQUARE_SHORT, rot.getPowerState());
                 Graphics2D g2d = (Graphics2D) g;
 
@@ -64,7 +64,7 @@ public class BoardView extends JPanel implements BoardObserver {
                             height,
                             0,
                             SpriteBank.getWire(SpriteBank.WireType.SQUARE_LONG, rot.getPowerState()));
-                } else if (!c[0] && c[1] && !c[2] && c[3]) {
+                } else if (!c[0] && c[1] && !c[2] && c[3])
                     Common.drawRotatedImage(
                             g,
                             x,
@@ -73,8 +73,8 @@ public class BoardView extends JPanel implements BoardObserver {
                             height,
                             90,
                             SpriteBank.getWire(SpriteBank.WireType.SQUARE_LONG, rot.getPowerState()));
-                } else {
-                    if (c[0] && c[1]) {
+                else {
+                    if (c[0] && c[1])
                         Common.drawRotatedImage(
                                 g,
                                 x,
@@ -83,8 +83,8 @@ public class BoardView extends JPanel implements BoardObserver {
                                 height,
                                 0,
                                 SpriteBank.getWire(SpriteBank.WireType.SQUARE_CURVED, rot.getPowerState()));
-                    }
-                    if (c[1] && c[2]) {
+                    
+                    if (c[1] && c[2]) 
                         Common.drawRotatedImage(
                                 g,
                                 x,
@@ -93,8 +93,7 @@ public class BoardView extends JPanel implements BoardObserver {
                                 height,
                                 90,
                                 SpriteBank.getWire(SpriteBank.WireType.SQUARE_CURVED, rot.getPowerState()));
-                    }
-                    if (c[2] && c[3]) {
+                    if (c[2] && c[3])
                         Common.drawRotatedImage(
                                 g,
                                 x,
@@ -103,8 +102,7 @@ public class BoardView extends JPanel implements BoardObserver {
                                 height,
                                 180,
                                 SpriteBank.getWire(SpriteBank.WireType.SQUARE_CURVED, rot.getPowerState()));
-                    }
-                    if (c[0] && c[3]) {
+                    if (c[0] && c[3])
                         Common.drawRotatedImage(
                                 g,
                                 x,
@@ -113,9 +111,9 @@ public class BoardView extends JPanel implements BoardObserver {
                                 height,
                                 270,
                                 SpriteBank.getWire(SpriteBank.WireType.SQUARE_CURVED, rot.getPowerState()));
-                    }
                 }
             }
+        } else {
         }
     }
 
