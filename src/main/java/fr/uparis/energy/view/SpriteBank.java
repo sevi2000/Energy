@@ -13,9 +13,10 @@ public class SpriteBank {
 
     private static BufferedImage mainImage;
 
-    private static final int SQUARE_IMAGE_WIDTH = 120;
-    private static final int SQUARE_IMAGE_HEIGHT = 120;
-    private static final int HEXAGON_IMAGE_HEIGHT = 104;
+    public static final int SQUARE_IMAGE_WIDTH = 120;
+    public static final int SQUARE_IMAGE_HEIGHT = 120;
+    public static final int HEXAGON_IMAGE_WIDTH = 120;
+    public static final int HEXAGON_IMAGE_HEIGHT = 104;
 
     private SpriteBank() {}
 
@@ -71,5 +72,21 @@ public class SpriteBank {
                 case OFF -> getImageAt(0, 3);
                 case ON -> getImageAt(3, 3);
             };
+    }
+
+    public enum WireType {
+        SQUARE_SHORT,
+        SQUARE_CURVED,
+        SQUARE_LONG,
+        HEXAGON_SHORT,
+        HEXAGON_CURVED_SHORT,
+        HEXAGON_CURVED_LONG,
+        HEXAGON_LONG
+    }
+
+    public static BufferedImage getWire(WireType w, PowerState state) {
+        int i = 2;
+        if (state == PowerState.ON) i += 3;
+        return getImageAt(i, w.ordinal());
     }
 }
