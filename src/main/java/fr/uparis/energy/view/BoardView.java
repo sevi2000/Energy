@@ -20,7 +20,9 @@ public class BoardView extends JPanel implements BoardObserver {
 
     @Override
     public void paintComponent(Graphics g) {
+        g.setColor(Color.BLACK);
         g.fillRect(0,0,getWidth(),getHeight());
+        if (rob == null) return;
         int tileWidth = this.getWidth() / rob.getWidth();
         int tileHeight = 0;
         if (tileWidth > SpriteBank.SQUARE_IMAGE_WIDTH)
@@ -39,17 +41,11 @@ public class BoardView extends JPanel implements BoardObserver {
                 int x;
                 if (rob.getGeometry() == Geometry.SQUARE || j == 0) x = j * tileWidth;
                 else{
-                    System.out.println("ELSE");
-                    System.out.println(j * tileWidth);
                     x = j * (tileWidth - 28); 
                 }  
                 int y;
                 if (rob.getGeometry() == Geometry.HEXAGON && j % 2 == 1) y = i * tileHeight + tileHeight / 2;
                 else y = i * tileHeight;
-                if (i == 0) {
-                    System.out.format(" j = %d x = %d\n", j, x);
-                }
-                    
                 this.drawTile(g,rob.getTileAt(i,j),x,y,tileWidth,tileHeight);
             }
             
@@ -71,8 +67,6 @@ public class BoardView extends JPanel implements BoardObserver {
         if (rot.getGeometry() == Geometry.SQUARE) {
             if (rot.getComponent() != Component.EMPTY) {
                 BufferedImage wire = SpriteBank.getWire(SpriteBank.WireType.SQUARE_SHORT, rot.getPowerState());
-                Graphics2D g2d = (Graphics2D) g;
-
                 for (int i = 0; i < rot.getGeometry().card(); i++) {
 
                     if (rot.getConnectorsExist()[i]) {
@@ -81,7 +75,6 @@ public class BoardView extends JPanel implements BoardObserver {
                 }
             } else {
                 boolean[] c = rot.getConnectorsExist();
-                System.out.println("EMPTY COMPONENT");
                 if (c[0] && !c[1] && c[2] && !c[3]) {
                     Common.drawRotatedImage(
                             g,
@@ -143,8 +136,6 @@ public class BoardView extends JPanel implements BoardObserver {
         } else {
             if (rot.getComponent() != Component.EMPTY) {
                 BufferedImage wire = SpriteBank.getWire(SpriteBank.WireType.HEXAGON_SHORT, rot.getPowerState());
-                Graphics2D g2d = (Graphics2D) g;
-
                 for (int i = 0; i < rot.getGeometry().card(); i++) {
 
                     if (rot.getConnectorsExist()[i]) {
