@@ -1,10 +1,10 @@
 package fr.uparis.energy.view;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.geom.AffineTransform;
 import java.util.List;
-import javax.swing.*;
 
 public class Common {
     private Common() {}

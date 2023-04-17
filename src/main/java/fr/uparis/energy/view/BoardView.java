@@ -20,11 +20,12 @@ public class BoardView extends JPanel implements BoardObserver {
 
     @Override
     public void paintComponent(Graphics g) {
+        System.out.println("width " + this.getWidth());
         g.setColor(Color.BLACK);
         g.fillRect(0,0,getWidth(),getHeight());
         if (rob == null) return;
         int tileWidth = this.getWidth() / rob.getWidth();
-        int tileHeight = 0;
+        int tileHeight;
         if (tileWidth > SpriteBank.SQUARE_IMAGE_WIDTH)
             tileWidth = SpriteBank.SQUARE_IMAGE_WIDTH;
         if (this.rob.getGeometry() == Geometry.SQUARE) {
@@ -60,63 +61,72 @@ public class BoardView extends JPanel implements BoardObserver {
                 this.rob.getGeometry(), rot.getPowerState(), rot.getComponent());
         g.drawImage(component, x, y, width, height, null);
         if (rot.getGeometry() == Geometry.SQUARE) {
-            if (rot.getComponent() != Component.EMPTY) {
-                BufferedImage wire = SpriteBank.getWire(SpriteBank.WireType.SQUARE_SHORT, rot.getPowerState());
-                for (int i = 0; i < rot.getGeometry().card(); i++) {
+            drawSquareTile(g,rot, x, y, width, height);
+        } else {
+          drawHexagonTile(g,rot,x,y,width,height);
+        }
+    }
+    
+     private void drawSquareTile(Graphics g, ReadOnlyTile rot, int x, int y, int width, int height) {
+         if (rot.getComponent() != Component.EMPTY) {
+             BufferedImage wire = SpriteBank.getWire(SpriteBank.WireType.SQUARE_SHORT, rot.getPowerState());
+             for (int i = 0; i < rot.getGeometry().card(); i++) {
 
-                    if (rot.getConnectorsExist()[i]) {
-                        Common.drawRotatedImage(g, x, y, width, height, 90 * i, wire);
-                    }
-                }
-            } else {
-                boolean[] c = rot.getConnectorsExist();
-                Image straightWire =  SpriteBank.getWire(SpriteBank.WireType.SQUARE_LONG, rot.getPowerState());
-                Image curvedWire = SpriteBank.getWire(SpriteBank.WireType.SQUARE_CURVED, rot.getPowerState());
+                 if (rot.getConnectorsExist()[i]) {
+                     Common.drawRotatedImage(g, x, y, width, height, 90 * i, wire);
+                 }
+             }
+         } else {
+             boolean[] c = rot.getConnectorsExist();
+             Image straightWire =  SpriteBank.getWire(SpriteBank.WireType.SQUARE_LONG, rot.getPowerState());
+             Image curvedWire = SpriteBank.getWire(SpriteBank.WireType.SQUARE_CURVED, rot.getPowerState());
 
 
-                if (c[0] && !c[1] && c[2] && !c[3]) {
-                    Common.drawRotatedImage(g, x, y, width, height, 0, straightWire);
-                } else if (!c[0] && c[1] && !c[2] && c[3])
-                    Common.drawRotatedImage(g, x, y, width, height, 90, straightWire);
-                else {
-                    if (c[0] && c[1])
-                        Common.drawRotatedImage(g, x, y, width, height, 0,curvedWire);
-                    
-                    if (c[1] && c[2]) 
-                        Common.drawRotatedImage(g, x, y, width, height, 90, curvedWire);
-                    if (c[2] && c[3])
-                        Common.drawRotatedImage(g, x, y, width, height, 180, curvedWire);
-                    if (c[0] && c[3])
-                        Common.drawRotatedImage(g, x, y, width, height, 270, curvedWire);
+             if (c[0] && !c[1] && c[2] && !c[3]) {
+                 Common.drawRotatedImage(g, x, y, width, height, 0, straightWire);
+             } else if (!c[0] && c[1] && !c[2] && c[3])
+                 Common.drawRotatedImage(g, x, y, width, height, 90, straightWire);
+             else {
+                 if (c[0] && c[1])
+                     Common.drawRotatedImage(g, x, y, width, height, 0,curvedWire);
+
+                 if (c[1] && c[2])
+                     Common.drawRotatedImage(g, x, y, width, height, 90, curvedWire);
+                 if (c[2] && c[3])
+                     Common.drawRotatedImage(g, x, y, width, height, 180, curvedWire);
+                 if (c[0] && c[3])
+                     Common.drawRotatedImage(g, x, y, width, height, 270, curvedWire);
+             }
+         }
+     }
+     
+    private  void drawHexagonTile(Graphics g, ReadOnlyTile rot, int x, int y, int width, int height) {
+        if (rot.getComponent() != Component.EMPTY) {
+            BufferedImage wire = SpriteBank.getWire(SpriteBank.WireType.HEXAGON_SHORT, rot.getPowerState());
+            for (int i = 0; i < rot.getGeometry().card(); i++) {
+
+                if (rot.getConnectorsExist()[i]) {
+                    Common.drawRotatedImage(g, x, y, width, height, 60 * i, wire);
                 }
             }
         } else {
-            if (rot.getComponent() != Component.EMPTY) {
-                BufferedImage wire = SpriteBank.getWire(SpriteBank.WireType.HEXAGON_SHORT, rot.getPowerState());
-                for (int i = 0; i < rot.getGeometry().card(); i++) {
+            boolean [] c = rot.getConnectorsExist();
+            Image hexagonLongWire = SpriteBank.getWire(SpriteBank.WireType.HEXAGON_LONG,rot.getPowerState());
+            Image hexagonCurvedShortWire = SpriteBank.getWire(SpriteBank.WireType.HEXAGON_CURVED_SHORT,rot.getPowerState());
+            Image hexagonCurvedLongWire = SpriteBank.getWire(SpriteBank.WireType.HEXAGON_CURVED_LONG,rot.getPowerState());
 
-                    if (rot.getConnectorsExist()[i]) {
-                        Common.drawRotatedImage(g, x, y, width, height, 60 * i, wire);
-                    }
-                }
-            } else {
-                boolean [] c = rot.getConnectorsExist();
-                Image hexagonLongWire = SpriteBank.getWire(SpriteBank.WireType.HEXAGON_LONG,rot.getPowerState());
-                if (c[0] && !c[1] && !c[2] && c[3] && !c[4] && !c[5]) Common.drawRotatedImage(g,x,y,width,height,0, hexagonLongWire);
-                else if (!c[0] && c[1] && !c[2] && !c[3] && c[4] && !c[5]) Common.drawRotatedImage(g,x,y,width,height,60, hexagonLongWire);
-                else if(!c[0] && !c[1] && c[2] && !c[3] && !c[4] && c[5]) Common.drawRotatedImage(g,x,y,width,height,120, hexagonLongWire);
-                else {
-                    for (int i = 0; i < rot.getGeometry().card(); i++) {
-                        if (c[i] && c[(i+1) % rot.getGeometry().card()]) Common.drawRotatedImage(g,x,y,width,height,60 * i,SpriteBank.getWire(SpriteBank.WireType.HEXAGON_CURVED_SHORT,rot.getPowerState()));
-                        if (c[i] && !c[(i+1) % rot.getGeometry().card()] && c[(i +2) % 6]) Common.drawRotatedImage(g,x,y,width,height,60 * i,SpriteBank.getWire(SpriteBank.WireType.HEXAGON_CURVED_LONG,rot.getPowerState()));
-                    }
+            if (c[0] && !c[1] && !c[2] && c[3] && !c[4] && !c[5]) Common.drawRotatedImage(g,x,y,width,height,0, hexagonLongWire);
+            else if (!c[0] && c[1] && !c[2] && !c[3] && c[4] && !c[5]) Common.drawRotatedImage(g,x,y,width,height,60, hexagonLongWire);
+            else if(!c[0] && !c[1] && c[2] && !c[3] && !c[4] && c[5]) Common.drawRotatedImage(g,x,y,width,height,120, hexagonLongWire);
+            else {
+                for (int i = 0; i < rot.getGeometry().card(); i++) {
+                    if (c[i] && c[(i+1) % rot.getGeometry().card()]) Common.drawRotatedImage(g,x,y,width,height,60 * i,hexagonCurvedShortWire);
+                    if (c[i] && !c[(i+1) % rot.getGeometry().card()] && c[(i +2) % 6]) Common.drawRotatedImage(g,x,y,width,height,60 * i,hexagonCurvedLongWire);
                 }
             }
         }
     }
-    /* private void drawSquareTile();
-    private  void drawHexagonTile();
-      */  
+
     @Override
     public void update(BoardObservable boardObservable) {
         this.rob = boardObservable;
