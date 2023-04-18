@@ -61,20 +61,20 @@ public class BoardView extends JPanel implements BoardObserver {
         int startX = (this.getWidth() - boardWidth) / 2;
         int startY = (this.getHeight() - boardHeight) / 2;
 
-        for (int i = 0; i < rob.getHeight(); i++) {
-            for (int j = 0; j < rob.getWidth(); j++) {
-                int x;
-                if (rob.getGeometry() == Geometry.SQUARE || j == 0) x = j * tileWidth + startX;
-                else{
-                    x = j * (tileWidth - 35) + startX;
-                }  
-                int y;
-                if (rob.getGeometry() == Geometry.HEXAGON && j % 2 == 1)
-                    y = i * tileHeight + tileHeight / 2 + startY;
-                else y = i * tileHeight + startY;
-                this.drawTile(g,rob.getTileAt(i,j),x,y,tileWidth,tileHeight);
+        for (int i = 0; i < this.rob.getHeight(); i++) {
+            for (int j = 0; j < this.rob.getWidth(); j++) {
+                int x, y;
+                if (this.rob.getGeometry() == Geometry.SQUARE) {
+                    x = j * tileWidth;
+                    y = i * tileHeight;
+                } else {
+                    x = (int)(j * 3.0 / 4.0 * tileWidth);
+                    y = (j % 2 == 1) ? i * tileHeight + tileHeight / 2 : i * tileHeight;
+                }
+
+                this.drawTile(g, this.rob.getTileAt(i, j),
+                        startX + x, startY + y, tileWidth, tileHeight);
             }
-            
         }
     }
 
