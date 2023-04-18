@@ -22,6 +22,7 @@ public class BoardView extends JPanel implements BoardObserver {
     public void paintComponent(Graphics g) {
         g.setColor(Color.BLACK);
         g.fillRect(0,0,getWidth(),getHeight());
+
         if (rob == null) return;
 
         int tileWidth;
@@ -36,21 +37,41 @@ public class BoardView extends JPanel implements BoardObserver {
         else
             tileHeight = (int)Math.floor(this.getHeight() / (this.rob.getHeight() +  0.5));
 
+        // Rectify the tile proportions
         if (this.rob.getGeometry() == Geometry.SQUARE) {
             tileWidth = Math.min(tileWidth, tileHeight);
             tileHeight = tileWidth;
+        } else {
+            int expectedHeight = (int)(tileWidth * (Math.sqrt(3) / 2));
+            if (expectedHeight > tileHeight)
+                tileWidth = (int)((2/Math.sqrt(3)) * tileHeight);
+            else if (expectedHeight < tileHeight)
+                tileHeight = (int)((Math.sqrt(3) / 2) * tileWidth);
         }
+
+        // Center the board
+        int boardWidth, boardHeight;
+        if (this.rob.getGeometry() == Geometry.SQUARE) {
+            boardWidth = tileWidth * this.rob.getWidth();
+            boardHeight = tileHeight * this.rob.getHeight();
+        } else {
+            boardWidth = (tileWidth / 4) * (3 * this.rob.getWidth() + 1);
+            boardHeight = (int)(tileHeight * (this.rob.getHeight() + 0.5));
+        }
+        int startX = (this.getWidth() - boardWidth) / 2;
+        int startY = (this.getHeight() - boardHeight) / 2;
 
         for (int i = 0; i < rob.getHeight(); i++) {
             for (int j = 0; j < rob.getWidth(); j++) {
                 int x;
-                if (rob.getGeometry() == Geometry.SQUARE || j == 0) x = j * tileWidth;
+                if (rob.getGeometry() == Geometry.SQUARE || j == 0) x = j * tileWidth + startX;
                 else{
-                    x = j * (tileWidth - 35);
+                    x = j * (tileWidth - 35) + startX;
                 }  
                 int y;
-                if (rob.getGeometry() == Geometry.HEXAGON && j % 2 == 1) y = i * tileHeight + tileHeight / 2;
-                else y = i * tileHeight;
+                if (rob.getGeometry() == Geometry.HEXAGON && j % 2 == 1)
+                    y = i * tileHeight + tileHeight / 2 + startY;
+                else y = i * tileHeight + startY;
                 this.drawTile(g,rob.getTileAt(i,j),x,y,tileWidth,tileHeight);
             }
             
