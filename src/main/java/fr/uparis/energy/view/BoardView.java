@@ -20,21 +20,25 @@ public class BoardView extends JPanel implements BoardObserver {
 
     @Override
     public void paintComponent(Graphics g) {
-        System.out.println("width " + this.getWidth());
         g.setColor(Color.BLACK);
         g.fillRect(0,0,getWidth(),getHeight());
         if (rob == null) return;
-        int tileWidth = this.getWidth() / rob.getWidth();
+
+        int tileWidth;
+        if (this.rob.getGeometry() == Geometry.SQUARE)
+            tileWidth = this.getWidth() / this.rob.getWidth();
+        else
+            tileWidth = 4 * this.getWidth() / (3 * this.rob.getWidth() + 1);
+
         int tileHeight;
-        if (tileWidth > SpriteBank.SQUARE_IMAGE_WIDTH)
-            tileWidth = SpriteBank.SQUARE_IMAGE_WIDTH;
+        if (this.rob.getGeometry() == Geometry.SQUARE)
+            tileHeight = this.getHeight() / this.rob.getHeight();
+        else
+            tileHeight = (int)Math.floor(this.getHeight() / (this.rob.getHeight() +  0.5));
+
         if (this.rob.getGeometry() == Geometry.SQUARE) {
-            tileHeight = this.getHeight() / rob.getHeight();
-            if (tileHeight > SpriteBank.SQUARE_IMAGE_HEIGHT) 
-                tileHeight = SpriteBank.SQUARE_IMAGE_HEIGHT;
-        } else {
-            tileHeight = (int)Math.floor(this.getHeight() / (rob.getHeight() +  0.5));
-            if (tileHeight > SpriteBank.HEXAGON_IMAGE_HEIGHT) tileHeight = SpriteBank.HEXAGON_IMAGE_HEIGHT;
+            tileWidth = Math.min(tileWidth, tileHeight);
+            tileHeight = tileWidth;
         }
 
         for (int i = 0; i < rob.getHeight(); i++) {
@@ -42,7 +46,7 @@ public class BoardView extends JPanel implements BoardObserver {
                 int x;
                 if (rob.getGeometry() == Geometry.SQUARE || j == 0) x = j * tileWidth;
                 else{
-                    x = j * (tileWidth - 28); 
+                    x = j * (tileWidth - 35);
                 }  
                 int y;
                 if (rob.getGeometry() == Geometry.HEXAGON && j % 2 == 1) y = i * tileHeight + tileHeight / 2;
