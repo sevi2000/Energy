@@ -1,13 +1,15 @@
 package fr.uparis.energy.view;
 
+import fr.uparis.energy.controller.BoardController;
 import fr.uparis.energy.model.Level;
 import fr.uparis.energy.utils.LevelConverter;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.*;
 
 public class Bank1View extends JPanel {
     private int selectedLevel = -1;
@@ -86,10 +88,13 @@ public class Bank1View extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 if (selectedLevel != -1) {
                     Level lvl = LevelConverter.getLevelFromResources(selectedLevel, Level.State.PLAYING);
+                    lvl.start();
                     BoardView bv = new BoardView();
+                    BoardController bc = new BoardController(lvl.getBoard(),bv);
+                    bv.addMouseListener(bc);
                     lvl.getBoard().addObserver(bv);
                     lvl.getBoard().notifyObservers();
-
+                    
                     parentWindow.setContentPane(bv);
                     parentWindow.setVisible(true);
                 }

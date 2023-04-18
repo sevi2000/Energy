@@ -1,5 +1,6 @@
 package fr.uparis.energy.model;
 
+import fr.uparis.energy.utils.IntPair;
 import fr.uparis.energy.view.BoardObserver;
 import java.util.ArrayList;
 import java.util.List;
@@ -304,5 +305,9 @@ public class Board implements BoardObservable {
     @Override
     public Geometry getGeometry() {
         return this.geometry;
+    }
+
+    public void rotateTileClockWise(IntPair clickedPolygon) {
+        this.tileGrid.get(clickedPolygon.a).get(clickedPolygon.b).rotateClockwise();
     }
 }

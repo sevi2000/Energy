@@ -4,22 +4,28 @@ import fr.uparis.energy.model.BoardObservable;
 import fr.uparis.energy.model.Component;
 import fr.uparis.energy.model.Geometry;
 import fr.uparis.energy.model.ReadOnlyTile;
+import fr.uparis.energy.utils.IntPair;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BoardView extends JPanel implements BoardObserver {
     private BoardObservable rob;
+    private Map<IntPair, IntPair> coordinateMap;
 
     public BoardView() {
         this.setPreferredSize(new Dimension(800, 800));
         this.setBackground(Color.BLACK);
+        this.coordinateMap = new HashMap<>();
         this.repaint();
     }
 
     @Override
     public void paintComponent(Graphics g) {
+        this.coordinateMap.clear();
         g.setColor(Color.BLACK);
         g.fillRect(0,0,getWidth(),getHeight());
 
@@ -71,7 +77,7 @@ public class BoardView extends JPanel implements BoardObserver {
                     x = (int)(j * 3.0 / 4.0 * tileWidth);
                     y = (j % 2 == 1) ? i * tileHeight + tileHeight / 2 : i * tileHeight;
                 }
-
+                this.coordinateMap.put(new IntPair(startX+x+tileWidth/2,startY+y+tileHeight/2),new IntPair(i,j));
                 this.drawTile(g, this.rob.getTileAt(i, j),
                         startX + x, startY + y, tileWidth, tileHeight);
             }
@@ -156,5 +162,9 @@ public class BoardView extends JPanel implements BoardObserver {
     public void update(BoardObservable boardObservable) {
         this.rob = boardObservable;
         this.repaint();
+    }
+
+    public Map<IntPair, IntPair> getCoordinateMap() {
+        return this.coordinateMap;
     }
 }
