@@ -14,4 +14,6 @@ public interface BoardObservable {
     void notifyObservers();
 
     Geometry getGeometry();
+
+    boolean isSolved();
 }

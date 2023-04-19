@@ -1,6 +1,5 @@
 package fr.uparis.energy.view;
 
-import fr.uparis.energy.controller.BoardController;
 import fr.uparis.energy.model.Level;
 import fr.uparis.energy.utils.LevelConverter;
 
@@ -87,15 +86,8 @@ public class Bank1View extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (selectedLevel != -1) {
-                    Level lvl = LevelConverter.getLevelFromResources(selectedLevel, Level.State.PLAYING);
-                    lvl.start();
-                    BoardView bv = new BoardView();
-                    BoardController bc = new BoardController(lvl.getBoard(),bv);
-                    bv.addMouseListener(bc);
-                    lvl.getBoard().addObserver(bv);
-                    lvl.getBoard().notifyObservers();
-                    
-                    parentWindow.setContentPane(bv);
+                   PlayingLevelView plv = new PlayingLevelView(parentWindow, LevelConverter.getLevelFromResources(selectedLevel,Level.State.PLAYING));
+                    parentWindow.setContentPane(plv);
                     parentWindow.setVisible(true);
                 }
             }
