@@ -146,6 +146,7 @@ public class Board implements BoardObservable {
      * Checks if the board is solved.
      * @return true if the board is in a solved state.
      */
+    @Override
     public boolean isSolved() {
         List<Tile> lampTiles = this.getTilesWithComponent(Component.LAMP);
         for (Tile tile : lampTiles) if (!tile.isPowered()) return false;

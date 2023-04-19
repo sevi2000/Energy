@@ -1,42 +1,58 @@
 package fr.uparis.energy.view;
 
+import fr.uparis.energy.controller.BoardController;
+import fr.uparis.energy.model.BoardObservable;
+import fr.uparis.energy.model.Level;
+import fr.uparis.energy.utils.LevelConverter;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.*;
 
-public class PlayingLevelView extends JPanel {
-
-    public PlayingLevelView(JFrame jFrame) {
+public class PlayingLevelView extends JPanel implements BoardObserver{
+    private JFrame parentWindow;
+    int nextLevel;
+    public PlayingLevelView(JFrame jFrame, Level lvl) {
+        this.parentWindow = jFrame;
         this.setPreferredSize(new Dimension(800, 800));
         // this.setLayout(new BoxLayout());
 
         JLabel back = Common.createButton("Back", new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                jFrame.setContentPane(new MainMenuView(jFrame));
-                jFrame.setVisible(true);
+                parentWindow.setContentPane(new MainMenuView(jFrame));
+                parentWindow.setVisible(true);
             }
         });
+        
+        lvl.start();
+        BoardView bv = new BoardView();
+        BoardController bc = new BoardController(lvl.getBoard(),bv);
+        bv.addMouseListener(bc);
+        lvl.getBoard().addObserver(bv);
+        lvl.getBoard().addObserver(this);
+        lvl.getBoard().notifyObservers();
+        
+        this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+        this.nextLevel = lvl.getNumber() + 1;
+        
+        this.add(bv);
+        this.add(back);
+    }
 
-        List<Component> components = new ArrayList<>();
-        components.add(back);
-        components.add(new BoardView());
-        components.add(Box.createRigidArea(new Dimension(0, 100)));
-        // components.add();
-
-        this.setPreferredSize(new Dimension(800, 800));
-
-        this.setLayout(new GridBagLayout());
-
-        JPanel contentPane = Common.centeredPane(components, 100, 1);
-        jFrame.revalidate();
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.anchor = GridBagConstraints.CENTER;
-        this.add(contentPane, gbc);
-
-        this.repaint();
+    @Override
+    public void update(BoardObservable boardObservable) {
+        System.out.println("tuile TOURNEE");
+        if (boardObservable.isSolved()) {
+            int res =JOptionPane.showInternalConfirmDialog(null,"You won","Game over",JOptionPane.OK_CANCEL_OPTION);
+            if (res == JOptionPane.OK_OPTION){
+                if (nextLevel < LevelConverter.getBank1LevelNumbers().size() + 1)
+                    parentWindow.setContentPane(new PlayingLevelView(parentWindow, LevelConverter.getLevelFromResources(nextLevel, Level.State.PLAYING)));
+                else 
+                    parentWindow.setContentPane(new MainMenuView(parentWindow));
+                parentWindow.setVisible(true);
+            }
+        }
     }
 }
