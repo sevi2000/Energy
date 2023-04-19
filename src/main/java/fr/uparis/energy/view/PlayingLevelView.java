@@ -28,7 +28,7 @@ public class PlayingLevelView extends JPanel implements BoardObserver{
         
         lvl.start();
         BoardView bv = new BoardView();
-        BoardController bc = new BoardController(lvl.getBoard(),bv);
+        BoardController bc = new BoardController(lvl.getBoard());
         bv.addMouseListener(bc);
         lvl.getBoard().addObserver(bv);
         lvl.getBoard().addObserver(this);
@@ -45,7 +45,7 @@ public class PlayingLevelView extends JPanel implements BoardObserver{
     public void update(BoardObservable boardObservable) {
         System.out.println("tuile TOURNEE");
         if (boardObservable.isSolved()) {
-            int res =JOptionPane.showInternalConfirmDialog(null,"You won","Game over",JOptionPane.OK_CANCEL_OPTION);
+            int res =JOptionPane.showInternalConfirmDialog(null,"You won","Game over",JOptionPane.PLAIN_MESSAGE);
             if (res == JOptionPane.OK_OPTION){
                 if (nextLevel < LevelConverter.getBank1LevelNumbers().size() + 1)
                     parentWindow.setContentPane(new PlayingLevelView(parentWindow, LevelConverter.getLevelFromResources(nextLevel, Level.State.PLAYING)));

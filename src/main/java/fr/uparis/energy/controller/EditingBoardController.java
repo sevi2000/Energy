@@ -8,11 +8,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Map;
 
-public class BoardController extends MouseAdapter {
+public class EditingBoardController extends MouseAdapter {
     
     private Board board;
     
-    public BoardController(Board board) {
+    public EditingBoardController(Board board) {
         this.board = board;
     }
     @Override
@@ -28,7 +28,7 @@ public class BoardController extends MouseAdapter {
                 clickedPolygon = entry.getValue();
             }
         }
-        board.rotateTileClockWise(clickedPolygon);
+        board.cycleTileComponent(clickedPolygon);
         board.propagateEnergy();
         board.notifyObservers();
     }
