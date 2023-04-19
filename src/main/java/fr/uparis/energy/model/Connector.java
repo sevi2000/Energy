@@ -72,4 +72,8 @@ public class Connector {
         if (this.getNeighbor() == null) return false;
         return this.exists() && this.getNeighbor().exists();
     }
+
+    public void toggleExists() {
+        this.exists = !this.exists;
+    }
 }

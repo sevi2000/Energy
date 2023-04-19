@@ -317,4 +317,8 @@ public class Board implements BoardObservable {
     public void cycleTileComponent(IntPair clickedPolygon) {
         this.tileGrid.get(clickedPolygon.a).get(clickedPolygon.b).cycleComponent();
     }
+    
+    public Tile getTileAt(IntPair position) {
+        return tileGrid.get(position.a).get(position.b);
+    }
 }

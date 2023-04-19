@@ -19,7 +19,6 @@ public class EditingLevelView extends JPanel implements BoardObserver{
     public EditingLevelView(JFrame jFrame, Level lvl) {
         this.parentWindow = jFrame;
         this.setPreferredSize(new Dimension(800, 800));
-        // this.setLayout(new BoxLayout());
         this.lvl = lvl;
         
         this.ch = new Checkbox("Remove");

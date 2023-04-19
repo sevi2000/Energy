@@ -10,4 +10,6 @@ public interface ReadOnlyTile {
     PowerState getPowerState();
 
     Geometry getGeometry();
+
+    int getNumberOfExistingConnectors();
 }

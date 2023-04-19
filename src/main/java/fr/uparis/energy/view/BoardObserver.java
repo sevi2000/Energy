@@ -4,4 +4,5 @@ import fr.uparis.energy.model.BoardObservable;
 
 public interface BoardObserver {
     void update(BoardObservable boardObservable);
+
 }

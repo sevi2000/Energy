@@ -15,6 +15,7 @@ import java.util.Map;
 public class BoardView extends JPanel implements BoardObserver {
     private BoardObservable rob;
     private Map<IntPair, IntPair> coordinateMap;
+    private int tileWidth;
 
     public BoardView() {
         this.setPreferredSize(new Dimension(800, 800));
@@ -30,12 +31,11 @@ public class BoardView extends JPanel implements BoardObserver {
         g.fillRect(0,0,getWidth(),getHeight());
 
         if (rob == null) return;
-
-        int tileWidth;
+        
         if (this.rob.getGeometry() == Geometry.SQUARE)
-            tileWidth = this.getWidth() / this.rob.getWidth();
+            this.tileWidth = this.getWidth() / this.rob.getWidth();
         else
-            tileWidth = 4 * this.getWidth() / (3 * this.rob.getWidth() + 1);
+            this.tileWidth = 4 * this.getWidth() / (3 * this.rob.getWidth() + 1);
 
         int tileHeight;
         if (this.rob.getGeometry() == Geometry.SQUARE)
@@ -132,7 +132,7 @@ public class BoardView extends JPanel implements BoardObserver {
      }
      
     private  void drawHexagonTile(Graphics g, ReadOnlyTile rot, int x, int y, int width, int height) {
-        if (rot.getComponent() != Component.EMPTY) {
+        if (rot.getComponent() != Component.EMPTY || rot.getNumberOfExistingConnectors() == 1) {
             BufferedImage wire = SpriteBank.getWire(SpriteBank.WireType.HEXAGON_SHORT, rot.getPowerState());
             for (int i = 0; i < rot.getGeometry().card(); i++) {
 
@@ -162,6 +162,11 @@ public class BoardView extends JPanel implements BoardObserver {
     public void update(BoardObservable boardObservable) {
         this.rob = boardObservable;
         this.repaint();
+    }
+
+    
+    public int getTileWidth() {
+        return this.tileWidth;
     }
 
     public Map<IntPair, IntPair> getCoordinateMap() {
