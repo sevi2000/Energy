@@ -41,8 +41,6 @@ public class EditingBoardController extends MouseAdapter {
 
     public double getAngle(IntPair clickedPolygon, int x, int y, BoardView bv) {
         IntPair center = Common.invertMapUsingStreams(bv.getCoordinateMap()).get(clickedPolygon);
-        System.out.format("cx %d,cy %d,x %d,y %d",center.a,center.b,x,y);
-        System.out.println("angle : "+Math.atan2((y - center.b) , x - center.a));
         return Math.atan2(-(y - center.b) , x - center.a);
     }
 

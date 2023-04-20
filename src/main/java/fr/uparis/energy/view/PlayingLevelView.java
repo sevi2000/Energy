@@ -16,7 +16,6 @@ public class PlayingLevelView extends JPanel implements BoardObserver{
     public PlayingLevelView(JFrame jFrame, Level lvl) {
         this.parentWindow = jFrame;
         this.setPreferredSize(new Dimension(800, 800));
-        // this.setLayout(new BoxLayout());
 
         JLabel back = Common.createButton("Back", new MouseAdapter() {
             @Override
@@ -43,7 +42,6 @@ public class PlayingLevelView extends JPanel implements BoardObserver{
 
     @Override
     public void update(BoardObservable boardObservable) {
-        System.out.println("tuile TOURNEE");
         if (boardObservable.isSolved()) {
             int res =JOptionPane.showInternalConfirmDialog(null,"You won","Game over",JOptionPane.PLAIN_MESSAGE);
             if (res == JOptionPane.OK_OPTION){

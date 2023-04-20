@@ -107,11 +107,6 @@ public class Tile implements ReadOnlyTile {
 
         int nextIndex = (Component.valuesAsList().indexOf(this.component) + 1) % Component.values().length;
         this.component = Component.values()[nextIndex];
-        /*if (this.component ==  Component.EMPTY && getNumberOfExistingConnectors() == 1){
-            for (Connector c:connectors) 
-                c.setExists(false);   
-            
-        }*/
     }
 
     /**

@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class EditingLevelView extends JPanel implements BoardObserver{
     private JFrame parentWindow;
-    Level lvl;
+    transient Level lvl;
     BoardView bv;
     Checkbox ch;
     public EditingLevelView(JFrame jFrame, Level lvl) {
@@ -70,14 +70,12 @@ public class EditingLevelView extends JPanel implements BoardObserver{
                 else
                     lvl.getBoard().addRowOnTop();
                 bv.update(lvl.getBoard());
-                System.out.println("Clicked UP");
             }
         }));
 
         arrowButons.add(Common.createButton("⬅️", new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println("Clicked LEFT");
                 if (ch.getState())
                     lvl.getBoard().removeColumnAtLeft();    
                 else
@@ -89,7 +87,6 @@ public class EditingLevelView extends JPanel implements BoardObserver{
         arrowButons.add(Common.createButton("⬇️", new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println("Clicked DOWN");
                 if (ch.getState())
                     lvl.getBoard().removeRowAtBottom();
                 else
@@ -101,7 +98,6 @@ public class EditingLevelView extends JPanel implements BoardObserver{
         arrowButons.add(Common.createButton("➡️", new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println("Clicked RIGHT");
                 if (ch.getState())
                     lvl.getBoard().removeColumnAtRight();
                 else 
@@ -114,8 +110,9 @@ public class EditingLevelView extends JPanel implements BoardObserver{
         res.add(arrowButons);
         return res;
     }
+
     @Override
     public void update(BoardObservable boardObservable) {
-        System.out.println("tuile TOURNEE");
+        
     }
 }
