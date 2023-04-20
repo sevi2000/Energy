@@ -1,5 +1,8 @@
 package fr.uparis.energy.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Represents a Direction to which a connector points.
  */
@@ -35,4 +38,9 @@ public interface Direction {
      * @return an integer representing the offset.
      */
     public int getWidthOffset();
+    
+   static List<Direction> getTrigonometricalOrderedDirection() {
+       return new ArrayList<>();
+   }
+   
 }

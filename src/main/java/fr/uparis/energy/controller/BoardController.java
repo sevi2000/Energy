@@ -1,12 +1,11 @@
 package fr.uparis.energy.controller;
 
 import fr.uparis.energy.model.Board;
-import fr.uparis.energy.utils.IntPair;
 import fr.uparis.energy.view.BoardView;
+import fr.uparis.energy.view.Common;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Map;
 
 public class BoardController extends MouseAdapter {
     
@@ -17,18 +16,7 @@ public class BoardController extends MouseAdapter {
     }
     @Override
     public void mouseClicked(MouseEvent e) {
-        double minDistance = Double.POSITIVE_INFINITY;
-        IntPair clickedPolygon = new IntPair(0,0);
-        for(Map.Entry<IntPair,IntPair> entry :((BoardView)(e.getSource())).getCoordinateMap().entrySet()) {
-            double distance = Math.sqrt(Math.pow(entry.getKey().a - e.getX(),2) +
-                    Math.pow(entry.getKey().b - e.getY(),2));
-            
-            if (distance < minDistance) {
-                minDistance = distance;
-                clickedPolygon = entry.getValue();
-            }
-        }
-        board.rotateTileClockWise(clickedPolygon);
+        board.rotateTileClockWise(Common.getClosestPolygon((BoardView) e.getSource(),e.getX(),e.getY()));
         board.propagateEnergy();
         board.notifyObservers();
     }
