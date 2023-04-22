@@ -307,8 +307,18 @@ public class Board implements BoardObservable {
     public Geometry getGeometry() {
         return this.geometry;
     }
-
+    
+    @Override
     public void rotateTileClockWise(IntPair clickedPolygon) {
         this.tileGrid.get(clickedPolygon.a).get(clickedPolygon.b).rotateClockwise();
+    }
+
+    @Override
+    public void cycleTileComponent(IntPair clickedPolygon) {
+        this.tileGrid.get(clickedPolygon.a).get(clickedPolygon.b).cycleComponent();
+    }
+    
+    public Tile getTileAt(IntPair position) {
+        return tileGrid.get(position.a).get(position.b);
     }
 }

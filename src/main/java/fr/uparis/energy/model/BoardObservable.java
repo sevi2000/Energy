@@ -1,5 +1,6 @@
 package fr.uparis.energy.model;
 
+import fr.uparis.energy.utils.IntPair;
 import fr.uparis.energy.view.BoardObserver;
 
 public interface BoardObservable {
@@ -16,4 +17,7 @@ public interface BoardObservable {
     Geometry getGeometry();
 
     boolean isSolved();
+
+    void rotateTileClockWise(IntPair clickedPolygon);
+    void cycleTileComponent(IntPair clickedPolygon);
 }

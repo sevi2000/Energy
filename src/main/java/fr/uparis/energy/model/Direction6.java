@@ -1,5 +1,7 @@
 package fr.uparis.energy.model;
 
+import java.util.List;
+
 public enum Direction6 implements Direction {
     NORTH,
     NORTH_EAST,
@@ -44,5 +46,9 @@ public enum Direction6 implements Direction {
             case NORTH_WEST, SOUTH_WEST -> -1;
             case NORTH_EAST, SOUTH_EAST -> 1;
         };
+    }
+    
+    public static List<Direction> getTrigonometricalOrderedDirection() {
+        return List.of(NORTH_EAST,NORTH,NORTH_WEST,SOUTH_WEST,SOUTH,SOUTH_EAST);
     }
 }

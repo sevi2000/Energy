@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.net.URL;
 
 public class SpriteBank {
-    // TODO Get wire images
 
     private static BufferedImage mainImage;
 
