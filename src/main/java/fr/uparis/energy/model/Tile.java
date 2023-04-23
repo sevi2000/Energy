@@ -195,4 +195,11 @@ public class Tile implements ReadOnlyTile {
                 i++;
         return i;
     }
+
+    public void empty() {
+        this.component = Component.EMPTY;
+        for (Connector c: this.connectors) {
+            c.setExists(false);
+        }
+    }
 }

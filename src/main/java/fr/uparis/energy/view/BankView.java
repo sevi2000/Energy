@@ -8,6 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,8 +31,11 @@ public class BankView extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.anchor = GridBagConstraints.CENTER;
         this.setLayout(new GridBagLayout());
-
-        JPanel contentPane = Common.centeredPane(components, 100, 1);
+        int width = switch (bank) {
+            case BANK_1 -> 100;
+            case BANK_2 -> 50;
+        };
+        JPanel contentPane = Common.centeredPane(components, width, 1,100);
         jFrame.revalidate();
         add(contentPane, gbc);
     }
@@ -89,12 +94,21 @@ public class BankView extends JPanel {
 
     private JPanel bottomMenu() {
         JPanel res = new JPanel();
-        res.setLayout(new GridLayout(1, 3));
+        switch (bank) {
+            case BANK_1 -> res.setLayout(new GridLayout(1, 4));
+            case BANK_2 -> res.setLayout(new GridLayout(1, 4,10,0));
+        }
+        
         JLabel play = Common.createButton("Play", new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (selectedLevel != -1) {
-                   PlayingLevelView plv = new PlayingLevelView(parentWindow, LevelConverter.getLevelFromResources(selectedLevel,Level.State.PLAYING));
+                    PlayingLevelView plv = null;
+                    try {
+                        plv = new PlayingLevelView(parentWindow, LevelConverter.getLevel(selectedLevel, Level.State.PLAYING, bank),bank);
+                    } catch (MalformedURLException ex) {
+                        throw new RuntimeException(ex);
+                    }
                     parentWindow.setContentPane(plv);
                     parentWindow.setVisible(true);
                 }
@@ -113,18 +127,42 @@ public class BankView extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (selectedLevel != -1) {
-                    EditingLevelView elv = new EditingLevelView(parentWindow, LevelConverter.getLevelFromResources(selectedLevel,Level.State.PLAYING));
+                    EditingLevelView elv = null;
+                    try {
+                        elv = new EditingLevelView(parentWindow, LevelConverter.getLevel(selectedLevel, Level.State.PLAYING,bank));
+                    } catch (MalformedURLException ex) {
+                        throw new RuntimeException(ex);
+                    }
                     parentWindow.setContentPane(elv);
                     parentWindow.setVisible(true);
+                }
+            }
+        });
+        
+        JLabel empty = Common.createButton("Empty", new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (selectedLevel != -1) {
+                    try {
+                        Level l = LevelConverter.getLevel(selectedLevel, Level.State.EDITING, bank);
+                        l.empty();
+                        LevelConverter.writeLevelToFile(l);
+                    } catch (MalformedURLException ex) {
+                        throw new RuntimeException(ex);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             }
         });
         res.add(play);
         
         if (bank == Bank.BANK_2) {
-            res.add(Box.createRigidArea(new Dimension(0, 50)));
+            //res.add(Box.createRigidArea(new Dimension(10, 10)));
             res.add(edit);
-            res.add(Box.createRigidArea(new Dimension(0,50)));
+            //res.add(Box.createRigidArea(new Dimension(10,10)));
+            res.add(empty);
+            //res.add(Box.createRigidArea(new Dimension(10,10)));
         } else {
             res.add(Box.createRigidArea(new Dimension(0, 200)));
         }

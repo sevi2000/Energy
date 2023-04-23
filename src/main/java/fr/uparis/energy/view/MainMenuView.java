@@ -35,7 +35,7 @@ public class MainMenuView extends JPanel {
 
         this.setLayout(new GridBagLayout());
 
-        JPanel contentPane = Common.centeredPane(components, 100, 1);
+        JPanel contentPane = Common.centeredPane(components, 100, 1, 100);
         jFrame.revalidate();
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.anchor = GridBagConstraints.CENTER;

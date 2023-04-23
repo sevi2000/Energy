@@ -321,4 +321,9 @@ public class Board implements BoardObservable {
     public Tile getTileAt(IntPair position) {
         return tileGrid.get(position.a).get(position.b);
     }
+    public void empty () {
+        for (List<Tile> line: tileGrid)
+            for (Tile t: line)
+                t.empty();
+    }
 }
