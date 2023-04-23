@@ -14,6 +14,12 @@ import java.io.IOException;
 public class EditingLevelView extends JPanel implements BoardObserver{
     private JFrame parentWindow;
     transient Level lvl;
+    JLabel save;
+    JLabel back;
+    JLabel upArrow;
+    JLabel leftArrow;
+    JLabel bottomArrow;
+    JLabel rightArrow;
     BoardView bv;
     Checkbox ch;
     public EditingLevelView(JFrame jFrame, Level lvl) {
@@ -40,8 +46,7 @@ public class EditingLevelView extends JPanel implements BoardObserver{
         res.setLayout(new BoxLayout(res,BoxLayout.X_AXIS));
         res.add(ch);
         JPanel verticalPane = new JPanel();
-        verticalPane.setLayout(new BoxLayout(verticalPane,BoxLayout.Y_AXIS));
-        verticalPane.add(Common.createButton("Save", new MouseAdapter() {
+        this.save = Common.createButton("Save", new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (lvl.isSolved()) {
@@ -52,17 +57,20 @@ public class EditingLevelView extends JPanel implements BoardObserver{
                     }
                 }
             }
-        }));
-        verticalPane.add(Common.createButton("Back", new MouseAdapter() {
+        });
+        this.back = Common.createButton("Back", new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 parentWindow.setContentPane(new Bank1View(parentWindow));
                 parentWindow.setVisible(true);
             }
-        }));
+        });
+        verticalPane.setLayout(new BoxLayout(verticalPane,BoxLayout.Y_AXIS));
+        verticalPane.add(this.save);
+        verticalPane.add(this.back);
         JPanel arrowButons  = new JPanel();
         arrowButons.setLayout(new GridLayout(2,2));
-        arrowButons.add(Common.createButton("⬆️", new MouseAdapter() {
+        this.upArrow = Common.createButton("⬆️", new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (ch.getState())
@@ -71,20 +79,19 @@ public class EditingLevelView extends JPanel implements BoardObserver{
                     lvl.getBoard().addRowOnTop();
                 bv.update(lvl.getBoard());
             }
-        }));
-
-        arrowButons.add(Common.createButton("⬅️", new MouseAdapter() {
+        });
+        this.leftArrow = Common.createButton("⬅️", new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (ch.getState())
-                    lvl.getBoard().removeColumnAtLeft();    
+                    lvl.getBoard().removeColumnAtLeft();
                 else
                     lvl.getBoard().addColumnAtLeft();
                 bv.update(lvl.getBoard());
             }
-        }));
-
-        arrowButons.add(Common.createButton("⬇️", new MouseAdapter() {
+        });
+        
+        this.bottomArrow = Common.createButton("⬇️", new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (ch.getState())
@@ -93,18 +100,23 @@ public class EditingLevelView extends JPanel implements BoardObserver{
                     lvl.getBoard().addRowAtBottom();
                 bv.update(lvl.getBoard());
             }
-        }));
-
-        arrowButons.add(Common.createButton("➡️", new MouseAdapter() {
+        });
+        
+        this.rightArrow = Common.createButton("➡️", new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (ch.getState())
                     lvl.getBoard().removeColumnAtRight();
-                else 
+                else
                     lvl.getBoard().addColumnAtRight();
                 bv.update(lvl.getBoard());
             }
-        }));
+        });
+        
+        arrowButons.add(this.upArrow);
+        arrowButons.add(this.leftArrow);
+        arrowButons.add(this.bottomArrow);
+        arrowButons.add(this.rightArrow);
         res.add(ch);
         res.add(verticalPane);
         res.add(arrowButons);
