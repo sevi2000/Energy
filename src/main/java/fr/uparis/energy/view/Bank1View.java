@@ -1,6 +1,7 @@
 package fr.uparis.energy.view;
 
 import fr.uparis.energy.model.Level;
+import fr.uparis.energy.utils.Bank;
 import fr.uparis.energy.utils.LevelConverter;
 
 import javax.swing.*;
@@ -62,7 +63,7 @@ public class Bank1View extends JPanel {
     private JPanel levelsPanel() {
         JPanel res = new JPanel();
         res.setPreferredSize(new Dimension(200, 200));
-        List<Integer> lvls = LevelConverter.getBank1LevelNumbers();
+        List<Integer> lvls = LevelConverter.getBankLevelNumbers(Bank.BANK_2);
         res.setLayout(new GridLayout(lvls.size() / 5 + 1, 5, 10, 10));
         for (Integer i : lvls) {
             JLabel lvlLabel = levelSelectionLabel(i.toString());
