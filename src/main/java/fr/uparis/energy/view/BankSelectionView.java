@@ -1,5 +1,7 @@
 package fr.uparis.energy.view;
 
+import fr.uparis.energy.utils.Bank;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -7,29 +9,40 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainMenuView extends JPanel {
-    public MainMenuView(JFrame jFrame) {
-        JLabel play = Common.createButton("Play", new MouseAdapter() {
+public class BankSelectionView extends JPanel {
+    public BankSelectionView(JFrame jFrame) {
+        JLabel bank1 = Common.createButton("Bank 1", new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                jFrame.setContentPane(new BankSelectionView(jFrame));
+                jFrame.setContentPane(new BankView(jFrame, Bank.BANK_1));
+                jFrame.setVisible(true);
+            }
+        });
+        
+        JLabel bank2 = Common.createButton("Bank 2", new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                jFrame.setContentPane(new BankView(jFrame, Bank.BANK_2));
                 jFrame.setVisible(true);
             }
         });
 
-        JLabel quit = Common.createButton("Quit", new MouseAdapter() {
+        JLabel back = Common.createButton("Back", new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.exit(0);
+                jFrame.setContentPane(new MainMenuView(jFrame));
+                jFrame.setVisible(true);
             }
         });
 
         List<Component> components = new ArrayList<>();
         components.add(titlePane());
         components.add(Box.createRigidArea(new Dimension(0, 100)));
-        components.add(play);
+        components.add(bank1);
         components.add(Box.createRigidArea(new Dimension(0, 100)));
-        components.add(quit);
+        components.add(bank2);
+        components.add(Box.createRigidArea(new Dimension(0, 100)));
+        components.add(back);
 
         this.setPreferredSize(new Dimension(800, 800));
 

@@ -11,16 +11,18 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bank1View extends JPanel {
+public class BankView extends JPanel {
     private int selectedLevel = -1;
     private final JFrame parentWindow;
     private final List<JLabel> levelButtons = new ArrayList<>();
-
-    public Bank1View(JFrame jFrame) {
+    
+    private Bank bank;
+    public BankView(JFrame jFrame, Bank bank) {
+        this.bank = bank;
         parentWindow = jFrame;
         List<Component> components = new ArrayList<>();
         this.setPreferredSize(new Dimension(800, 800));
-        components.add(bank1Label());
+        components.add(bankLabel());
         components.add(this.levelsPanel());
         components.add(Box.createRigidArea(new Dimension(0, 25)));
         components.add(this.bottomMenu());
@@ -28,13 +30,18 @@ public class Bank1View extends JPanel {
         gbc.anchor = GridBagConstraints.CENTER;
         this.setLayout(new GridBagLayout());
 
-        JPanel contentPane = Common.centeredPane(components, 200, 1);
+        JPanel contentPane = Common.centeredPane(components, 100, 1);
         jFrame.revalidate();
         add(contentPane, gbc);
     }
 
-    private static JLabel bank1Label() {
-        JLabel res = new JLabel("Bank 1");
+    private  JLabel bankLabel() {
+        JLabel res = new JLabel();
+        switch (this.bank){
+            case BANK_1 -> res.setText("Bank 1");
+            case BANK_2 -> res.setText("Bank 2");
+        }
+        
         res.setAlignmentX(Component.CENTER_ALIGNMENT);
         res.setForeground(Color.BLACK);
         res.setBackground(Color.GRAY);
@@ -63,7 +70,7 @@ public class Bank1View extends JPanel {
     private JPanel levelsPanel() {
         JPanel res = new JPanel();
         res.setPreferredSize(new Dimension(200, 200));
-        List<Integer> lvls = LevelConverter.getBankLevelNumbers(Bank.BANK_2);
+        List<Integer> lvls = LevelConverter.getBankLevelNumbers(bank);
         res.setLayout(new GridLayout(lvls.size() / 5 + 1, 5, 10, 10));
         for (Integer i : lvls) {
             JLabel lvlLabel = levelSelectionLabel(i.toString());
@@ -97,13 +104,30 @@ public class Bank1View extends JPanel {
         JLabel back = Common.createButton("Back", new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                parentWindow.setContentPane(new MainMenuView(parentWindow));
+                parentWindow.setContentPane(new BankSelectionView(parentWindow));
                 parentWindow.setVisible(true);
             }
         });
-
+        
+        JLabel edit = Common.createButton("Edit", new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (selectedLevel != -1) {
+                    EditingLevelView elv = new EditingLevelView(parentWindow, LevelConverter.getLevelFromResources(selectedLevel,Level.State.PLAYING));
+                    parentWindow.setContentPane(elv);
+                    parentWindow.setVisible(true);
+                }
+            }
+        });
         res.add(play);
-        res.add(Box.createRigidArea(new Dimension(0, 200)));
+        
+        if (bank == Bank.BANK_2) {
+            res.add(Box.createRigidArea(new Dimension(0, 50)));
+            res.add(edit);
+            res.add(Box.createRigidArea(new Dimension(0,50)));
+        } else {
+            res.add(Box.createRigidArea(new Dimension(0, 200)));
+        }
         res.add(back);
 
         return res;
