@@ -1,6 +1,7 @@
 package fr.uparis.energy.utils;
 
 import fr.uparis.energy.model.*;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOError;
@@ -10,10 +11,8 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.nio.file.StandardCopyOption;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,11 +20,17 @@ import java.util.regex.Pattern;
  * Utils class to store and retrieve a level from a file.
  */
 public class LevelConverter {
+    
 
     /**
      * Class constructor.
      * This constructor is private to prevent creating a LevelConverter.
      */
+    
+    public static final String energyPath = new StringBuilder().
+            append(System.getProperty("user.home")).
+            append(System.getProperty("file.separator")).
+            append(".energy").toString(); 
     private LevelConverter() {}
 
     /**
@@ -199,11 +204,15 @@ public class LevelConverter {
      * @throws IOException if file opening goes wrong
      */
     public static void writeLevelToFile(Level level) throws IOException {
-        String energyDirectory = System.getProperty("user.home") + System.getProperty("file.separator") + ".energy";
-        File directory = new File(energyDirectory);
-        directory.mkdir();
+        
+        File directory = new File(energyPath);
         Files.writeString(
-                Path.of(energyDirectory + System.getProperty("file.separator") + "level" + level.getNumber() + ".nrg"),
+                Path.of(new StringBuilder().
+                                append(energyPath).
+                                append(System.getProperty("file.separator")).
+                                append("level").
+                                append(level.getNumber()).
+                                append( ".nrg").toString()),
                 level.toString(),
                 StandardCharsets.UTF_8);
     }
@@ -214,12 +223,15 @@ public class LevelConverter {
         return matcher.group(1);
     }
 
-    public static List<Integer> getBank1LevelNumbers() {
+    public static List<Integer> getBankLevelNumbers(Bank bank) {
         List<Integer> res = new ArrayList<>();
         ClassLoader cl = LevelConverter.class.getClassLoader();
         URL path = cl.getResource("levels");
         if (path == null) throw new IllegalStateException();
-        String dir = path.getPath();
+        String dir = switch (bank) {
+            case BANK_1 -> path.getPath();
+            case BANK_2 -> System.getProperty("user.home") + System.getProperty("file.separator") + ".energy";
+        };
         File levels = new File(dir);
         File[] list = levels.listFiles();
         if (list == null) throw new IllegalStateException();
@@ -228,5 +240,21 @@ public class LevelConverter {
         }
         Collections.sort(res);
         return res;
+    }
+    
+    public static void copyBank1Levels() throws IOException {
+        File energyDir = new File(Path.of(energyPath).toUri());
+        if (energyDir.exists()) return;
+        energyDir.mkdir();
+        for (int i = 1; i < getBankLevelNumbers(Bank.BANK_1).size(); i++) {
+            Path original = Path.of(Objects.requireNonNull(LevelConverter.
+                    class.
+                    getClassLoader().
+                    getResource("levels/level" + i + ".nrg")).
+                    getPath());
+            Path copied = Path.of((energyDir+System.getProperty("file.separator")+"level"+i+".nrg"));
+            Files.copy(original, copied, StandardCopyOption.REPLACE_EXISTING);
+        }
+        
     }
 }
