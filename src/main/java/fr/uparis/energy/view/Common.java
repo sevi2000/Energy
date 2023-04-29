@@ -30,12 +30,19 @@ public class Common {
         res.setHorizontalAlignment(SwingConstants.CENTER);
         return res;
     }
+    
+    public static JLabel createButton(String title, int border, MouseAdapter adapter) {
+        JLabel button = createButton(title,adapter);
+        button.setBorder(BorderFactory.createEmptyBorder(border,border,border,border));
+        return button;
+    }
 
-    public static JPanel centeredPane(List<Component> children, int border, int col) {
+
+        public static JPanel centeredPane(List<Component> children, int width, int col, int height) {
         JPanel content = new JPanel();
         content.setLayout(new GridLayout(children.size(), col));
         for (Component component : children) content.add(component);
-        content.setBorder(BorderFactory.createEmptyBorder(border, border, border, border));
+        content.setBorder(BorderFactory.createEmptyBorder(height, width, width,height));
         return content;
     }
 

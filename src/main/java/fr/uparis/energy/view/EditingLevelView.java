@@ -3,6 +3,7 @@ package fr.uparis.energy.view;
 import fr.uparis.energy.controller.EditingBoardController;
 import fr.uparis.energy.model.BoardObservable;
 import fr.uparis.energy.model.Level;
+import fr.uparis.energy.utils.Bank;
 import fr.uparis.energy.utils.LevelConverter;
 
 import javax.swing.*;
@@ -61,7 +62,7 @@ public class EditingLevelView extends JPanel implements BoardObserver{
         this.back = Common.createButton("Back", new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                parentWindow.setContentPane(new Bank1View(parentWindow));
+                parentWindow.setContentPane(new BankView(parentWindow, Bank.BANK_2));
                 parentWindow.setVisible(true);
             }
         });

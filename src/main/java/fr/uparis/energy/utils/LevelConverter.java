@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOError;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -183,7 +184,7 @@ public class LevelConverter {
         return new Level(levelNumber, state, board);
     }
 
-    public static Level getLevelFromResources(int number, Level.State state) {
+    private static Level getLevelFromResources(int number, Level.State state) {
         URL levelLocation = LevelConverter.class.getClassLoader().getResource("levels/level" + number + ".nrg");
         if (levelLocation == null) throw new IllegalArgumentException();
 
@@ -197,6 +198,31 @@ public class LevelConverter {
         return l;
     }
 
+    private static Level getLevelFromHome(int number, Level.State state) throws MalformedURLException {
+        URL levelLocation = Path.of(new StringBuilder().
+                append(energyPath).
+                append(System.getProperty("file.separator")).
+                append("level").
+                append(number).
+                append( ".nrg").toString()).toUri().toURL();
+        if (levelLocation == null) throw new IllegalArgumentException();
+
+        Level l = null;
+        try {
+            l = fileToLevel(levelLocation, state);
+        } catch (Exception e) {
+            System.exit(1);
+        }
+
+        return l;
+    }
+    
+    public static Level getLevel(int number, Level.State state, Bank bank) throws MalformedURLException {
+        return switch (bank) {
+            case BANK_1 -> getLevelFromResources(number,state);
+            case BANK_2 -> getLevelFromHome(number,state);
+        };
+    }
     /**
      * Saves the given level to a file
      *

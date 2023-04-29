@@ -10,11 +10,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.MalformedURLException;
 
 public class PlayingLevelView extends JPanel implements BoardObserver{
     private JFrame parentWindow;
     int nextLevel;
-    public PlayingLevelView(JFrame jFrame, Level lvl) {
+    private Bank bank;
+    public PlayingLevelView(JFrame jFrame, Level lvl, Bank bank) {
+        this.bank = bank;
         this.parentWindow = jFrame;
         this.setPreferredSize(new Dimension(800, 800));
 
@@ -46,8 +49,13 @@ public class PlayingLevelView extends JPanel implements BoardObserver{
         if (boardObservable.isSolved()) {
             int res =JOptionPane.showInternalConfirmDialog(null,"You won","Game over",JOptionPane.PLAIN_MESSAGE);
             if (res == JOptionPane.OK_OPTION){
-                if (nextLevel < LevelConverter.getBankLevelNumbers(Bank.BANK_1).size() + 1)
-                    parentWindow.setContentPane(new PlayingLevelView(parentWindow, LevelConverter.getLevelFromResources(nextLevel, Level.State.PLAYING)));
+                if (nextLevel < LevelConverter.getBankLevelNumbers(Bank.BANK_1).size() + 1) {
+                    try {
+                        parentWindow.setContentPane(new PlayingLevelView(parentWindow, LevelConverter.getLevel(nextLevel, Level.State.PLAYING, bank),bank));
+                    } catch (MalformedURLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
                 else 
                     parentWindow.setContentPane(new MainMenuView(parentWindow));
                 parentWindow.setVisible(true);
