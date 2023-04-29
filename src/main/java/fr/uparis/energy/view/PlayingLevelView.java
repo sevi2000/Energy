@@ -49,7 +49,7 @@ public class PlayingLevelView extends JPanel implements BoardObserver{
         if (boardObservable.isSolved()) {
             int res =JOptionPane.showInternalConfirmDialog(null,"You won","Game over",JOptionPane.PLAIN_MESSAGE);
             if (res == JOptionPane.OK_OPTION){
-                if (nextLevel < LevelConverter.getBankLevelNumbers(Bank.BANK_1).size() + 1) {
+                if (nextLevel < LevelConverter.getBankLevelNumbers(bank).size() + 1) {
                     try {
                         parentWindow.setContentPane(new PlayingLevelView(parentWindow, LevelConverter.getLevel(nextLevel, Level.State.PLAYING, bank),bank));
                     } catch (MalformedURLException e) {
