@@ -9,9 +9,9 @@ import java.util.List;
  * Represents a tile that is held by a board.
  */
 public class Tile implements ReadOnlyTile {
-    private final List<Connector> connectors = new ArrayList<>();
+    private List<Connector> connectors = new ArrayList<>();
     private Component component;
-    private final Geometry geometry;
+    private Geometry geometry;
 
     private boolean isPowered = false;
 

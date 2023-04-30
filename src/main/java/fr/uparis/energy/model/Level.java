@@ -13,6 +13,10 @@ public class Level {
         return this.board;
     }
 
+    public void toggleGeometry() {
+        this.board.toggleGeometry();
+    }
+
     /**
      * This level state.
      */

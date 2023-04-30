@@ -7,7 +7,6 @@ import fr.uparis.energy.utils.Bank;
 import fr.uparis.energy.utils.LevelConverter;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.MalformedURLException;
@@ -19,7 +18,7 @@ public class PlayingLevelView extends JPanel implements BoardObserver{
     public PlayingLevelView(JFrame jFrame, Level lvl, Bank bank) {
         this.bank = bank;
         this.parentWindow = jFrame;
-        this.setPreferredSize(new Dimension(800, 800));
+        this.setPreferredSize(Common.FRAME_SIZE);
 
         JLabel back = Common.createButton("Back", new MouseAdapter() {
             @Override

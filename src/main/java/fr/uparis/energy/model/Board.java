@@ -14,7 +14,7 @@ public class Board implements BoardObservable {
 
     private final List<List<Tile>> tileGrid;
 
-    private final Geometry geometry;
+    private Geometry geometry;
 
     private final Random rand = new Random();
 
@@ -325,5 +325,10 @@ public class Board implements BoardObservable {
         for (List<Tile> line: tileGrid)
             for (Tile t: line)
                 t.empty();
+    }
+
+    public void toggleGeometry() {
+        this.empty();
+        this.geometry = this.geometry.opposite();
     }
 }

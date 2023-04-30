@@ -49,4 +49,9 @@ public enum Geometry {
             case HEXAGON -> Direction6.values();
         };
     }
+
+    public Geometry opposite() {
+        return this == Geometry.SQUARE ? Geometry.HEXAGON : Geometry.SQUARE;
+    }
+    
 }
