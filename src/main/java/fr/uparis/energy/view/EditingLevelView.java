@@ -3,19 +3,15 @@ package fr.uparis.energy.view;
 import fr.uparis.energy.controller.EditingBoardController;
 import fr.uparis.energy.model.BoardObservable;
 import fr.uparis.energy.model.Level;
-import fr.uparis.energy.utils.Bank;
-import fr.uparis.energy.utils.LevelConverter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 
 public class EditingLevelView extends JPanel implements BoardObserver{
     private JFrame parentWindow;
     transient Level lvl;
-    JLabel save;
     JLabel back;
     JLabel upArrow;
     JLabel leftArrow;
@@ -47,27 +43,16 @@ public class EditingLevelView extends JPanel implements BoardObserver{
         res.setLayout(new BoxLayout(res,BoxLayout.X_AXIS));
         res.add(ch);
         JPanel verticalPane = new JPanel();
-        this.save = Common.createButton("Save", new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (lvl.isSolved()) {
-                    try {
-                        LevelConverter.writeLevelToFile(lvl);
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }
-            }
-        });
         this.back = Common.createButton("Back", new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                parentWindow.setContentPane(new BankView(parentWindow, Bank.BANK_2));
-                parentWindow.setVisible(true);
-            }
+                
+                String msg = lvl.isSolved() ?"Sve changes?" : "Exit without saving?";
+                Common.showConfirmation("Exit",msg,parentWindow,lvl);
+        }
         });
         verticalPane.setLayout(new BoxLayout(verticalPane,BoxLayout.Y_AXIS));
-        verticalPane.add(this.save);
+        verticalPane.add(this.ch);
         verticalPane.add(this.back);
         JPanel arrowButons  = new JPanel();
         arrowButons.setLayout(new GridLayout(2,2));
@@ -118,7 +103,6 @@ public class EditingLevelView extends JPanel implements BoardObserver{
         arrowButons.add(this.leftArrow);
         arrowButons.add(this.bottomArrow);
         arrowButons.add(this.rightArrow);
-        res.add(ch);
         res.add(verticalPane);
         res.add(arrowButons);
         return res;
