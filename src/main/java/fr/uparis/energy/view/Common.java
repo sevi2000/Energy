@@ -92,5 +92,6 @@ public class Common {
             }
         parentWindow.setContentPane(new MainMenuView(parentWindow));
         parentWindow.setVisible(true);
+        }
     }
 }
