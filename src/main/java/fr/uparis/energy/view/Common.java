@@ -90,9 +90,6 @@ public class Common {
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
-        } else if (result == JOptionPane.NO_OPTION){
-            return;
-        }
         parentWindow.setContentPane(new MainMenuView(parentWindow));
         parentWindow.setVisible(true);
     }
