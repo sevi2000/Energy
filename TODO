@@ -8,10 +8,6 @@ afficher un connecteur seul dans une tuile vide
 avoir une aide qui explique comment faire dans l'éditeur
 implémenter clic droit pour tourner une tuile dans le sens inverse
 refactor all code
-bouton dans l'écran BANK 2 pour changer la géométrie avec confirmation
-bouton dans l'écran BANK 2 pour vider le niveau avec confirmation
-les boutons vider le niveau et changer la géométrie crée des niveaux vides et donc non-jouables -> quand il clique sur play il faut vérifier que isSolved retourne true et si false dire un message
-isSolved doit retourner true uniquement s'il existe au moins une lampe
 
 dans l'éditeur bouton back qui dit :
     - si le niveau est gagnant : "voulez-vous sauvegarder ?"
