@@ -8,7 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -146,12 +145,10 @@ public class BankView extends JPanel {
                     try {
                         Level l = LevelConverter.getLevel(selectedLevel, Level.State.EDITING, bank);
                         l.empty();
-                        LevelConverter.writeLevelToFile(l);
+                        Common.showConfirmation("Empty", "Would you want to empty ?", parentWindow, l, true);
                     } catch (MalformedURLException ex) {
                         throw new RuntimeException(ex);
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                    } 
                 }
             }
         });
@@ -162,13 +159,11 @@ public class BankView extends JPanel {
                     try {
                         Level l = LevelConverter.getLevel(selectedLevel, Level.State.EDITING, bank);
                         l.toggleGeometry();
-                        LevelConverter.writeLevelToFile(l);
+                        Common.showConfirmation("Geometry", "Would you want to change geometry?", parentWindow, l, true);
                         System.out.println("WROTE LVL");
                     } catch (MalformedURLException ex) {
                         throw new RuntimeException(ex);
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                    } 
                 }
             }
         });

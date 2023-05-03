@@ -48,7 +48,7 @@ public class EditingLevelView extends JPanel implements BoardObserver{
             public void mouseClicked(MouseEvent e) {
                 
                 String msg = lvl.isSolved() ?"Sve changes?" : "Exit without saving?";
-                Common.showConfirmation("Exit",msg,parentWindow,lvl);
+                Common.showConfirmation("Exit",msg,parentWindow,lvl, false);
         }
         });
         verticalPane.setLayout(new BoxLayout(verticalPane,BoxLayout.Y_AXIS));
