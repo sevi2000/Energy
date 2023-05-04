@@ -18,7 +18,7 @@ public class BoardView extends JPanel implements BoardObserver {
     private int tileWidth;
 
     public BoardView() {
-        this.setPreferredSize(new Dimension(800, 800));
+        this.setPreferredSize(Common.FRAME_SIZE);
         this.setBackground(Color.BLACK);
         this.coordinateMap = new HashMap<>();
         this.repaint();

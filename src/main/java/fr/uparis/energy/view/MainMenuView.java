@@ -31,7 +31,7 @@ public class MainMenuView extends JPanel {
         components.add(Box.createRigidArea(new Dimension(0, 100)));
         components.add(quit);
 
-        this.setPreferredSize(new Dimension(800, 800));
+        this.setPreferredSize(Common.FRAME_SIZE);
 
         this.setLayout(new GridBagLayout());
 

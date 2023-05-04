@@ -21,7 +21,7 @@ public class EditingLevelView extends JPanel implements BoardObserver{
     Checkbox ch;
     public EditingLevelView(JFrame jFrame, Level lvl) {
         this.parentWindow = jFrame;
-        this.setPreferredSize(new Dimension(800, 800));
+        this.setPreferredSize(Common.FRAME_SIZE);
         this.lvl = lvl;
         
         this.ch = new Checkbox("Remove");
@@ -48,7 +48,7 @@ public class EditingLevelView extends JPanel implements BoardObserver{
             public void mouseClicked(MouseEvent e) {
                 
                 String msg = lvl.isSolved() ?"Sve changes?" : "Exit without saving?";
-                Common.showConfirmation("Exit",msg,parentWindow,lvl);
+                Common.showConfirmation("Exit",msg,parentWindow,lvl, false);
         }
         });
         verticalPane.setLayout(new BoxLayout(verticalPane,BoxLayout.Y_AXIS));

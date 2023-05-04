@@ -14,6 +14,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Common {
+    
+    public static final Dimension FRAME_SIZE = new Dimension(1000, 1000);
     private Common() {
     }
 
@@ -35,9 +37,10 @@ public class Common {
         return res;
     }
 
-    public static JLabel createButton(String title, int border, MouseAdapter adapter) {
+    public static JLabel createButton(String title, int fontSize, MouseAdapter adapter) {
         JLabel button = createButton(title, adapter);
-        button.setBorder(BorderFactory.createEmptyBorder(border, border, border, border));
+        button.setFont(new Font("Arial", Font.BOLD, fontSize));
+        //button.setBorder(BorderFactory.createEmptyBorder(border, border, border, border));
         return button;
     }
 
@@ -79,7 +82,7 @@ public class Common {
                 .collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
     }
 
-    public static void showConfirmation(String title, String msg, JFrame parentWindow, Level lvl) {
+    public static void showConfirmation(String title, String msg, JFrame parentWindow, Level lvl, boolean stayHere) {
 
         int result = JOptionPane.showConfirmDialog(parentWindow, msg, title,
                 JOptionPane.YES_NO_OPTION,
@@ -93,7 +96,9 @@ public class Common {
         } /*else if (result == JOptionPane.NO_OPTION){
             return;
         }*/
-        parentWindow.setContentPane(new MainMenuView(parentWindow));
-        parentWindow.setVisible(true);
+        if(!stayHere) {
+            parentWindow.setContentPane(new MainMenuView(parentWindow));
+            parentWindow.setVisible(true);
+        }
     }
 }

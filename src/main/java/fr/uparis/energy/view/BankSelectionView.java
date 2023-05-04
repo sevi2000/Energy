@@ -44,7 +44,7 @@ public class BankSelectionView extends JPanel {
         components.add(Box.createRigidArea(new Dimension(0, 100)));
         components.add(back);
 
-        this.setPreferredSize(new Dimension(800, 800));
+        this.setPreferredSize(Common.FRAME_SIZE);
 
         this.setLayout(new GridBagLayout());
 

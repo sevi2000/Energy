@@ -8,7 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +22,7 @@ public class BankView extends JPanel {
         this.bank = bank;
         parentWindow = jFrame;
         List<Component> components = new ArrayList<>();
-        this.setPreferredSize(new Dimension(800, 800));
+        this.setPreferredSize(Common.FRAME_SIZE);
         components.add(bankLabel());
         components.add(this.levelsPanel());
         components.add(Box.createRigidArea(new Dimension(0, 25)));
@@ -96,7 +95,7 @@ public class BankView extends JPanel {
         JPanel res = new JPanel();
         switch (bank) {
             case BANK_1 -> res.setLayout(new GridLayout(1, 4));
-            case BANK_2 -> res.setLayout(new GridLayout(1, 4,10,0));
+            case BANK_2 -> res.setLayout(new GridLayout(1, 5,5,0));
         }
         
         JLabel play = Common.createButton("Play", new MouseAdapter() {
@@ -146,23 +145,44 @@ public class BankView extends JPanel {
                     try {
                         Level l = LevelConverter.getLevel(selectedLevel, Level.State.EDITING, bank);
                         l.empty();
-                        LevelConverter.writeLevelToFile(l);
+                        Common.showConfirmation("Empty", "Would you want to empty ?", parentWindow, l, true);
                     } catch (MalformedURLException ex) {
                         throw new RuntimeException(ex);
-                    } catch (IOException ex) {
+                    } 
+                }
+            }
+        });
+        JLabel toggleGeometry = Common.createButton("Toggle Geometry", new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (selectedLevel != -1) {
+                    try {
+                        Level l = LevelConverter.getLevel(selectedLevel, Level.State.EDITING, bank);
+                        l.toggleGeometry();
+                        Common.showConfirmation("Geometry", "Would you want to change geometry?", parentWindow, l, true);
+                        System.out.println("WROTE LVL");
+                    } catch (MalformedURLException ex) {
                         throw new RuntimeException(ex);
-                    }
+                    } 
                 }
             }
         });
         res.add(play);
         
         if (bank == Bank.BANK_2) {
+            Font font = new Font("Arial", Font.BOLD, 20);
+
             //res.add(Box.createRigidArea(new Dimension(10, 10)));
+            edit.setFont(font);
             res.add(edit);
             //res.add(Box.createRigidArea(new Dimension(10,10)));
+            empty.setFont(font);
             res.add(empty);
             //res.add(Box.createRigidArea(new Dimension(10,10)));
+            toggleGeometry.setFont(font);
+            res.add(toggleGeometry);
+            play.setFont(font);
+            back.setFont(font);
         } else {
             res.add(Box.createRigidArea(new Dimension(0, 200)));
         }
