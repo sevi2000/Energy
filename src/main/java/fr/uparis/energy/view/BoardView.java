@@ -101,7 +101,7 @@ public class BoardView extends JPanel implements BoardObserver {
     }
     
      private void drawSquareTile(Graphics g, ReadOnlyTile rot, int x, int y, int width, int height) {
-         if (rot.getComponent() != Component.EMPTY) {
+         if (rot.getComponent() != Component.EMPTY || rot.getNumberOfExistingConnectors() == 1) {
              BufferedImage wire = SpriteBank.getWire(SpriteBank.WireType.SQUARE_SHORT, rot.getPowerState());
              for (int i = 0; i < rot.getGeometry().card(); i++) {
 

@@ -63,6 +63,7 @@ public class EditingLevelView extends JPanel implements BoardObserver{
                     lvl.getBoard().removeRowOnTop();
                 else
                     lvl.getBoard().addRowOnTop();
+                lvl.getBoard().propagateEnergy();
                 bv.update(lvl.getBoard());
             }
         });
@@ -73,6 +74,7 @@ public class EditingLevelView extends JPanel implements BoardObserver{
                     lvl.getBoard().removeColumnAtLeft();
                 else
                     lvl.getBoard().addColumnAtLeft();
+                lvl.getBoard().propagateEnergy();
                 bv.update(lvl.getBoard());
             }
         });
@@ -84,6 +86,7 @@ public class EditingLevelView extends JPanel implements BoardObserver{
                     lvl.getBoard().removeRowAtBottom();
                 else
                     lvl.getBoard().addRowAtBottom();
+                lvl.getBoard().propagateEnergy();
                 bv.update(lvl.getBoard());
             }
         });
@@ -95,6 +98,7 @@ public class EditingLevelView extends JPanel implements BoardObserver{
                     lvl.getBoard().removeColumnAtRight();
                 else
                     lvl.getBoard().addColumnAtRight();
+                lvl.getBoard().propagateEnergy();
                 bv.update(lvl.getBoard());
             }
         });
