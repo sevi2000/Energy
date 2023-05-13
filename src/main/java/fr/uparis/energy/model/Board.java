@@ -307,13 +307,15 @@ public class Board implements BoardObservable, ReadOnlyBoard {
     public Geometry getGeometry() {
         return this.geometry;
     }
-    
-    @Override
+
     public void rotateTileClockWise(IntPair clickedPolygon) {
         this.tileGrid.get(clickedPolygon.a).get(clickedPolygon.b).rotateClockwise();
     }
 
-    @Override
+    public void rotateTileCounterClockWise(IntPair clickedPolygon) {
+        this.tileGrid.get(clickedPolygon.a).get(clickedPolygon.b).rotateCounterClockwise();
+    }
+
     public void cycleTileComponent(IntPair clickedPolygon) {
         this.tileGrid.get(clickedPolygon.a).get(clickedPolygon.b).cycleComponent();
     }

@@ -4,6 +4,7 @@ import fr.uparis.energy.model.Board;
 import fr.uparis.energy.view.BoardView;
 import fr.uparis.energy.view.Common;
 
+import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -16,7 +17,10 @@ public class BoardController extends MouseAdapter {
     }
     @Override
     public void mousePressed(MouseEvent e) {
-        board.rotateTileClockWise(Common.getClosestPolygon((BoardView) e.getSource(),e.getX(),e.getY()));
+        if (SwingUtilities.isLeftMouseButton(e))
+            board.rotateTileClockWise(Common.getClosestPolygon((BoardView) e.getSource(),e.getX(),e.getY()));
+        else
+            board.rotateTileCounterClockWise(Common.getClosestPolygon((BoardView) e.getSource(),e.getX(),e.getY()));
         board.propagateEnergy();
         board.notifyObservers();
     }
