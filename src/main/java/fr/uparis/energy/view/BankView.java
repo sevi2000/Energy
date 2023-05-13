@@ -1,15 +1,18 @@
 package fr.uparis.energy.view;
 
+import fr.uparis.energy.model.Board;
+import fr.uparis.energy.model.Geometry;
 import fr.uparis.energy.model.Level;
 import fr.uparis.energy.utils.Bank;
 import fr.uparis.energy.utils.LevelConverter;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.*;
 
 public class BankView extends JPanel {
   private int selectedLevel = -1;
@@ -97,7 +100,7 @@ public class BankView extends JPanel {
     JPanel res = new JPanel();
     switch (bank) {
       case BANK_1 -> res.setLayout(new GridLayout(1, 4));
-      case BANK_2 -> res.setLayout(new GridLayout(1, 5, 5, 0));
+      case BANK_2 -> res.setLayout(new GridLayout(2, 3, 5, 5));
     }
 
     JLabel play =
@@ -193,6 +196,19 @@ public class BankView extends JPanel {
                 }
               }
             });
+    
+    JLabel addLevel = Common.createButton("Add Level", new MouseAdapter() {
+      @Override
+      public void mousePressed(MouseEvent e) {
+        try {
+          Level lvl = new Level(LevelConverter.getBankLevelNumbers(Bank.BANK_2).size() + 1, Level.State.EDITING,new Board(3,3, Geometry.SQUARE));
+          LevelConverter.writeLevelToFile(lvl);
+          repaint();
+        } catch (Exception e1) {
+          System.out.println("erreur");
+        }
+      }
+    });
     res.add(play);
 
     if (bank == Bank.BANK_2) {
@@ -207,6 +223,8 @@ public class BankView extends JPanel {
       // res.add(Box.createRigidArea(new Dimension(10,10)));
       toggleGeometry.setFont(font);
       res.add(toggleGeometry);
+      addLevel.setFont(font);
+      res.add(addLevel);
       play.setFont(font);
       back.setFont(font);
     } else {
