@@ -1,8 +1,8 @@
 package fr.uparis.energy.view;
 
-import fr.uparis.energy.model.BoardObservable;
+import fr.uparis.energy.model.ReadOnlyBoard;
 
 public interface BoardObserver {
-    void update(BoardObservable boardObservable);
+    void update(ReadOnlyBoard rob);
 
 }

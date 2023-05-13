@@ -1,9 +1,7 @@
 package fr.uparis.energy.view;
 
-import fr.uparis.energy.model.BoardObservable;
+import fr.uparis.energy.model.*;
 import fr.uparis.energy.model.Component;
-import fr.uparis.energy.model.Geometry;
-import fr.uparis.energy.model.ReadOnlyTile;
 import fr.uparis.energy.utils.IntPair;
 
 import javax.swing.*;
@@ -13,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BoardView extends JPanel implements BoardObserver {
-    private transient BoardObservable rob;
+    private transient ReadOnlyBoard rob;
     private transient Map<IntPair, IntPair> coordinateMap;
     private int tileWidth;
 
@@ -161,8 +159,8 @@ public class BoardView extends JPanel implements BoardObserver {
     }
 
     @Override
-    public void update(BoardObservable boardObservable) {
-        this.rob = boardObservable;
+    public void update(ReadOnlyBoard rob) {
+        this.rob = rob;
         this.repaint();
     }
 

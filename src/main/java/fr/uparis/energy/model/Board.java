@@ -10,7 +10,7 @@ import java.util.Random;
  * Represents the board of a level. Any modification made to the board or any of its tiles
  * must be followed by a call to Board.propagateEnergy(). A board is forced to be at least 1x1.
  */
-public class Board implements BoardObservable {
+public class Board implements BoardObservable, ReadOnlyBoard {
 
     private final List<List<Tile>> tileGrid;
 

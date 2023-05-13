@@ -1,8 +1,8 @@
 package fr.uparis.energy.view;
 
 import fr.uparis.energy.controller.EditingBoardController;
-import fr.uparis.energy.model.BoardObservable;
 import fr.uparis.energy.model.Level;
+import fr.uparis.energy.model.ReadOnlyBoard;
 
 import javax.swing.*;
 import java.awt.*;
@@ -113,7 +113,7 @@ public class EditingLevelView extends JPanel implements BoardObserver{
     }
 
     @Override
-    public void update(BoardObservable boardObservable) {
+    public void update(ReadOnlyBoard rob) {
         
     }
 }

@@ -1,8 +1,8 @@
 package fr.uparis.energy.view;
 
 import fr.uparis.energy.controller.BoardController;
-import fr.uparis.energy.model.BoardObservable;
 import fr.uparis.energy.model.Level;
+import fr.uparis.energy.model.ReadOnlyBoard;
 import fr.uparis.energy.utils.Bank;
 import fr.uparis.energy.utils.LevelConverter;
 
@@ -44,8 +44,8 @@ public class PlayingLevelView extends JPanel implements BoardObserver{
     }
 
     @Override
-    public void update(BoardObservable boardObservable) {
-        if (boardObservable.isSolved()) {
+    public void update(ReadOnlyBoard rob) {
+        if (rob.isSolved()) {
             JOptionPane.showInternalConfirmDialog(null,"You won","Game over",JOptionPane.PLAIN_MESSAGE);
             if (nextLevel < LevelConverter.getBankLevelNumbers(bank).size() + 1) {
                 try {
