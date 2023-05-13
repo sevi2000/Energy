@@ -10,6 +10,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class EditingLevelView extends JPanel implements BoardObserver{
+    private final String HELP_MESSAGE = """
+    Helping
+    """;
     private JFrame parentWindow;
     transient Level lvl;
     JLabel back;
@@ -52,7 +55,13 @@ public class EditingLevelView extends JPanel implements BoardObserver{
         }
         });
         verticalPane.setLayout(new BoxLayout(verticalPane,BoxLayout.Y_AXIS));
-        verticalPane.add(this.ch);
+        verticalPane.add(Common.createButton("Help", new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                JOptionPane.showInternalConfirmDialog(null, HELP_MESSAGE,
+                        "Help",JOptionPane.PLAIN_MESSAGE);
+            }
+        }));
         verticalPane.add(this.back);
         JPanel arrowButons  = new JPanel();
         arrowButons.setLayout(new GridLayout(2,2));
@@ -107,6 +116,7 @@ public class EditingLevelView extends JPanel implements BoardObserver{
         arrowButons.add(this.leftArrow);
         arrowButons.add(this.bottomArrow);
         arrowButons.add(this.rightArrow);
+        res.add(this.ch);
         res.add(verticalPane);
         res.add(arrowButons);
         return res;
