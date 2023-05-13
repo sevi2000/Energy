@@ -15,7 +15,7 @@ public class BoardController extends MouseAdapter {
         this.board = board;
     }
     @Override
-    public void mouseClicked(MouseEvent e) {
+    public void mousePressed(MouseEvent e) {
         board.rotateTileClockWise(Common.getClosestPolygon((BoardView) e.getSource(),e.getX(),e.getY()));
         board.propagateEnergy();
         board.notifyObservers();

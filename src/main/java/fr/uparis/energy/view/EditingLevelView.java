@@ -45,7 +45,7 @@ public class EditingLevelView extends JPanel implements BoardObserver{
         JPanel verticalPane = new JPanel();
         this.back = Common.createButton("Back", new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 
                 String msg = lvl.isSolved() ?"Sve changes?" : "Exit without saving?";
                 Common.showConfirmation("Exit",msg,parentWindow,lvl, false);
@@ -58,7 +58,7 @@ public class EditingLevelView extends JPanel implements BoardObserver{
         arrowButons.setLayout(new GridLayout(2,2));
         this.upArrow = Common.createButton("⬆️", new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 if (ch.getState())
                     lvl.getBoard().removeRowOnTop();
                 else
@@ -69,7 +69,7 @@ public class EditingLevelView extends JPanel implements BoardObserver{
         });
         this.leftArrow = Common.createButton("⬅️", new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 if (ch.getState())
                     lvl.getBoard().removeColumnAtLeft();
                 else
@@ -81,7 +81,7 @@ public class EditingLevelView extends JPanel implements BoardObserver{
         
         this.bottomArrow = Common.createButton("⬇️", new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 if (ch.getState())
                     lvl.getBoard().removeRowAtBottom();
                 else
@@ -93,7 +93,7 @@ public class EditingLevelView extends JPanel implements BoardObserver{
         
         this.rightArrow = Common.createButton("➡️", new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 if (ch.getState())
                     lvl.getBoard().removeColumnAtRight();
                 else

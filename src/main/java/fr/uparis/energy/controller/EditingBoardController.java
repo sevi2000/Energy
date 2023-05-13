@@ -17,7 +17,7 @@ public class EditingBoardController extends MouseAdapter {
         this.board = board;
     }
     @Override
-        public void mouseClicked(MouseEvent e) {
+        public void mousePressed(MouseEvent e) {
             BoardView bv = ((BoardView)(e.getSource()));
             IntPair clickedPolygon = Common.getClosestPolygon(bv, e.getX(), e.getY());
             if (isWithinCenterArea(bv, clickedPolygon, e.getX(), e.getY())) {

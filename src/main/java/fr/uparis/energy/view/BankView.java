@@ -60,7 +60,7 @@ public class BankView extends JPanel {
         JLabel button = Common.createButton(label, null);
         button.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 selectedLevel = Integer.parseInt(button.getText());
 
                 resetLevelButtons();
@@ -100,7 +100,7 @@ public class BankView extends JPanel {
         
         JLabel play = Common.createButton("Play", new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 if (selectedLevel != -1) {
                     PlayingLevelView plv = null;
                     try {
@@ -116,7 +116,7 @@ public class BankView extends JPanel {
 
         JLabel back = Common.createButton("Back", new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 parentWindow.setContentPane(new BankSelectionView(parentWindow));
                 parentWindow.setVisible(true);
             }
@@ -124,7 +124,7 @@ public class BankView extends JPanel {
         
         JLabel edit = Common.createButton("Edit", new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 if (selectedLevel != -1) {
                     EditingLevelView elv = null;
                     try {
@@ -140,7 +140,7 @@ public class BankView extends JPanel {
         
         JLabel empty = Common.createButton("Empty", new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 if (selectedLevel != -1) {
                     try {
                         Level l = LevelConverter.getLevel(selectedLevel, Level.State.EDITING, bank);
@@ -154,7 +154,7 @@ public class BankView extends JPanel {
         });
         JLabel toggleGeometry = Common.createButton("Toggle Geometry", new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 if (selectedLevel != -1) {
                     try {
                         Level l = LevelConverter.getLevel(selectedLevel, Level.State.EDITING, bank);

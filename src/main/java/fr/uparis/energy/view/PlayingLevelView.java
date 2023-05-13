@@ -22,7 +22,7 @@ public class PlayingLevelView extends JPanel implements BoardObserver{
 
         JLabel back = Common.createButton("Back", new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 parentWindow.setContentPane(new MainMenuView(jFrame));
                 parentWindow.setVisible(true);
             }

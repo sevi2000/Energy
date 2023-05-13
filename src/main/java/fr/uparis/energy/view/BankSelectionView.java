@@ -13,7 +13,7 @@ public class BankSelectionView extends JPanel {
     public BankSelectionView(JFrame jFrame) {
         JLabel bank1 = Common.createButton("Bank 1", new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 jFrame.setContentPane(new BankView(jFrame, Bank.BANK_1));
                 jFrame.setVisible(true);
             }
@@ -21,7 +21,7 @@ public class BankSelectionView extends JPanel {
         
         JLabel bank2 = Common.createButton("Bank 2", new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 jFrame.setContentPane(new BankView(jFrame, Bank.BANK_2));
                 jFrame.setVisible(true);
             }
@@ -29,7 +29,7 @@ public class BankSelectionView extends JPanel {
 
         JLabel back = Common.createButton("Back", new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 jFrame.setContentPane(new MainMenuView(jFrame));
                 jFrame.setVisible(true);
             }

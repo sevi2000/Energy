@@ -11,7 +11,7 @@ public class MainMenuView extends JPanel {
     public MainMenuView(JFrame jFrame) {
         JLabel play = Common.createButton("Play", new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 jFrame.setContentPane(new BankSelectionView(jFrame));
                 jFrame.setVisible(true);
             }
@@ -19,7 +19,7 @@ public class MainMenuView extends JPanel {
 
         JLabel quit = Common.createButton("Quit", new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 System.exit(0);
             }
         });
