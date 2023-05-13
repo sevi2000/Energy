@@ -33,8 +33,8 @@ public class PlayingLevelView extends JPanel implements BoardObserver{
         BoardController bc = new BoardController(lvl.getBoard());
         bv.addMouseListener(bc);
         lvl.getBoard().addObserver(bv);
-        lvl.getBoard().addObserver(this);
         lvl.getBoard().notifyObservers();
+        lvl.getBoard().addObserver(this);
         
         this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
         this.nextLevel = lvl.getNumber() + 1;
