@@ -10,7 +10,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class EditingLevelView extends JPanel implements BoardObserver{
-    private final String HELP_MESSAGE = """
+    private static final String HELP_MESSAGE = """
     Helping
     """;
     private JFrame parentWindow;
