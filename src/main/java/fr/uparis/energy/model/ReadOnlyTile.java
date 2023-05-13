@@ -3,13 +3,13 @@ package fr.uparis.energy.model;
 import fr.uparis.energy.view.PowerState;
 
 public interface ReadOnlyTile {
-    Component getComponent();
+  Component getComponent();
 
-    boolean[] getConnectorsExist();
+  boolean[] getConnectorsExist();
 
-    PowerState getPowerState();
+  PowerState getPowerState();
 
-    Geometry getGeometry();
+  Geometry getGeometry();
 
-    int getNumberOfExistingConnectors();
+  int getNumberOfExistingConnectors();
 }
