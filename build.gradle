@@ -73,3 +73,10 @@ sourceSets{
         }
     }
 }
+
+jar {
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+    archiveFileName = 'Energy.jar'
+}
