@@ -177,7 +177,7 @@ public class BankView extends JPanel {
                     l.toggleGeometry();
                     Common.showConfirmation(
                         "Geometry", "Would you want to change geometry?", parentWindow, l, true);
-                    System.out.println("WROTE LVL");
+                    //System.out.println("WROTE LVL");
                   } catch (MalformedURLException ex) {
                     throw new RuntimeException(ex);
                   }

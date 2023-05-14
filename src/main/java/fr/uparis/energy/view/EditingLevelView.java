@@ -3,10 +3,11 @@ package fr.uparis.energy.view;
 import fr.uparis.energy.controller.EditingBoardController;
 import fr.uparis.energy.model.Level;
 import fr.uparis.energy.model.ReadOnlyBoard;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.*;
 
 public class EditingLevelView extends JPanel implements BoardObserver {
   private static final String HELP_MESSAGE = """
@@ -53,7 +54,7 @@ public class EditingLevelView extends JPanel implements BoardObserver {
               @Override
               public void mousePressed(MouseEvent e) {
 
-                String msg = lvl.isSolved() ? "Sve changes?" : "Exit without saving?";
+                String msg = lvl.isSolved() ? "Save changes?" : "Exit without saving?";
                 Common.showConfirmation("Exit", msg, parentWindow, lvl, false);
               }
             });

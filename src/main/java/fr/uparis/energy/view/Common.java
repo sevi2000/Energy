@@ -3,6 +3,8 @@ package fr.uparis.energy.view;
 import fr.uparis.energy.model.Level;
 import fr.uparis.energy.utils.IntPair;
 import fr.uparis.energy.utils.LevelConverter;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.geom.AffineTransform;
@@ -10,7 +12,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import javax.swing.*;
 
 public class Common {
 
@@ -86,15 +87,16 @@ public class Common {
     int result =
         JOptionPane.showConfirmDialog(
             parentWindow, msg, title, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-    if (result == JOptionPane.YES_OPTION && lvl.isSolved()) {
-      try {
-        LevelConverter.writeLevelToFile(lvl);
-      } catch (IOException ex) {
-        throw new RuntimeException(ex);
-      }
-    } /*else if (result == JOptionPane.NO_OPTION){
-          return;
-      }*/
+    if (result == JOptionPane.YES_OPTION) {
+      if (lvl.isSolved())
+        try {
+          LevelConverter.writeLevelToFile(lvl);
+        } catch (IOException ex) {
+          throw new RuntimeException(ex);
+        }
+    } else if (result == JOptionPane.NO_OPTION){
+          if (!lvl.isSolved()) return;
+    } else return;
     if (!stayHere) {
       parentWindow.setContentPane(new MainMenuView(parentWindow));
       parentWindow.setVisible(true);
