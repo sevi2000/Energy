@@ -24,23 +24,11 @@ public class BankView extends JPanel {
   public BankView(JFrame jFrame, Bank bank) {
     this.bank = bank;
     parentWindow = jFrame;
-    List<Component> components = new ArrayList<>();
     this.setPreferredSize(Common.FRAME_SIZE);
-    components.add(bankLabel());
-    components.add(this.levelsPanel());
-    components.add(Box.createRigidArea(new Dimension(0, 25)));
-    components.add(this.bottomMenu());
-    GridBagConstraints gbc = new GridBagConstraints();
-    gbc.anchor = GridBagConstraints.CENTER;
-    this.setLayout(new GridBagLayout());
-    int width =
-        switch (bank) {
-          case BANK_1 -> 100;
-          case BANK_2 -> 50;
-        };
-    JPanel contentPane = Common.centeredPane(components, width, 1, 100);
-    jFrame.revalidate();
-    add(contentPane, gbc);
+    this.setLayout(new BorderLayout());
+    this.add(this.bankLabel(), BorderLayout.NORTH);
+    this.add(this.levelsPanel(), BorderLayout.CENTER);
+    this.add(this.bottomMenu(), BorderLayout.SOUTH);
   }
 
   private JLabel bankLabel() {
