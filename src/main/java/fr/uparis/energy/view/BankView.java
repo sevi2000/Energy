@@ -203,10 +203,11 @@ public class BankView extends JPanel {
         try {
           Level lvl = new Level(LevelConverter.getBankLevelNumbers(Bank.BANK_2).size() + 1, Level.State.EDITING,new Board(3,3, Geometry.SQUARE));
           LevelConverter.writeLevelToFile(lvl);
-          repaint();
         } catch (Exception e1) {
-          System.out.println("erreur");
+          throw new RuntimeException();
         }
+        parentWindow.setContentPane(new BankView(parentWindow, Bank.BANK_2));
+        parentWindow.setVisible(true);
       }
     });
     res.add(play);
