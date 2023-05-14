@@ -1,13 +1,13 @@
 package fr.uparis.energy.model;
 
 public interface ReadOnlyBoard {
-  ReadOnlyTile getTileAt(int i, int j);
+    ReadOnlyTile getTileAt(int i, int j);
 
-  int getWidth();
+    int getWidth();
 
-  int getHeight();
+    int getHeight();
 
-  Geometry getGeometry();
+    Geometry getGeometry();
 
-  boolean isSolved();
+    boolean isSolved();
 }

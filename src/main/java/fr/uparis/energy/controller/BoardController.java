@@ -9,21 +9,18 @@ import javax.swing.*;
 
 public class BoardController extends MouseAdapter {
 
-  private Board board;
+    private Board board;
 
-  public BoardController(Board board) {
-    this.board = board;
-  }
+    public BoardController(Board board) {
+        this.board = board;
+    }
 
-  @Override
-  public void mousePressed(MouseEvent e) {
-    if (SwingUtilities.isLeftMouseButton(e))
-      board.rotateTileClockWise(
-          Common.getClosestPolygon((BoardView) e.getSource(), e.getX(), e.getY()));
-    else
-      board.rotateTileCounterClockWise(
-          Common.getClosestPolygon((BoardView) e.getSource(), e.getX(), e.getY()));
-    board.propagateEnergy();
-    board.notifyObservers();
-  }
+    @Override
+    public void mousePressed(MouseEvent e) {
+        if (SwingUtilities.isLeftMouseButton(e))
+            board.rotateTileClockWise(Common.getClosestPolygon((BoardView) e.getSource(), e.getX(), e.getY()));
+        else board.rotateTileCounterClockWise(Common.getClosestPolygon((BoardView) e.getSource(), e.getX(), e.getY()));
+        board.propagateEnergy();
+        board.notifyObservers();
+    }
 }
