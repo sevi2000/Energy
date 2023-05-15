@@ -33,6 +33,8 @@ public class BankView extends JPanel {
         Dimension maxSize = new Dimension(Short.MAX_VALUE, 100);
         this.add(new Box.Filler(minSize, prefSize, maxSize));
         this.add(this.bottomMenu());
+        if (bank == Bank.BANK_1)
+            this.add(new Box.Filler(minSize, prefSize, maxSize));
     }
 
     private JPanel bankLabel() {
