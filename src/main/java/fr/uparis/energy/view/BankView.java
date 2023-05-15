@@ -25,13 +25,19 @@ public class BankView extends JPanel {
         this.bank = bank;
         parentWindow = jFrame;
         this.setPreferredSize(Common.FRAME_SIZE);
-        this.setLayout(new BorderLayout());
-        this.add(this.bankLabel(), BorderLayout.NORTH);
-        this.add(this.levelsPanel(), BorderLayout.CENTER);
-        this.add(this.bottomMenu(), BorderLayout.SOUTH);
+        this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+        this.add(this.bankLabel());
+        this.add(this.levelsPanel());
+        Dimension minSize = new Dimension(5, 100);
+        Dimension prefSize = new Dimension(5, 100);
+        Dimension maxSize = new Dimension(Short.MAX_VALUE, 100);
+        this.add(new Box.Filler(minSize, prefSize, maxSize));
+        this.add(this.bottomMenu());
     }
 
-    private JLabel bankLabel() {
+    private JPanel bankLabel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout());
         JLabel res = new JLabel();
         switch (this.bank) {
             case BANK_1 -> res.setText("Bank 1");
@@ -40,12 +46,12 @@ public class BankView extends JPanel {
 
         res.setAlignmentX(Component.CENTER_ALIGNMENT);
         res.setForeground(Color.BLACK);
-        res.setBackground(Color.GRAY);
         res.setAlignmentX(SwingConstants.CENTER);
         res.setAlignmentY(SwingConstants.CENTER);
         Font font = new Font("Arial", Font.BOLD, 70);
         res.setFont(font);
-        return res;
+        panel.add(res);
+        return panel;
     }
 
     private JLabel levelSelectionLabel(String label) {
@@ -167,7 +173,7 @@ public class BankView extends JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 int newLevelNumber = LevelConverter.getBankLevelNumbers(Bank.BANK_2).size() + 1;
-                if (newLevelNumber >= 81) return;
+                if (newLevelNumber >= 31) return;
                 try {
                     Level lvl = new Level(
                             newLevelNumber,
@@ -185,14 +191,13 @@ public class BankView extends JPanel {
 
         if (bank == Bank.BANK_2) {
             Font font = new Font("Arial", Font.BOLD, 20);
-
-            // res.add(Box.createRigidArea(new Dimension(10, 10)));
+            
             edit.setFont(font);
             res.add(edit);
-            // res.add(Box.createRigidArea(new Dimension(10,10)));
+            
             empty.setFont(font);
             res.add(empty);
-            // res.add(Box.createRigidArea(new Dimension(10,10)));
+            
             toggleGeometry.setFont(font);
             res.add(toggleGeometry);
             addLevel.setFont(font);
