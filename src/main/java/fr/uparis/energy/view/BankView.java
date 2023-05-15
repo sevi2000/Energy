@@ -5,13 +5,14 @@ import fr.uparis.energy.model.Geometry;
 import fr.uparis.energy.model.Level;
 import fr.uparis.energy.utils.Bank;
 import fr.uparis.energy.utils.LevelConverter;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.*;
 
 public class BankView extends JPanel {
     private int selectedLevel = -1;
@@ -165,9 +166,11 @@ public class BankView extends JPanel {
         JLabel addLevel = Common.createButton("Add Level", new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
+                int newLevelNumber = LevelConverter.getBankLevelNumbers(Bank.BANK_2).size() + 1;
+                if (newLevelNumber >= 81) return;
                 try {
                     Level lvl = new Level(
-                            LevelConverter.getBankLevelNumbers(Bank.BANK_2).size() + 1,
+                            newLevelNumber,
                             Level.State.EDITING,
                             new Board(3, 3, Geometry.SQUARE));
                     LevelConverter.writeLevelToFile(lvl);
