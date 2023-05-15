@@ -3,6 +3,8 @@ package fr.uparis.energy.view;
 import fr.uparis.energy.model.Level;
 import fr.uparis.energy.utils.IntPair;
 import fr.uparis.energy.utils.LevelConverter;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.geom.AffineTransform;
@@ -10,7 +12,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import javax.swing.*;
 
 public class Common {
 
@@ -95,5 +96,22 @@ public class Common {
             parentWindow.setContentPane(new MainMenuView(parentWindow));
             parentWindow.setVisible(true);
         }
+    }
+    
+    public static JPanel centeredElt(JLabel l) {
+        JPanel res = new JPanel();
+        res.setPreferredSize(new Dimension(FRAME_SIZE.width,60));
+       l.setAlignmentY(JLabel.CENTER);
+       l.setAlignmentX(JLabel.CENTER);
+        res.add(l);
+        return res;
+    }
+    public static JPanel titlePane() {
+        JPanel res = new JPanel();
+        JLabel title = new JLabel("Energy");
+        res.setMaximumSize(new Dimension(Common.FRAME_SIZE.width,100));
+        title.setFont(new Font("Arial", Font.BOLD, 70));
+        res.add(title);
+        return res;
     }
 }

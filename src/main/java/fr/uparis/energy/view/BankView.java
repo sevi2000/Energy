@@ -189,7 +189,11 @@ public class BankView extends JPanel {
                 parentWindow.setVisible(true);
             }
         });
-        res.add(play);
+        if (bank == Bank.BANK_1) {
+            play.setPreferredSize(new Dimension(10,10));
+            back.setPreferredSize(new Dimension(10,10));
+        }
+        res.add(play); 
 
         if (bank == Bank.BANK_2) {
             Font font = new Font("Arial", Font.BOLD, 20);
