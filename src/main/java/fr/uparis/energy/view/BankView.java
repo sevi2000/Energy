@@ -5,15 +5,17 @@ import fr.uparis.energy.model.Geometry;
 import fr.uparis.energy.model.Level;
 import fr.uparis.energy.utils.Bank;
 import fr.uparis.energy.utils.LevelConverter;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.*;
 
+/**
+ * Represents the level selection screen.
+ */
 public class BankView extends JPanel {
     private int selectedLevel = -1;
     private final JFrame parentWindow;
@@ -21,11 +23,17 @@ public class BankView extends JPanel {
 
     private Bank bank;
 
+    /**
+     * Class constructor.
+     *
+     * @param jFrame parent window.
+     * @param bank to be displayed.
+     */
     public BankView(JFrame jFrame, Bank bank) {
         this.bank = bank;
         parentWindow = jFrame;
         this.setPreferredSize(Common.FRAME_SIZE);
-        this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(this.bankLabel());
         this.add(this.levelsPanel());
         Dimension minSize = new Dimension(5, 100);
@@ -33,10 +41,13 @@ public class BankView extends JPanel {
         Dimension maxSize = new Dimension(Short.MAX_VALUE, 100);
         this.add(new Box.Filler(minSize, prefSize, maxSize));
         this.add(this.bottomMenu());
-        if (bank == Bank.BANK_1)
-            this.add(new Box.Filler(minSize, prefSize, maxSize));
+        if (bank == Bank.BANK_1) this.add(new Box.Filler(minSize, prefSize, maxSize));
     }
 
+    /**
+     * Gives the title of the screen.
+     * @return a JPanel holding the appropriate title.
+     */
     private JPanel bankLabel() {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
@@ -56,6 +67,11 @@ public class BankView extends JPanel {
         return panel;
     }
 
+    /**
+     * Prepares a label representing a level number.
+     * @param label content.
+     * @return a JLabel with a level number.
+     */
     private JLabel levelSelectionLabel(String label) {
         JLabel button = Common.createButton(label, null);
         button.addMouseListener(new MouseAdapter() {
@@ -71,6 +87,10 @@ public class BankView extends JPanel {
         return button;
     }
 
+    /**
+     * Level selection panel.
+     * @return a JPanel containing buttons for each level.
+     */
     private JPanel levelsPanel() {
         JPanel res = new JPanel();
         res.setPreferredSize(new Dimension(200, 200));
@@ -84,6 +104,9 @@ public class BankView extends JPanel {
         return res;
     }
 
+    /**
+     * Resets other buttons state when we select a level.
+     */
     private void resetLevelButtons() {
         for (JLabel label : this.levelButtons) {
             label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -91,6 +114,10 @@ public class BankView extends JPanel {
         }
     }
 
+    /**
+     * Represents the menu at the bottom of the screen.
+     * @return a JPanel containing the necessary buttons.
+     */
     private JPanel bottomMenu() {
         JPanel res = new JPanel();
         switch (bank) {
@@ -174,13 +201,11 @@ public class BankView extends JPanel {
         JLabel addLevel = Common.createButton("Add Level", new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                int newLevelNumber = LevelConverter.getBankLevelNumbers(Bank.BANK_2).size() + 1;
+                int newLevelNumber =
+                        LevelConverter.getBankLevelNumbers(Bank.BANK_2).size() + 1;
                 if (newLevelNumber >= 31) return;
                 try {
-                    Level lvl = new Level(
-                            newLevelNumber,
-                            Level.State.EDITING,
-                            new Board(3, 3, Geometry.SQUARE));
+                    Level lvl = new Level(newLevelNumber, Level.State.EDITING, new Board(3, 3, Geometry.SQUARE));
                     LevelConverter.writeLevelToFile(lvl);
                 } catch (Exception e1) {
                     throw new RuntimeException();
@@ -190,20 +215,20 @@ public class BankView extends JPanel {
             }
         });
         if (bank == Bank.BANK_1) {
-            play.setPreferredSize(new Dimension(10,10));
-            back.setPreferredSize(new Dimension(10,10));
+            play.setPreferredSize(new Dimension(10, 10));
+            back.setPreferredSize(new Dimension(10, 10));
         }
-        res.add(play); 
+        res.add(play);
 
         if (bank == Bank.BANK_2) {
             Font font = new Font("Arial", Font.BOLD, 20);
-            
+
             edit.setFont(font);
             res.add(edit);
-            
+
             empty.setFont(font);
             res.add(empty);
-            
+
             toggleGeometry.setFont(font);
             res.add(toggleGeometry);
             addLevel.setFont(font);

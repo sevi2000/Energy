@@ -178,6 +178,13 @@ public class LevelConverter {
         return new Level(levelNumber, state, board);
     }
 
+    /**
+     * Loads a level from resources directory.
+     * @param number of the level to be loaded.
+     * @param state of the level to be loaded.
+     * @return a valid level
+     * @throws Exception if the file  was not found or the level does not have a valid format.
+     */
     private static Level getLevelFromResources(int number, Level.State state) {
         URL levelLocation = LevelConverter.class.getClassLoader().getResource("levels/level" + number + ".nrg");
         if (levelLocation == null) throw new IllegalArgumentException();
@@ -192,6 +199,13 @@ public class LevelConverter {
         return l;
     }
 
+    /**
+     * Loads a level from `~/.energy`.
+     * @param number of the level to be loaded.
+     * @param state of the level to be loaded.
+     * @return a valid level
+     * @throws Exception if the file  was not found or the level does not have a valid format.
+     */
     private static Level getLevelFromHome(int number, Level.State state) throws MalformedURLException {
         URL levelLocation = Path.of(new StringBuilder()
                         .append(energyPath)
@@ -202,7 +216,6 @@ public class LevelConverter {
                         .toString())
                 .toUri()
                 .toURL();
-        if (levelLocation == null) throw new IllegalArgumentException();
 
         Level l = null;
         try {
@@ -214,6 +227,14 @@ public class LevelConverter {
         return l;
     }
 
+    /**
+     * Loads a level either built in or user level.
+     *
+     * @param number of the level to be loaded.
+     * @param state of the level to be loaded.
+     * @return a valid level
+     * @throws MalformedURLException if the file  was not found or the level does not have a valid format.
+     */
     public static Level getLevel(int number, Level.State state, Bank bank) throws MalformedURLException {
         return switch (bank) {
             case BANK_1 -> getLevelFromResources(number, state);
@@ -247,6 +268,12 @@ public class LevelConverter {
         return matcher.group(1);
     }
 
+    /**
+     * Gives the numbers levels.
+     *
+     * @param bank from which to get the levels.
+     * @return a sorted list of the numbers.
+     */
     public static List<Integer> getBankLevelNumbers(Bank bank) {
         List<Integer> res = new ArrayList<>();
         ClassLoader cl = LevelConverter.class.getClassLoader();
@@ -267,6 +294,10 @@ public class LevelConverter {
         return res;
     }
 
+    /**
+     * Copies builtin levels to bank2.
+     * @throws IOException if something goes wrong with the files.
+     */
     public static void copyBank1Levels() throws IOException {
         File energyDir = new File(Path.of(energyPath).toUri());
         if (energyDir.exists()) return;

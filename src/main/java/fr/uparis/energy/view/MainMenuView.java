@@ -1,11 +1,19 @@
 package fr.uparis.energy.view;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.*;
 
+/**
+ * Represents the first screen.
+ */
 public class MainMenuView extends JPanel {
+
+    /**
+     * Class constructor.
+     * @param jFrame parent window.
+     */
     public MainMenuView(JFrame jFrame) {
 
         this.setPreferredSize(Common.FRAME_SIZE);
@@ -29,13 +37,11 @@ public class MainMenuView extends JPanel {
         play.setPreferredSize(new Dimension(200, 100));
         quit.setPreferredSize(new Dimension(200, 100));
         this.add(Common.titlePane());
-        this.add(new Box.Filler(new Dimension(Common.FRAME_SIZE.width, 50),
+        this.add(new Box.Filler(
+                new Dimension(Common.FRAME_SIZE.width, 50),
                 new Dimension(Common.FRAME_SIZE.width, 50),
                 new Dimension(Common.FRAME_SIZE.width, 50)));
-        //this.add(new Box.Filler(size, size, size));
         this.add(Common.centeredElt(play));
-        //this.add(new Box.Filler(size, size, size));
         this.add(Common.centeredElt(quit));
     }
-    
 }

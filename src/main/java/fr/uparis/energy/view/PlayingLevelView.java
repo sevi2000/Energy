@@ -10,11 +10,20 @@ import java.awt.event.MouseEvent;
 import java.net.MalformedURLException;
 import javax.swing.*;
 
+/**
+ * Represents the screen in which we play a level.
+ */
 public class PlayingLevelView extends JPanel implements BoardObserver {
     private JFrame parentWindow;
     int nextLevel;
     private Bank bank;
 
+    /**
+     * Class constructor.
+     * @param jFrame parent window.
+     * @param lvl to be played.
+     * @param bank of this level.
+     */
     public PlayingLevelView(JFrame jFrame, Level lvl, Bank bank) {
         this.bank = bank;
         this.parentWindow = jFrame;
@@ -43,6 +52,10 @@ public class PlayingLevelView extends JPanel implements BoardObserver {
         this.add(back);
     }
 
+    /**
+     * Updates the view according to the model.
+     * @param rob model from which to get information.
+     */
     @Override
     public void update(ReadOnlyBoard rob) {
         if (rob.isSolved()) {

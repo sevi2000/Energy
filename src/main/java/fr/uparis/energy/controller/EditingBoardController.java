@@ -8,14 +8,25 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
+/**
+ * Represents a board controller when we edit a level.
+ */
 public class EditingBoardController extends MouseAdapter {
 
     private Board board;
 
+    /**
+     * Class constructor.
+     * @param board model.
+     */
     public EditingBoardController(Board board) {
         this.board = board;
     }
 
+    /**
+     * Handles a mouse click on the board.
+     * @param e the click event.
+     */
     @Override
     public void mousePressed(MouseEvent e) {
         BoardView bv = ((BoardView) (e.getSource()));

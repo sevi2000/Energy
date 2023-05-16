@@ -8,11 +8,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.*;
 
+/**
+ * Represents the screen in which we edit a level.
+ */
 public class EditingLevelView extends JPanel implements BoardObserver {
     private static final String HELP_MESSAGE = """
     Helping
     """;
-    private JFrame parentWindow;
+    private final JFrame parentWindow;
     transient Level lvl;
     JLabel back;
     JLabel upArrow;
@@ -22,6 +25,11 @@ public class EditingLevelView extends JPanel implements BoardObserver {
     BoardView bv;
     Checkbox ch;
 
+    /**
+     * Class Constructor.
+     * @param jFrame parent window.
+     * @param lvl to be edited.
+     */
     public EditingLevelView(JFrame jFrame, Level lvl) {
         this.parentWindow = jFrame;
         this.setPreferredSize(Common.FRAME_SIZE);
@@ -41,6 +49,10 @@ public class EditingLevelView extends JPanel implements BoardObserver {
         this.add(bottomPane());
     }
 
+    /**
+     * Represents the menu at the bottom of the screen.
+     * @return a panel containing the necessary buttons.
+     */
     private JPanel bottomPane() {
         JPanel res = new JPanel();
         res.setLayout(new BoxLayout(res, BoxLayout.X_AXIS));
@@ -113,6 +125,10 @@ public class EditingLevelView extends JPanel implements BoardObserver {
         return res;
     }
 
+    /**
+     * Updates the view.
+     * @param rob model from which to get information.
+     */
     @Override
     public void update(ReadOnlyBoard rob) {}
 }

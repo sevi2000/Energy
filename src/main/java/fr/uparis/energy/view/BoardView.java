@@ -1,7 +1,9 @@
 package fr.uparis.energy.view;
 
-import fr.uparis.energy.model.*;
 import fr.uparis.energy.model.Component;
+import fr.uparis.energy.model.Geometry;
+import fr.uparis.energy.model.ReadOnlyBoard;
+import fr.uparis.energy.model.ReadOnlyTile;
 import fr.uparis.energy.utils.IntPair;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -9,11 +11,17 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.*;
 
+/**
+ * Represents a game board.
+ */
 public class BoardView extends JPanel implements BoardObserver {
     private transient ReadOnlyBoard rob;
     private transient Map<IntPair, IntPair> coordinateMap;
     private int tileWidth;
 
+    /**
+     * Class constructor.
+     */
     public BoardView() {
         this.setPreferredSize(Common.FRAME_SIZE);
         this.setBackground(Color.BLACK);
@@ -21,6 +29,10 @@ public class BoardView extends JPanel implements BoardObserver {
         this.repaint();
     }
 
+    /**
+     * Draws the board.
+     * @param g graphical context necessary for drawing.
+     */
     @Override
     public void paintComponent(Graphics g) {
         this.coordinateMap.clear();
@@ -77,6 +89,16 @@ public class BoardView extends JPanel implements BoardObserver {
         }
     }
 
+    /**
+     * Draws a tile.
+     *
+     * @param g graphical context.
+     * @param rot the model to be drawn.
+     * @param x coordinate.
+     * @param y coordinate.
+     * @param width of the tile.
+     * @param height of the tile.
+     */
     private void drawTile(Graphics g, ReadOnlyTile rot, int x, int y, int width, int height) {
         g.drawImage(SpriteBank.getShape(this.rob.getGeometry(), rot.getPowerState()), x, y, width, height, null);
 
@@ -89,6 +111,15 @@ public class BoardView extends JPanel implements BoardObserver {
         }
     }
 
+    /**
+     * Draws a square tile.
+     * @param g graphical context.
+     * @param rot the model to be drawn.
+     * @param x coordinate.
+     * @param y coordinate.
+     * @param width of the tile.
+     * @param height of the tile.
+     */
     private void drawSquareTile(Graphics g, ReadOnlyTile rot, int x, int y, int width, int height) {
         if (rot.getComponent() != Component.EMPTY || rot.getNumberOfExistingConnectors() == 1) {
             BufferedImage wire = SpriteBank.getWire(SpriteBank.WireType.SQUARE_SHORT, rot.getPowerState());
@@ -117,6 +148,15 @@ public class BoardView extends JPanel implements BoardObserver {
         }
     }
 
+    /**
+     * Draws a hexagon tile.
+     * @param g graphical context.
+     * @param rot the model to be drawn.
+     * @param x coordinate.
+     * @param y coordinate.
+     * @param width of the tile.
+     * @param height of the tile.
+     */
     private void drawHexagonTile(Graphics g, ReadOnlyTile rot, int x, int y, int width, int height) {
         if (rot.getComponent() != Component.EMPTY || rot.getNumberOfExistingConnectors() == 1) {
             BufferedImage wire = SpriteBank.getWire(SpriteBank.WireType.HEXAGON_SHORT, rot.getPowerState());
@@ -151,16 +191,28 @@ public class BoardView extends JPanel implements BoardObserver {
         }
     }
 
+    /**
+     * Updates the view according to the model.
+     * @param rob model from which to get information.
+     */
     @Override
     public void update(ReadOnlyBoard rob) {
         this.rob = rob;
         this.repaint();
     }
 
+    /**
+     *
+     * {@return the width of a tile.}
+     */
     public int getTileWidth() {
         return this.tileWidth;
     }
 
+    /**
+     *
+     * {@return the a map containing the coordinates of each tile.}
+     */
     public Map<IntPair, IntPair> getCoordinateMap() {
         return this.coordinateMap;
     }
