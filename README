@@ -1,0 +1,7 @@
+Adrian HEOUAIRI
+Sevi DERVISHI
+
+Pour lancer le programme, lancez la commande "./gradlew run" dans le dossier du projet.
+
+Lors d'une partie, vous pouvez faire clic gauche pour tourner une tuile dans le sens horaire
+et clic droit pour tourner une tuile dans le sens anti-horaire.
