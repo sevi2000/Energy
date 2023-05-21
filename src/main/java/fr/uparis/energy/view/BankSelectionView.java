@@ -1,10 +1,11 @@
 package fr.uparis.energy.view;
 
 import fr.uparis.energy.utils.Bank;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.*;
 
 /**
  * Represents the bank selection screen.
@@ -46,6 +47,7 @@ public class BankSelectionView extends JPanel {
         bank1.setPreferredSize(new Dimension(200, 100));
         bank2.setPreferredSize(new Dimension(200, 100));
         back.setPreferredSize(new Dimension(200, 100));
+        this.add(Box.createRigidArea(new Dimension(0, 100)));
         this.add(Common.titlePane());
         this.add(new Box.Filler(
                 new Dimension(Common.FRAME_SIZE.width, 50),

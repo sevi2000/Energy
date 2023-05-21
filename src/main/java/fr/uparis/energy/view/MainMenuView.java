@@ -1,9 +1,9 @@
 package fr.uparis.energy.view;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.*;
 
 /**
  * Represents the first screen.
@@ -36,6 +36,7 @@ public class MainMenuView extends JPanel {
 
         play.setPreferredSize(new Dimension(200, 100));
         quit.setPreferredSize(new Dimension(200, 100));
+        this.add(Box.createRigidArea(new Dimension(0, 200)));
         this.add(Common.titlePane());
         this.add(new Box.Filler(
                 new Dimension(Common.FRAME_SIZE.width, 50),
