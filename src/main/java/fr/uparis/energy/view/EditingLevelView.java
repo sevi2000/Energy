@@ -3,17 +3,17 @@ package fr.uparis.energy.view;
 import fr.uparis.energy.controller.EditingBoardController;
 import fr.uparis.energy.model.Level;
 import fr.uparis.energy.model.ReadOnlyBoard;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.*;
 
 /**
  * Represents the screen in which we edit a level.
  */
 public class EditingLevelView extends JPanel implements BoardObserver {
-    private static final String HELP_MESSAGE = """
+    private static final String HELP_MESSAGE =
+            """
     Click the center of a tile to change its component.
     Click near an edge of a tile to toggle the existence of a wire on this edge.
     When the Remove checkbox is not ticked, use the four arrow buttons to increase

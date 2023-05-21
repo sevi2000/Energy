@@ -3,10 +3,9 @@ package fr.uparis.energy.controller;
 import fr.uparis.energy.model.Board;
 import fr.uparis.energy.view.BoardView;
 import fr.uparis.energy.view.Common;
-
-import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.*;
 
 /**
  * Represents a board controller when we play.
