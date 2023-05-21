@@ -302,7 +302,7 @@ public class LevelConverter {
         File energyDir = new File(Path.of(energyPath).toUri());
         if (energyDir.exists()) return;
         energyDir.mkdir();
-        for (int i = 1; i < getBankLevelNumbers(Bank.BANK_1).size(); i++) {
+        for (int i = 1; i <= getBankLevelNumbers(Bank.BANK_1).size(); i++) {
             Path original = Path.of(Objects.requireNonNull(
                             LevelConverter.class.getClassLoader().getResource("levels/level" + i + ".nrg"))
                     .getPath());
