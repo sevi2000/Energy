@@ -1,8 +1,6 @@
 package fr.uparis.energy.model;
 
-/**
- * Represents the shape of a level tiles.
- */
+/** Represents the shape of a level tiles. */
 public enum Geometry {
     SQUARE,
     HEXAGON;
@@ -11,6 +9,7 @@ public enum Geometry {
 
     /**
      * Casts a string representation to a Geometry.
+     *
      * @param s the given string.
      * @return the corresponding value.
      */
@@ -24,6 +23,7 @@ public enum Geometry {
 
     /**
      * Textual representation.
+     *
      * @return a string that can be written in a level file.
      */
     @Override
@@ -33,6 +33,7 @@ public enum Geometry {
 
     /**
      * Gives the number of sides of the given geometry.
+     *
      * @return an integer representing the number of sides.
      */
     public int card() {
@@ -41,6 +42,7 @@ public enum Geometry {
 
     /**
      * Gives the Direction values corresponding to a given geometry.
+     *
      * @return an array with the Direction values for the given geometry.
      */
     public Direction[] getDirections() {
@@ -53,5 +55,4 @@ public enum Geometry {
     public Geometry opposite() {
         return this == Geometry.SQUARE ? Geometry.HEXAGON : Geometry.SQUARE;
     }
-    
 }

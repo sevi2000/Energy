@@ -1,15 +1,14 @@
 package fr.uparis.energy.model;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import fr.uparis.energy.utils.Bank;
 import fr.uparis.energy.utils.InvalidLevelException;
 import fr.uparis.energy.utils.LevelConverter;
-import org.junit.jupiter.api.Test;
-
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 class TestBoard {
 
@@ -35,7 +34,7 @@ class TestBoard {
         Level l2 = null;
         try {
             l2 = LevelConverter.getLevel(4, Level.State.PLAYING, Bank.BANK_1);
-            l =LevelConverter.getLevel(4, Level.State.PLAYING, Bank.BANK_1);
+            l = LevelConverter.getLevel(4, Level.State.PLAYING, Bank.BANK_1);
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }

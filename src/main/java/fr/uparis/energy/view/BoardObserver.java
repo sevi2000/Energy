@@ -1,8 +1,15 @@
 package fr.uparis.energy.view;
 
-import fr.uparis.energy.model.BoardObservable;
+import fr.uparis.energy.model.ReadOnlyBoard;
 
+/**
+ * Board observer interface necessary for Observer pattern.
+ */
 public interface BoardObserver {
-    void update(BoardObservable boardObservable);
 
+    /**
+     * Updates the view.
+     * @param rob model from which to get information.
+     */
+    void update(ReadOnlyBoard rob);
 }

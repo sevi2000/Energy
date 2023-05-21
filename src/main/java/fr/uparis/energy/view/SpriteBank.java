@@ -2,19 +2,31 @@ package fr.uparis.energy.view;
 
 import fr.uparis.energy.model.Component;
 import fr.uparis.energy.model.Geometry;
-
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import javax.imageio.ImageIO;
 
+/**
+ * Class used to load graphic resources.
+ */
 public class SpriteBank {
 
     private static BufferedImage mainImage;
 
+    /**
+     * Tile default width.
+     */
     public static final int SQUARE_IMAGE_WIDTH = 120;
+
+    /**
+     * Square tile default height.
+     */
     public static final int SQUARE_IMAGE_HEIGHT = 120;
-    public static final int HEXAGON_IMAGE_WIDTH = 120;
+
+    /**
+     * Hexagon tile default height.
+     */
     public static final int HEXAGON_IMAGE_HEIGHT = 104;
 
     private SpriteBank() {}
@@ -34,6 +46,13 @@ public class SpriteBank {
         return mainImage.getSubimage(SQUARE_IMAGE_WIDTH * j, SQUARE_IMAGE_HEIGHT * i, SQUARE_IMAGE_WIDTH, height);
     }
 
+    /**
+     * Gets the specified component.
+     * @param geometry of the parent tile.
+     * @param powerState of the parent tile.
+     * @param component to be drawn.
+     * @return a BufferedImage of the specified component.
+     */
     public static BufferedImage getComponent(Geometry geometry, PowerState powerState, Component component) {
         if (component == Component.EMPTY)
             return switch (geometry) {
@@ -60,6 +79,12 @@ public class SpriteBank {
         return getImageAt(i, j);
     }
 
+    /**
+     * Gets the specified shape.
+     * @param geometry of the tile.
+     * @param powerState of the tile.
+     * @return a BufferedImage of the specified shape.
+     */
     public static BufferedImage getShape(Geometry geometry, PowerState powerState) {
         if (geometry == Geometry.SQUARE)
             return switch (powerState) {
@@ -73,6 +98,9 @@ public class SpriteBank {
             };
     }
 
+    /**
+     * Specifies which wire to load.
+     */
     public enum WireType {
         SQUARE_SHORT,
         SQUARE_CURVED,
@@ -83,6 +111,12 @@ public class SpriteBank {
         HEXAGON_LONG
     }
 
+    /**
+     * Gets the specified wire.
+     * @param w the type of the wire.
+     * @param state of the parent tile.
+     * @return a BufferedImage of the specified wire.
+     */
     public static BufferedImage getWire(WireType w, PowerState state) {
         int i = 2;
         if (state == PowerState.ON) i += 3;

@@ -22,6 +22,7 @@ public enum Direction6 implements Direction {
 
     /**
      * Gives the line number depending on Direction value and column index parity.
+     *
      * @param columnIndex in which this direction is.
      * @return an integer representing the offset.
      */
@@ -37,6 +38,7 @@ public enum Direction6 implements Direction {
 
     /**
      * Gives the column Direction value.
+     *
      * @return an integer representing the offset.
      */
     @Override
@@ -47,8 +49,8 @@ public enum Direction6 implements Direction {
             case NORTH_EAST, SOUTH_EAST -> 1;
         };
     }
-    
+
     public static List<Direction> getTrigonometricalOrderedDirection() {
-        return List.of(NORTH_EAST,NORTH,NORTH_WEST,SOUTH_WEST,SOUTH,SOUTH_EAST);
+        return List.of(NORTH_EAST, NORTH, NORTH_WEST, SOUTH_WEST, SOUTH, SOUTH_EAST);
     }
 }

@@ -1,13 +1,10 @@
 package fr.uparis.energy.model;
 
 import fr.uparis.energy.view.PowerState;
-
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Represents a tile that is held by a board.
- */
+/** Represents a tile that is held by a board. */
 public class Tile implements ReadOnlyTile {
     private List<Connector> connectors = new ArrayList<>();
     private Component component;
@@ -17,6 +14,7 @@ public class Tile implements ReadOnlyTile {
 
     /**
      * Builds a Tile with the given specification.
+     *
      * @param geometry of this tile.
      * @param connectedEdges of this tile.
      * @param component of this tile.
@@ -35,6 +33,7 @@ public class Tile implements ReadOnlyTile {
 
     /**
      * Tells if this tile is powered.
+     *
      * @return the power state of this tile.
      */
     public boolean isPowered() {
@@ -47,6 +46,7 @@ public class Tile implements ReadOnlyTile {
 
     /**
      * Builds a Tile with the given geometry, an empty component and no connectors.
+     *
      * @param geometry of the resulting tile.
      */
     public Tile(Geometry geometry) {
@@ -59,9 +59,7 @@ public class Tile implements ReadOnlyTile {
         }
     }
 
-    /**
-     * Rotates given tile by 90 or 60 degrees clockwise depending on its geometry.
-     */
+    /** Rotates given tile by 90 or 60 degrees clockwise depending on its geometry. */
     public void rotateClockwise() {
         Connector current = this.connectors.get(0);
         Connector next = this.connectors.get(1);
@@ -77,8 +75,8 @@ public class Tile implements ReadOnlyTile {
     }
 
     /**
-     * Propagates energy through existing connectors to the neighbor tiles. Should only be called
-     * on a tile whose isPowered() is true.
+     * Propagates energy through existing connectors to the neighbor tiles. Should only be called on a
+     * tile whose isPowered() is true.
      */
     public void propagateEnergyToNeighbors() {
         List<Tile> connectedNeighborsNotPowered = new ArrayList<>();
@@ -91,18 +89,14 @@ public class Tile implements ReadOnlyTile {
         for (Tile t : connectedNeighborsNotPowered) t.propagateEnergyToNeighbors();
     }
 
-    /**
-     * Rotates given tile by 90 or 60 degrees counter clockwise depending on its geometry.
-     */
+    /** Rotates given tile by 90 or 60 degrees counter clockwise depending on its geometry. */
     public void rotateCounterClockwise() {
         for (int i = 0; i < geometry.card() - 1; i++) {
             this.rotateClockwise();
         }
     }
 
-    /**
-     * Allows to change this tile's component.
-     */
+    /** Allows to change this tile's component. */
     public void cycleComponent() {
 
         int nextIndex = (Component.valuesAsList().indexOf(this.component) + 1) % Component.values().length;
@@ -111,6 +105,7 @@ public class Tile implements ReadOnlyTile {
 
     /**
      * Textual representation of this tile connector.
+     *
      * @return a String that can be written in a level file.
      */
     private String connectorsToString() {
@@ -123,6 +118,7 @@ public class Tile implements ReadOnlyTile {
 
     /**
      * Textual representation of this tile.
+     *
      * @return a String that can be written in a level file.
      */
     @Override
@@ -156,6 +152,7 @@ public class Tile implements ReadOnlyTile {
 
     /**
      * Gives this tile connectors.
+     *
      * @return a list containing this tile connectors.
      */
     public List<Connector> getConnectors() {
@@ -186,19 +183,17 @@ public class Tile implements ReadOnlyTile {
     public PowerState getPowerState() {
         return PowerState.fromBoolean(this.isPowered());
     }
-    
+
     @Override
     public int getNumberOfExistingConnectors() {
         int i = 0;
-        for(Connector c : connectors)
-            if (c.exists())
-                i++;
+        for (Connector c : connectors) if (c.exists()) i++;
         return i;
     }
 
     public void empty() {
         this.component = Component.EMPTY;
-        for (Connector c: this.connectors) {
+        for (Connector c : this.connectors) {
             c.setExists(false);
         }
     }

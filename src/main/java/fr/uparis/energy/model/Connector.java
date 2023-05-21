@@ -1,8 +1,6 @@
 package fr.uparis.energy.model;
 
-/**
- * Represents a connector held by a Tile.
- */
+/** Represents a connector held by a Tile. */
 public class Connector {
     private boolean exists;
     private final Tile parentTile;
@@ -13,6 +11,7 @@ public class Connector {
 
     /**
      * Builds a Connector with the given specification.
+     *
      * @param parentTile on which this connector is
      * @param exists if this connector represents a wire
      * @param direction side on which the connector is
@@ -25,6 +24,7 @@ public class Connector {
 
     /**
      * Checks if this connector exists. It means if we can pass energy through it.
+     *
      * @return true if it exists.
      */
     public boolean exists() {
@@ -33,6 +33,7 @@ public class Connector {
 
     /**
      * Existance setter
+     *
      * @param exists value to set.
      */
     public void setExists(boolean exists) {
@@ -41,6 +42,7 @@ public class Connector {
 
     /**
      * Neighbor setter.
+     *
      * @param c to connect to.
      */
     public void setNeighbor(Connector c) {
@@ -49,6 +51,7 @@ public class Connector {
 
     /**
      * Direction getter.
+     *
      * @return the direction of this connector according to its parentTile.
      */
     public Direction getDirection() {
@@ -57,8 +60,9 @@ public class Connector {
 
     /**
      * Neighbor getter.
-     * @return the neighbor Connector of this Connector, or null if this Connector is facing
-     * the emptiness around the board.
+     *
+     * @return the neighbor Connector of this Connector, or null if this Connector is facing the
+     *     emptiness around the board.
      */
     public Connector getNeighbor() {
         return this.neighbor;

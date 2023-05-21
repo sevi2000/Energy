@@ -1,8 +1,6 @@
 package fr.uparis.energy.model;
 
-/**
- * Represents a level that can be played or edited.
- */
+/** Represents a level that can be played or edited. */
 public class Level {
 
     private final int number;
@@ -17,9 +15,7 @@ public class Level {
         this.board.toggleGeometry();
     }
 
-    /**
-     * This level state.
-     */
+    /** This level state. */
     public enum State {
         EDITING,
         PLAYING;
@@ -27,6 +23,7 @@ public class Level {
 
     /**
      * Builds a level with the given specifications and calls propagateEnergy().
+     *
      * @param number of the level.
      * @param state of the level.
      * @param board of the level.
@@ -40,6 +37,7 @@ public class Level {
 
     /**
      * Checks if the level is solved (i.e. we won)
+     *
      * @return true if all tiles which contain a lamp are powered.
      */
     public boolean isSolved() {
@@ -48,6 +46,7 @@ public class Level {
 
     /**
      * Prepares a level by shuffling its board.
+     *
      * @return true if the level can be played (i.e. it is not in a winning state after 100 shuffles)
      */
     public boolean start() {
@@ -62,6 +61,7 @@ public class Level {
 
     /**
      * Level's number getter.
+     *
      * @return this level's number.
      */
     public int getNumber() {
@@ -70,6 +70,7 @@ public class Level {
 
     /**
      * Textual representation.
+     *
      * @return a String that can be witten to a file to save the level.
      */
     @Override
@@ -80,7 +81,7 @@ public class Level {
     public String toStringWithEnergy() {
         return this.board.toStringWithEnergy();
     }
-    
+
     public void empty() {
         this.board.empty();
     }

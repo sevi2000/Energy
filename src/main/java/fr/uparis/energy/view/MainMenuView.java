@@ -1,17 +1,27 @@
 package fr.uparis.energy.view;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.List;
+import javax.swing.*;
 
+/**
+ * Represents the first screen.
+ */
 public class MainMenuView extends JPanel {
+
+    /**
+     * Class constructor.
+     * @param jFrame parent window.
+     */
     public MainMenuView(JFrame jFrame) {
+
+        this.setPreferredSize(Common.FRAME_SIZE);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        Dimension size = new Dimension(Common.FRAME_SIZE.width, 10);
         JLabel play = Common.createButton("Play", new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 jFrame.setContentPane(new BankSelectionView(jFrame));
                 jFrame.setVisible(true);
             }
@@ -19,34 +29,20 @@ public class MainMenuView extends JPanel {
 
         JLabel quit = Common.createButton("Quit", new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 System.exit(0);
             }
         });
 
-        List<Component> components = new ArrayList<>();
-        components.add(titlePane());
-        components.add(Box.createRigidArea(new Dimension(0, 100)));
-        components.add(play);
-        components.add(Box.createRigidArea(new Dimension(0, 100)));
-        components.add(quit);
-
-        this.setPreferredSize(Common.FRAME_SIZE);
-
-        this.setLayout(new GridBagLayout());
-
-        JPanel contentPane = Common.centeredPane(components, 100, 1, 100);
-        jFrame.revalidate();
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.anchor = GridBagConstraints.CENTER;
-        this.add(contentPane, gbc);
-    }
-
-    private static JPanel titlePane() {
-        JPanel res = new JPanel();
-        JLabel title = new JLabel("Energy");
-        title.setFont(new Font("Arial", Font.BOLD, 70));
-        res.add(title);
-        return res;
+        play.setPreferredSize(new Dimension(200, 100));
+        quit.setPreferredSize(new Dimension(200, 100));
+        this.add(Box.createRigidArea(new Dimension(0, 200)));
+        this.add(Common.titlePane());
+        this.add(new Box.Filler(
+                new Dimension(Common.FRAME_SIZE.width, 50),
+                new Dimension(Common.FRAME_SIZE.width, 50),
+                new Dimension(Common.FRAME_SIZE.width, 50)));
+        this.add(Common.centeredElt(play));
+        this.add(Common.centeredElt(quit));
     }
 }

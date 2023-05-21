@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Represents the board of a level. Any modification made to the board or any of its tiles
- * must be followed by a call to Board.propagateEnergy(). A board is forced to be at least 1x1.
+ * Represents the board of a level. Any modification made to the board or any of its tiles must be
+ * followed by a call to Board.propagateEnergy(). A board is forced to be at least 1x1.
  */
-public class Board implements BoardObservable {
+public class Board implements BoardObservable, ReadOnlyBoard {
 
     private final List<List<Tile>> tileGrid;
 
@@ -22,6 +22,7 @@ public class Board implements BoardObservable {
 
     /**
      * Builds an empty board with the given dimensions.
+     *
      * @param width of the board.
      * @param height of the board.
      * @param geometry of the board.
@@ -37,9 +38,7 @@ public class Board implements BoardObservable {
             for (int j = 0; j < width; j++) tileGrid.get(i).add(new Tile(this.geometry));
     }
 
-    /**
-     * Adds a row before the first one.
-     */
+    /** Adds a row before the first one. */
     public void addRowOnTop() {
         List<Tile> newRow = new ArrayList<>(this.getWidth());
         for (int i = 0; i < this.getWidth(); i++) {
@@ -52,6 +51,7 @@ public class Board implements BoardObservable {
 
     /**
      * Sets the given row at the given index.
+     *
      * @param lineNumber index for the given row.
      * @param row to be set.
      * @param setNeighbors true if we need to initialize the neighbors.
@@ -64,9 +64,7 @@ public class Board implements BoardObservable {
         if (setNeighbors) this.setNeighbors();
     }
 
-    /**
-     * Adds a row after the last one.
-     */
+    /** Adds a row after the last one. */
     public void addRowAtBottom() {
         List<Tile> newRow = new ArrayList<>(this.getWidth());
         for (int i = 0; i < this.getWidth(); i++) {
@@ -77,9 +75,7 @@ public class Board implements BoardObservable {
         this.setNeighbors();
     }
 
-    /**
-     * Adds a column before the first one.
-     */
+    /** Adds a column before the first one. */
     public void addColumnAtLeft() {
         for (int i = 0; i < this.getHeight(); i++) {
             this.tileGrid.get(i).add(0, new Tile(this.geometry));
@@ -88,9 +84,7 @@ public class Board implements BoardObservable {
         this.setNeighbors();
     }
 
-    /**
-     * Adds a column after the last one.
-     */
+    /** Adds a column after the last one. */
     public void addColumnAtRight() {
         for (int i = 0; i < this.getHeight(); i++) {
             this.tileGrid.get(i).add(new Tile(this.geometry));
@@ -99,27 +93,21 @@ public class Board implements BoardObservable {
         this.setNeighbors();
     }
 
-    /**
-     * Removes the fist row.
-     */
+    /** Removes the fist row. */
     public void removeRowOnTop() {
         if (this.getHeight() == 1) return;
         this.tileGrid.remove(0);
         this.setNeighbors();
     }
 
-    /**
-     * Removes the last row.
-     */
+    /** Removes the last row. */
     public void removeRowAtBottom() {
         if (this.getHeight() == 1) return;
         this.tileGrid.remove(this.getHeight() - 1);
         this.setNeighbors();
     }
 
-    /**
-     * Removes the first column.
-     */
+    /** Removes the first column. */
     public void removeColumnAtLeft() {
         if (this.getWidth() == 1) return;
         for (int i = 0; i < this.getHeight(); i++) {
@@ -129,9 +117,7 @@ public class Board implements BoardObservable {
         this.setNeighbors();
     }
 
-    /**
-     * Removes the last column.
-     */
+    /** Removes the last column. */
     public void removeColumnAtRight() {
         if (this.getWidth() == 1) return;
         int currentWidth = this.getWidth();
@@ -144,6 +130,7 @@ public class Board implements BoardObservable {
 
     /**
      * Checks if the board is solved.
+     *
      * @return true if the board is in a solved state.
      */
     @Override
@@ -153,9 +140,7 @@ public class Board implements BoardObservable {
         return true;
     }
 
-    /**
-     * Shuffles the board by rotating each tile randomly.
-     */
+    /** Shuffles the board by rotating each tile randomly. */
     public void shuffle() {
         for (Tile tile : this.getAllTiles()) {
             int numberOfRotations = rand.nextInt(0, tile.getGeometry().card());
@@ -165,9 +150,7 @@ public class Board implements BoardObservable {
         }
     }
 
-    /**
-     * Propagates the energy to the different tiles.
-     */
+    /** Propagates the energy to the different tiles. */
     public void propagateEnergy() {
         this.turnOffEverything();
         for (Tile t : this.getTilesWithComponent(Component.SOURCE)) t.propagateEnergyToNeighbors();
@@ -181,9 +164,7 @@ public class Board implements BoardObservable {
         }
     }
 
-    /**
-     * Turns each tile off except the sources.
-     */
+    /** Turns each tile off except the sources. */
     private void turnOffEverything() {
         for (Tile t : this.getAllTiles()) t.setPowered(false);
     }
@@ -203,6 +184,7 @@ public class Board implements BoardObservable {
 
     /**
      * String that represents this board configuration.
+     *
      * @return string representation of this board's geometry and dimensions.
      */
     private String config() {
@@ -211,6 +193,7 @@ public class Board implements BoardObservable {
 
     /**
      * String representation of the board.
+     *
      * @return a string representing the tiles of this board.
      */
     private String tileGridToString() {
@@ -226,6 +209,7 @@ public class Board implements BoardObservable {
 
     /**
      * Textual representation.
+     *
      * @return string ready to be written in a level file.
      */
     @Override
@@ -233,9 +217,7 @@ public class Board implements BoardObservable {
         return this.config() + "\n" + this.tileGridToString();
     }
 
-    /**
-     * Initializes the neighbor of each connector of each tile.
-     */
+    /** Initializes the neighbor of each connector of each tile. */
     public void setNeighbors() {
         for (int i = 0; i < this.getHeight(); i++) {
             for (int j = 0; j < this.getWidth(); j++) {
@@ -255,6 +237,7 @@ public class Board implements BoardObservable {
 
     /**
      * Returns the width of this board.
+     *
      * @return size of a line.
      */
     @Override
@@ -264,6 +247,7 @@ public class Board implements BoardObservable {
 
     /**
      * Returns the height of this board.
+     *
      * @return size of a column.
      */
     @Override
@@ -307,24 +291,25 @@ public class Board implements BoardObservable {
     public Geometry getGeometry() {
         return this.geometry;
     }
-    
-    @Override
+
     public void rotateTileClockWise(IntPair clickedPolygon) {
         this.tileGrid.get(clickedPolygon.a).get(clickedPolygon.b).rotateClockwise();
     }
 
-    @Override
+    public void rotateTileCounterClockWise(IntPair clickedPolygon) {
+        this.tileGrid.get(clickedPolygon.a).get(clickedPolygon.b).rotateCounterClockwise();
+    }
+
     public void cycleTileComponent(IntPair clickedPolygon) {
         this.tileGrid.get(clickedPolygon.a).get(clickedPolygon.b).cycleComponent();
     }
-    
+
     public Tile getTileAt(IntPair position) {
         return tileGrid.get(position.a).get(position.b);
     }
-    public void empty () {
-        for (List<Tile> line: tileGrid)
-            for (Tile t: line)
-                t.empty();
+
+    public void empty() {
+        for (List<Tile> line : tileGrid) for (Tile t : line) t.empty();
     }
 
     public void toggleGeometry() {

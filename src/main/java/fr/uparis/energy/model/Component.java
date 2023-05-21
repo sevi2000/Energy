@@ -5,9 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Enum representing a component held by a Tile.
- */
+/** Enum representing a component held by a Tile. */
 public enum Component {
     SOURCE("S"),
     LAMP("L"),
