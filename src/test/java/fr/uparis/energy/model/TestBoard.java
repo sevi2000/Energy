@@ -1,29 +1,34 @@
 package fr.uparis.energy.model;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+
+import org.junit.jupiter.api.Test;
 
 import fr.uparis.energy.utils.Bank;
 import fr.uparis.energy.utils.InvalidLevelException;
 import fr.uparis.energy.utils.LevelConverter;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import org.junit.jupiter.api.Test;
 
 class TestBoard {
 
     @Test
     void testBoardSolvedInASolvedLevel() throws InvalidSizeException, IOException, InvalidLevelException {
-        URL levelLocation = getClass().getClassLoader().getResource("levels/level1.nrg");
-        Level l = LevelConverter.fileToLevel(levelLocation, Level.State.PLAYING);
+        // URL levelLocation = getClass().getClassLoader().getResource("levels/level1.nrg");
+        Level l = LevelConverter.fileToLevel("levels/level1.nrg", Level.State.PLAYING);
         // l.getBoard().propagateEnergy();
         assertTrue(l.isSolved());
     }
 
     @Test
     void testBoardSolvedInANonSolvedLevel() throws InvalidSizeException, IOException, InvalidLevelException {
-        URL levelLocation = getClass().getClassLoader().getResource("levels/level3.nrg");
-        Level l = LevelConverter.fileToLevel(levelLocation, Level.State.PLAYING);
+        // URL levelLocation = getClass().getClassLoader().getResource("levels/level3.nrg");
+        Level l = LevelConverter.fileToLevel("levels/level3.nrg", Level.State.PLAYING);
         l.start();
         assertFalse(l.isSolved());
     }

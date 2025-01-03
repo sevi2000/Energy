@@ -1,20 +1,32 @@
 package fr.uparis.energy.utils;
 
-import fr.uparis.energy.model.*;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOError;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import fr.uparis.energy.model.Board;
+import fr.uparis.energy.model.Component;
+import fr.uparis.energy.model.Geometry;
+import fr.uparis.energy.model.InvalidSizeException;
+import fr.uparis.energy.model.Level;
+import fr.uparis.energy.model.Tile;
 
 /** Utils class to store and retrieve a level from a file. */
 public class LevelConverter {
@@ -144,16 +156,26 @@ public class LevelConverter {
      * @throws IOException if file opening goes wrong
      * @throws InvalidSizeException if the line length does not fit with the board size
      */
-    public static Level fileToLevel(URL path, Level.State state)
+    public static Level fileToLevel(String path, Level.State state)
             throws InvalidLevelException, IOException, InvalidSizeException {
-        URI uri = null;
-        try {
-            uri = path.toURI();
-        } catch (Exception e) {
-            throw new FileNotFoundException();
+        List<String> content;
+
+        System.out.println("Loading level from file: " + path);
+
+        if(path.startsWith(energyPath)){
+            try {
+                File f = new File(path);
+                content = Files.readAllLines(Path.of(f.getPath()));
+            } catch (Exception e) {
+                throw new FileNotFoundException();
+            }
+        }else{
+            try(InputStream is = LevelConverter.class.getClassLoader().getResourceAsStream(path)) {
+                content = new BufferedReader(new InputStreamReader(is)).lines().toList();
+            } catch (Exception e) {
+                throw new FileNotFoundException();
+            }
         }
-        File f = new File(uri);
-        List<String> content = Files.readAllLines(Path.of(uri));
 
         // Parse the first line
         String[] config = content.get(0).trim().split(" ");
@@ -171,7 +193,8 @@ public class LevelConverter {
         }
         board.setNeighbors();
 
-        Matcher levelNumberMatcher = getMatcher("^level([0-9]+)\\.nrg$", f.getName());
+        System.out.println("Level loaded from file: " + path);
+        Matcher levelNumberMatcher = getMatcher("level([0-9]+)\\.nrg$", path.toString());
         if (!levelNumberMatcher.find()) throw new IllegalArgumentException();
         int levelNumber = Integer.parseInt(levelNumberMatcher.group(1));
 
@@ -186,13 +209,14 @@ public class LevelConverter {
      * @throws Exception if the file  was not found or the level does not have a valid format.
      */
     private static Level getLevelFromResources(int number, Level.State state) {
-        URL levelLocation = LevelConverter.class.getClassLoader().getResource("levels/level" + number + ".nrg");
-        if (levelLocation == null) throw new IllegalArgumentException();
+        // URL levelLocation = LevelConverter.class.getClassLoader().getResource("levels/level" + number + ".nrg");
+        // if (levelLocation == null) throw new IllegalArgumentException();
 
         Level l = null;
         try {
-            l = fileToLevel(levelLocation, state);
+            l = fileToLevel("levels/level" + number + ".nrg", state);
         } catch (Exception e) {
+            e.printStackTrace();
             System.exit(1);
         }
 
@@ -207,20 +231,28 @@ public class LevelConverter {
      * @throws Exception if the file  was not found or the level does not have a valid format.
      */
     private static Level getLevelFromHome(int number, Level.State state) throws MalformedURLException {
-        URL levelLocation = Path.of(new StringBuilder()
-                        .append(energyPath)
-                        .append(System.getProperty("file.separator"))
-                        .append("level")
-                        .append(number)
-                        .append(".nrg")
-                        .toString())
-                .toUri()
-                .toURL();
+        // URL levelLocation = Path.of(new StringBuilder()
+        //                 .append(energyPath)
+        //                 .append(System.getProperty("file.separator"))
+        //                 .append("level")
+        //                 .append(number)
+        //                 .append(".nrg")
+        //                 .toString())
+        //         .toUri()
+        //         .toURL();
+        String levelLocation = new StringBuilder()
+                .append(energyPath)
+                .append(System.getProperty("file.separator"))
+                .append("level")
+                .append(number)
+                .append(".nrg")
+                .toString();
 
         Level l = null;
         try {
             l = fileToLevel(levelLocation, state);
         } catch (Exception e) {
+            e.printStackTrace();
             System.exit(1);
         }
 
@@ -276,20 +308,30 @@ public class LevelConverter {
      */
     public static List<Integer> getBankLevelNumbers(Bank bank) {
         List<Integer> res = new ArrayList<>();
-        ClassLoader cl = LevelConverter.class.getClassLoader();
-        URL path = cl.getResource("levels");
-        if (path == null) throw new IllegalStateException();
-        String dir =
-                switch (bank) {
-                    case BANK_1 -> path.getPath();
-                    case BANK_2 -> System.getProperty("user.home") + System.getProperty("file.separator") + ".energy";
-                };
-        File levels = new File(dir);
-        File[] list = levels.listFiles();
-        if (list == null) throw new IllegalStateException();
-        for (File f : list) {
-            res.add(Integer.parseInt(extractNumber(f.getName())));
+        switch(bank) {
+            case BANK_1 -> {
+                for (int i = 1; i <= 21; i++) {
+                    res.add(i);
+                }
+            }
+            case BANK_2 -> {
+                ClassLoader cl = LevelConverter.class.getClassLoader();
+                URL path = cl.getResource("levels");
+                if (path == null) throw new IllegalStateException();
+                String dir =
+                        switch (bank) {
+                            case BANK_1 -> path.getPath();
+                            case BANK_2 -> System.getProperty("user.home") + System.getProperty("file.separator") + ".energy";
+                        };
+                File levels = new File(dir);
+                File[] list = levels.listFiles();
+                if (list == null) throw new IllegalStateException();
+                for (File f : list) {
+                    res.add(Integer.parseInt(extractNumber(f.getName())));
+                }
+            }
         }
+        
         Collections.sort(res);
         return res;
     }
