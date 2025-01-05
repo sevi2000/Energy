@@ -1,0 +1,76 @@
+plugins {
+    id 'java'
+    id 'jacoco'
+    id 'application'
+    id 'com.diffplug.spotless' version '6.15.0'
+    id 'org.sonarqube' version '3.5.0.2730'
+    id 'com.github.johnrengelman.shadow' version '8.1.1' // Use the latest version
+}
+
+group 'fr.uparis.energy'
+version '1.0-SNAPSHOT'
+mainClassName = 'fr.uparis.energy.Main'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    implementation("com.diffplug.spotless:spotless-lib:2.35.0")
+    implementation("com.diffplug.spotless:spotless-plugin-gradle:6.15.0")
+}
+
+jacocoTestReport {
+    reports {
+        xml.required.set(true)  // Use this in place of `xml.enabled = true` for newer Gradle versions
+        html.required.set(true) // Optionally enable HTML reports
+    }
+}
+test {
+    useJUnitPlatform()
+
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+
+
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
+
+sonar {
+  properties {
+    property "sonar.login", "admin"
+    property "sonar.password", "F9Erj73eUynRrGP"
+  }
+}
+
+sourceSets{
+    main {
+        java {
+            srcDir(["src/main/java"])
+        }
+        resources {
+
+            srcDirs= ["src/main/resources"]
+
+        }
+    }
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+     from {
+    sourceSets.main.resources.srcDirs
+    }
+    archiveFileName = 'Energy.jar'
+      duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+}
+shadowJar {
+    archiveClassifier.set('all') // Optional: Appends '-all' to the JAR name
+}
